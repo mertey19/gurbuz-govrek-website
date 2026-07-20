@@ -1,6 +1,7 @@
 import { About } from "@/components/sections/About";
 import { AnalysisCenter } from "@/components/sections/AnalysisCenter";
 import { CampusVisits } from "@/components/sections/CampusVisits";
+import { CareerCorner } from "@/components/sections/CareerCorner";
 import { ContactCTA } from "@/components/sections/ContactCTA";
 import { Counseling } from "@/components/sections/Counseling";
 import { Events } from "@/components/sections/Events";
@@ -55,6 +56,7 @@ export default function Home() {
         <Mathematics />
         <Counseling />
         <AnalysisCenter />
+        <CareerCorner />
         <CampusVisits />
         <SuccessStories />
         <Events />
