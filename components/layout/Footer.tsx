@@ -64,7 +64,12 @@ export function Footer() {
               <li className="flex gap-3"><Mail className="size-4 text-gold" aria-hidden="true" /><a href={siteConfig.contact.emailHref} className="break-all hover:text-white">{siteConfig.contact.email}</a></li>
             </ul>
             <div className="mt-6 flex gap-3">
-              {[{ icon: Camera, label: "Instagram" }, { icon: Play, label: "YouTube" }].map(({ icon: Icon, label }) => (
+              {[
+                { icon: Camera, label: "Instagram", href: siteConfig.contact.instagram },
+                { icon: Play, label: "YouTube", href: siteConfig.contact.youtube },
+              ].map(({ icon: Icon, label, href }) => href ? (
+                <a key={label} href={href} target="_blank" rel="noreferrer" className="flex size-10 items-center justify-center rounded-full border border-white/20 text-white/70 transition hover:border-gold hover:text-gold-light" aria-label={`${label} sayfasını aç`}><Icon className="size-4" aria-hidden="true" /></a>
+              ) : (
                 <span key={label} className="flex size-10 cursor-not-allowed items-center justify-center rounded-full border border-white/15 text-white/35" aria-label={`${label} bağlantısı yakında`} title={`${label} bağlantısı eklenecek`}><Icon className="size-4" aria-hidden="true" /></span>
               ))}
             </div>

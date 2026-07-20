@@ -1,4 +1,8 @@
-export const mediaArticles = [
+import type { MediaArticle } from "@/types";
+
+// Bir karta dış bağlantı eklemek için externalUrl, video eklemek için videoUrl
+// alanını kullanın. Ayrıntılı örnekler CONTENT_GUIDE.md dosyasındadır.
+export const mediaArticles: readonly MediaArticle[] = [
   {
     category: "Tercih Rehberi",
     title: "Tercih döneminde dikkat edilmesi gerekenler",
@@ -27,4 +31,4 @@ export const mediaArticles = [
     content:
       "Öğrenci üniversitede yalnızca ders programıyla değil, kampüsün sosyal ve akademik olanaklarıyla da yaşar. Ulaşım, barınma, kulüpler, laboratuvarlar ve şehir yaşamı kararın sürdürülebilirliği açısından önem taşır.",
   },
-] as const;
+];

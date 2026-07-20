@@ -66,6 +66,8 @@ Bu değer canonical URL, sitemap, robots ve JSON-LD şemalarında kullanılır.
 
 ## İçerik yönetimi
 
+Bağlantı, YouTube/Vimeo videosu veya bilgisayardan video eklemek için adım adım Türkçe anlatım: [`CONTENT_GUIDE.md`](CONTENT_GUIDE.md)
+
 - Genel marka ve iletişim: `config/site.ts`
 - Hizmetler: `data/services.ts`
 - SSS: `data/faq.ts`

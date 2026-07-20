@@ -23,6 +23,15 @@ export type GalleryItem = {
   position?: string;
 };
 
+export type MediaArticle = {
+  category: string;
+  title: string;
+  summary: string;
+  content?: string;
+  externalUrl?: string;
+  videoUrl?: string;
+};
+
 export type AppointmentFormData = {
   fullName: string;
   phone: string;
