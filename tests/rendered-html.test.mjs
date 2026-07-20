@@ -29,6 +29,7 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
   assert.doesNotMatch(html, /<form\b|\/api\/appointments|Randevu Talebi Oluştur/i);
   assert.match(html, /Randevu ile/i);
   assert.match(html, /WhatsApp Üzerinden İletişime Geçin/i);
+  assert.doesNotMatch(html, /Gizlilik Politikası|KVKK Aydınlatma Metni|Kullanım Koşulları/i);
   assert.match(html, /src="\/images\/hero-gurbuz-govrek\.png"/i);
   assert.doesNotMatch(html, /\/_vinext\/image/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|Building your site/i);

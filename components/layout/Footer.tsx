@@ -1,34 +1,8 @@
-"use client";
-
-import { Camera, Mail, Phone, Play, X } from "lucide-react";
-import { useCallback, useRef, useState } from "react";
+import { Camera, Mail, Phone, Play } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { siteConfig } from "@/config/site";
-import { useFocusTrap } from "@/hooks/useFocusTrap";
-
-const legalContent = {
-  privacy: {
-    title: "Gizlilik Politikası",
-    body: "Bu site üzerinde kişisel bilgi toplayan bir form bulunmaz. İletişim, kullanıcının isteğiyle açılan WhatsApp bağlantısı üzerinden gerçekleşir. WhatsApp üzerinde paylaşılan bilgiler ilgili platformun gizlilik koşullarına tabidir. Site ve iletişim hakkında sorular gurbuzgovrek@gmail.com adresine iletilebilir.",
-  },
-  kvkk: {
-    title: "KVKK Aydınlatma Metni",
-    body: "Bu web sitesi kişisel veri giriş formu kullanmaz. WhatsApp üzerinden iletişime geçmeyi seçmeniz hâlinde paylaştığınız bilgiler mesajınızı yanıtlamak ve iletişimi yürütmek amacıyla değerlendirilir. Kişisel verilerle ilgili başvurularınızı gurbuzgovrek@gmail.com adresine iletebilirsiniz.",
-  },
-  terms: {
-    title: "Kullanım Koşulları",
-    body: "Sitedeki içerikler genel bilgilendirme amacı taşır. Üniversite verileri ve tercih değerlendirmeleri zaman içinde değişebilir; kesin sonuç veya yerleşme garantisi sunmaz. Kişisel değerlendirme için güncel ve doğrulanabilir kaynaklar esas alınır.",
-  },
-} as const;
-
-type LegalKey = keyof typeof legalContent;
 
 export function Footer() {
-  const [activeLegal, setActiveLegal] = useState<LegalKey | null>(null);
-  const dialogRef = useRef<HTMLDivElement>(null);
-  const close = useCallback(() => setActiveLegal(null), []);
-  useFocusTrap(dialogRef, Boolean(activeLegal), close);
-
   return (
     <footer className="bg-navy text-white">
       <Container className="py-16 lg:py-20">
@@ -75,26 +49,11 @@ export function Footer() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-6 pt-7 text-xs text-white/48 md:flex-row md:items-center md:justify-between">
+        <div className="flex flex-col gap-2 pt-7 text-xs text-white/48 md:flex-row md:items-center md:justify-between">
           <p>© {new Date().getFullYear()} Gürbüz Gövrek. Tüm hakları saklıdır.</p>
-          <div className="flex flex-wrap gap-5">
-            <button type="button" onClick={() => setActiveLegal("privacy")} className="hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold">Gizlilik Politikası</button>
-            <button type="button" onClick={() => setActiveLegal("kvkk")} className="hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold">KVKK Aydınlatma Metni</button>
-            <button type="button" onClick={() => setActiveLegal("terms")} className="hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold">Kullanım Koşulları</button>
-          </div>
+          <p>Matematik Öğretmeni · Tercih Uzmanı</p>
         </div>
       </Container>
-
-      {activeLegal && (
-        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-navy/85 p-5 backdrop-blur-sm" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && close()}>
-          <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="legal-title" className="relative w-full max-w-2xl rounded-md bg-white p-7 text-ink shadow-2xl sm:p-10">
-            <button type="button" onClick={close} className="absolute top-4 right-4 flex size-11 items-center justify-center rounded-full border border-navy/15 text-navy focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold" aria-label="Pencereyi kapat"><X aria-hidden="true" /></button>
-            <p className="eyebrow">Bilgilendirme</p>
-            <h2 id="legal-title" className="mt-3 pr-12 font-serif text-3xl font-semibold text-navy">{legalContent[activeLegal].title}</h2>
-            <p className="mt-6 leading-8 text-ink/72">{legalContent[activeLegal].body}</p>
-          </div>
-        </div>
-      )}
     </footer>
   );
 }
