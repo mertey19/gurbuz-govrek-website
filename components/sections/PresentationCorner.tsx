@@ -8,6 +8,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import {
   presentationCollections,
+  presentationSlideCount,
   type PresentationCategory,
 } from "@/data/presentationCollections";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
@@ -84,8 +85,8 @@ export function PresentationCorner() {
                   <Images className="size-5" aria-hidden="true" />
                 </span>
                 <div>
-                  <p className="font-serif text-2xl font-semibold">30 özgün görsel</p>
-                  <p className="mt-0.5 text-xs text-white/52">3 ayrı içerik serisi</p>
+                  <p className="font-serif text-2xl font-semibold">{presentationSlideCount} özgün görsel</p>
+                  <p className="mt-0.5 text-xs text-white/52">{presentationCollections.length} ayrı içerik serisi</p>
                 </div>
               </div>
             </div>
@@ -93,8 +94,23 @@ export function PresentationCorner() {
         </Reveal>
 
         <Reveal delay={0.05} className="mt-10">
+          <label className="block md:hidden" htmlFor="sunum-serisi">
+            <span className="mb-2 block text-[10px] font-bold tracking-[.18em] text-gold-light uppercase">İçerik serisini seçin</span>
+            <select
+              id="sunum-serisi"
+              value={category}
+              onChange={(event) => selectCategory(event.target.value as PresentationCategory)}
+              className="h-14 w-full rounded-sm border border-white/15 bg-white px-4 text-sm font-bold text-navy outline-none focus:border-gold focus:ring-2 focus:ring-gold/25"
+            >
+              {presentationCollections.map((collection) => (
+                <option key={collection.id} value={collection.id}>
+                  {collection.label} · {collection.slides.length} görsel
+                </option>
+              ))}
+            </select>
+          </label>
           <div
-            className="grid gap-2 rounded-sm border border-white/10 bg-white/[.045] p-2 sm:grid-cols-3"
+            className="hidden gap-2 rounded-sm border border-white/10 bg-white/[.045] p-2 md:grid md:grid-cols-3 xl:grid-cols-4"
             role="tablist"
             aria-label="Sunum kategorileri"
           >
@@ -115,9 +131,9 @@ export function PresentationCorner() {
                       : "text-white/68 hover:bg-white/8 hover:text-white"
                   }`}
                 >
-                  <span className="sm:hidden lg:inline">{collection.label}</span>
-                  <span className="hidden sm:inline lg:hidden">{collection.shortLabel}</span>
-                  <span className={active ? "text-navy/55" : "text-gold-light/72"}> · 10</span>
+                  <span className="hidden xl:inline">{collection.label}</span>
+                  <span className="xl:hidden">{collection.shortLabel}</span>
+                  <span className={active ? "text-navy/55" : "text-gold-light/72"}> · {collection.slides.length}</span>
                 </button>
               );
             })}
@@ -127,7 +143,7 @@ export function PresentationCorner() {
         <div
           id="sunum-panel"
           role="tabpanel"
-          aria-labelledby={`sunum-tab-${category}`}
+          aria-label={activeCollection.label}
           className="mt-9"
         >
           <div className="flex flex-col gap-2 border-b border-white/12 pb-6 sm:flex-row sm:items-end sm:justify-between sm:gap-8">

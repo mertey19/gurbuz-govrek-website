@@ -27,6 +27,22 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
     "../public/images/sunum-kosesi/ucak-uzay/10.webp",
     "../public/images/sunum-kosesi/endustri-isletme/01.webp",
     "../public/images/sunum-kosesi/endustri-isletme/10.webp",
+    "../public/images/sunum-kosesi/bilgisayar-yazilim/01.webp",
+    "../public/images/sunum-kosesi/bilgisayar-yazilim/10.webp",
+    "../public/images/sunum-kosesi/bilgisayar-matematik/01.webp",
+    "../public/images/sunum-kosesi/bilgisayar-matematik/10.webp",
+    "../public/images/sunum-kosesi/mimarlik-insaat/01.webp",
+    "../public/images/sunum-kosesi/mimarlik-insaat/10.webp",
+    "../public/images/sunum-kosesi/makine-mekatronik/01.webp",
+    "../public/images/sunum-kosesi/makine-mekatronik/10.webp",
+    "../public/images/sunum-kosesi/hukuk-psikoloji/01.webp",
+    "../public/images/sunum-kosesi/hukuk-psikoloji/10.webp",
+    "../public/images/sunum-kosesi/ekonomi-isletme/01.webp",
+    "../public/images/sunum-kosesi/ekonomi-isletme/10.webp",
+    "../public/images/sunum-kosesi/tip-dis/01.webp",
+    "../public/images/sunum-kosesi/tip-dis/10.webp",
+    "../public/images/sunum-kosesi/tuma/01.webp",
+    "../public/images/sunum-kosesi/tuma/09.webp",
   ].map((path) => access(new URL(path, import.meta.url))));
 
   const response = await render();
@@ -48,9 +64,12 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
   assert.match(html, /115 meslek dosyası/i);
   assert.match(html, /5 kategori/i);
   assert.match(html, /Sunum ve Seminer Köşesi/i);
-  assert.match(html, /30 özgün görsel/i);
-  assert.match(html, /3 ayrı içerik serisi/i);
+  assert.match(html, /109(?:<!-- -->)? özgün görsel/i);
+  assert.match(html, /11(?:<!-- -->)? ayrı içerik serisi/i);
   assert.match(html, /Tercihler 2026/i);
+  assert.match(html, /TÜMA 2025 Araştırması/i);
+  assert.match(html, /Bilgisayar ve Yazılım Mühendisliği/i);
+  assert.match(html, /Tıp ve Diş Hekimliği/i);
   assert.match(html, /\/images\/sunum-kosesi\/seminer\/01\.webp/i);
   assert.match(html, /\/resources\/meslek-tanitim\/tyt\/acil-yardim-ve-afet-yoneticisi\.pdf/i);
   assert.doesNotMatch(html, /Gizlilik Politikası|KVKK Aydınlatma Metni|Kullanım Koşulları/i);
