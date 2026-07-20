@@ -13,7 +13,7 @@ export const siteConfig = {
     phoneHref: "tel:+905013653371",
     email: "gurbuzgovrek@gmail.com",
     emailHref: "mailto:gurbuzgovrek@gmail.com",
-    hours: "Randevu ile",
+    hours: "WhatsApp üzerinden",
     location: "Yüz yüze ve online görüşme",
     instagram: "",
     youtube: "",
@@ -28,6 +28,8 @@ export const siteConfig = {
     { label: "İletişim", href: "#iletisim" },
   ],
 } as const;
+
+export const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber.replace(/\D/g, "")}?text=${encodeURIComponent(siteConfig.whatsappMessage)}`;
 
 export const stats = [
   { value: "Birebir", label: "Öğrenci Görüşmesi" },

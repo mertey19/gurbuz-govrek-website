@@ -37,15 +37,9 @@ NEXT_PUBLIC_WHATSAPP_NUMBER=905013653371
 
 Numara tanımlı değilse WhatsApp öğesi kırık bağlantı açmaz ve pasif görünür.
 
-## Randevu backend'i
+## Görüşme ve iletişim
 
-Form React Hook Form ve Zod ile tarayıcı tarafında doğrulanır; `/api/appointments` endpoint'i aynı verileri sunucuda yeniden doğrular ve D1 üzerindeki `appointments` tablosuna kaydeder. Şema `db/schema.ts`, üretilmiş migration ise `drizzle/` klasöründedir. Kısa süre içinde aynı telefon veya e-postayla yinelenen gönderimler engellenir; bot alanı, kaynak kontrolü, içerik türü ve istek boyutu kontrolleri uygulanır. Form verileri loglara yazdırılmaz.
-
-Yerel geliştirme sırasında D1 verileri proje içindeki `.wrangler/` durum klasöründe tutulur. Şema değişirse migration üretin:
-
-```bash
-npx drizzle-kit generate
-```
+Sitede randevu formu bulunmaz. Tüm görüşme talepleri, sayfadaki WhatsApp butonları üzerinden `+90 501 365 33 71` numarasına yönlendirilir. Varsayılan mesaj ve numara `config/site.ts` dosyasından yönetilir.
 
 ## Alan adı ve SEO
 

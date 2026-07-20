@@ -3,6 +3,7 @@ import { Check, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
+import { whatsappUrl } from "@/config/site";
 
 const trustPoints = [
   "Kişiye özel yol haritası",
@@ -42,7 +43,7 @@ export function Hero() {
           </Reveal>
           <Reveal delay={0.22}>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Button href="#randevu">Danışmanlık Al</Button>
+              <Button href={whatsappUrl} external>WhatsApp&apos;tan Bilgi Al</Button>
               <Button href="#hizmetler" variant="outline">Hizmetleri İncele</Button>
             </div>
           </Reveal>

@@ -1,6 +1,5 @@
 import { About } from "@/components/sections/About";
 import { AnalysisCenter } from "@/components/sections/AnalysisCenter";
-import { Appointment } from "@/components/sections/Appointment";
 import { CampusVisits } from "@/components/sections/CampusVisits";
 import { ContactCTA } from "@/components/sections/ContactCTA";
 import { Counseling } from "@/components/sections/Counseling";
@@ -62,7 +61,6 @@ export default function Home() {
         <Media />
         <Gallery />
         <FAQ />
-        <Appointment />
         <ContactCTA />
       </main>
       <script

@@ -35,8 +35,8 @@ export const faqItems = [
       "Evet. Matematik eğitimi ayrı bir çalışma programıdır; ancak öğrencinin akademik ve uzun vadeli hedefleri için iki hizmet birlikte planlanabilir.",
   },
   {
-    question: "Randevu nasıl oluşturulur?",
+    question: "Görüşme için nasıl iletişime geçilir?",
     answer:
-      "Sayfadaki randevu formunu doldurabilirsiniz. İletişim kanalları etkinleştirildiğinde uygun gün ve saat için size dönüş yapılır.",
+      "Sayfadaki WhatsApp butonuna dokunarak doğrudan iletişime geçebilirsiniz. Görüşme ayrıntıları ve uygun zaman WhatsApp üzerinden birlikte planlanır.",
   },
 ] as const;

@@ -4,7 +4,7 @@ import { Menu } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { siteConfig } from "@/config/site";
+import { siteConfig, whatsappUrl } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { MobileMenu } from "./MobileMenu";
 
@@ -56,8 +56,8 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-3">
-            <Button href="#randevu" className="hidden xl:inline-flex" showArrow={false}>
-              Randevu Oluştur
+            <Button href={whatsappUrl} external className="hidden xl:inline-flex" showArrow={false}>
+              WhatsApp&apos;tan Görüş
             </Button>
             <button
               type="button"

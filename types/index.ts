@@ -31,15 +31,3 @@ export type MediaArticle = {
   externalUrl?: string;
   videoUrl?: string;
 };
-
-export type AppointmentFormData = {
-  fullName: string;
-  phone: string;
-  email: string;
-  gradeLevel: string;
-  service: string;
-  meetingType: string;
-  message: string;
-  consent: boolean;
-  website?: string;
-};

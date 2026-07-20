@@ -2,7 +2,7 @@
 
 import { X } from "lucide-react";
 import { useEffect, useRef } from "react";
-import { siteConfig } from "@/config/site";
+import { siteConfig, whatsappUrl } from "@/config/site";
 import { Button } from "@/components/ui/Button";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
 
@@ -64,8 +64,8 @@ export function MobileMenu({
             </li>
           ))}
         </ul>
-        <Button href="#randevu" className="mt-8 w-full" onClick={onClose}>
-          Randevu Oluştur
+        <Button href={whatsappUrl} external className="mt-8 w-full" onClick={onClose}>
+          WhatsApp&apos;tan Görüş
         </Button>
       </nav>
     </div>

@@ -9,11 +9,11 @@ import { useFocusTrap } from "@/hooks/useFocusTrap";
 const legalContent = {
   privacy: {
     title: "Gizlilik Politikası",
-    body: "Randevu formunda paylaşılan ad soyad, telefon, e-posta, sınıf düzeyi, hizmet tercihi, görüşme şekli ve mesaj bilgileri yalnızca talebi değerlendirmek, görüşmeyi planlamak ve başvuru sahibiyle iletişim kurmak amacıyla kaydedilir. Bilgiler hizmetin işletilmesi için gerekli barındırma ve veritabanı altyapısında korunur; yasal zorunluluklar dışında amacı dışında kullanılmaz. Bilgi ve silme talepleri gurbuzgovrek@gmail.com adresine iletilebilir.",
+    body: "Bu site üzerinde kişisel bilgi toplayan bir form bulunmaz. İletişim, kullanıcının isteğiyle açılan WhatsApp bağlantısı üzerinden gerçekleşir. WhatsApp üzerinde paylaşılan bilgiler ilgili platformun gizlilik koşullarına tabidir. Site ve iletişim hakkında sorular gurbuzgovrek@gmail.com adresine iletilebilir.",
   },
   kvkk: {
     title: "KVKK Aydınlatma Metni",
-    body: "Veri sorumlusu Gürbüz Gövrek'tir. Randevu formuyla elektronik ortamda toplanan kimlik, iletişim, eğitim ve talep bilgileri; randevu talebinin alınması, değerlendirilmesi, iletişim kurulması ve görüşmenin planlanması amaçlarıyla, 6698 sayılı Kanun'un 5/2-c maddesindeki sözleşmenin kurulmasıyla doğrudan ilgili ve gerekli olma hukuki sebebine dayanılarak işlenir. Veriler, hizmetin yürütülmesi için gerekli barındırma ve veritabanı hizmet sağlayıcılarıyla ve yasal zorunluluk halinde yetkili kurumlarla sınırlı olarak paylaşılabilir. Kanun'un 11. maddesindeki haklarınıza ilişkin başvurularınızı gurbuzgovrek@gmail.com adresine iletebilirsiniz.",
+    body: "Bu web sitesi doğrudan kişisel veri giriş formu kullanmaz ve ziyaretçi bilgilerini randevu veritabanına kaydetmez. WhatsApp üzerinden iletişime geçmeyi seçmeniz hâlinde paylaştığınız bilgiler görüşme talebinizi yanıtlamak ve iletişimi yürütmek amacıyla değerlendirilir. Kişisel verilerle ilgili başvurularınızı gurbuzgovrek@gmail.com adresine iletebilirsiniz.",
   },
   terms: {
     title: "Kullanım Koşulları",

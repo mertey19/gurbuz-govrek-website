@@ -3,6 +3,7 @@ import { ArrowRight, BriefcaseBusiness, Goal, HeartHandshake, MessagesSquare, Ra
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionTitle } from "@/components/ui/SectionTitle";
+import { whatsappUrl } from "@/config/site";
 
 const features = [
   { icon: Radar, title: "İlgi ve yetenek analizi" },
@@ -28,7 +29,7 @@ export function Counseling() {
                 </div>
               ))}
             </div>
-            <a href="#randevu" className="mt-7 inline-flex min-h-11 items-center gap-2 text-sm font-bold text-blue-deep focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold">İlk görüşmeyi planlayın <ArrowRight className="size-4" aria-hidden="true" /></a>
+            <a href={whatsappUrl} target="_blank" rel="noreferrer" className="mt-7 inline-flex min-h-11 items-center gap-2 text-sm font-bold text-blue-deep focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold">WhatsApp&apos;tan görüşün <ArrowRight className="size-4" aria-hidden="true" /></a>
           </Reveal>
           <Reveal delay={0.08} className="relative">
             <div className="relative aspect-[4/5] overflow-hidden rounded-sm bg-cream shadow-[0_25px_70px_rgba(7,26,51,.16)]">

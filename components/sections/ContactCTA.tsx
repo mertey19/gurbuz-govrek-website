@@ -2,7 +2,7 @@ import { SiteImage as Image } from "@/components/ui/SiteImage";
 import { Clock3, Mail, MapPin, Phone } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { siteConfig } from "@/config/site";
+import { siteConfig, whatsappUrl } from "@/config/site";
 
 const contactRows = [
   { icon: Phone, label: "Telefon", value: siteConfig.contact.phone, href: siteConfig.contact.phoneHref },
@@ -24,7 +24,7 @@ export function ContactCTA() {
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
             {contactRows.map(({ icon: Icon, label, value, href }) => <div key={label} className="flex items-center gap-3"><span className="flex size-10 shrink-0 items-center justify-center rounded-full border border-gold/38 text-gold-light"><Icon className="size-4" aria-hidden="true" /></span><div><p className="text-[10px] tracking-[.15em] text-white/42 uppercase">{label}</p>{href ? <a href={href} className="mt-1 block text-sm text-white/78 transition hover:text-white">{value}</a> : <p className="mt-1 text-sm text-white/78">{value}</p>}</div></div>)}
           </div>
-          <Button href="#randevu" className="mt-9">Randevu Oluştur</Button>
+          <Button href={whatsappUrl} external className="mt-9">WhatsApp&apos;tan Görüş</Button>
         </div>
       </Container>
     </section>

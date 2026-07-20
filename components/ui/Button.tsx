@@ -10,6 +10,7 @@ type ButtonProps = {
   className?: string;
   showArrow?: boolean;
   onClick?: () => void;
+  external?: boolean;
 };
 
 const variants = {
@@ -26,11 +27,14 @@ export function Button({
   className,
   showArrow = true,
   onClick,
+  external = false,
 }: ButtonProps) {
   return (
     <Link
       href={href}
       onClick={onClick}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noreferrer" : undefined}
       className={cn(
         "group inline-flex min-h-12 items-center justify-center gap-2 rounded-sm px-5 py-3 text-sm font-bold tracking-wide transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold",
         variants[variant],
