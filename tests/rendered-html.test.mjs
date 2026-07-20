@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { access } from "node:fs/promises";
 import test from "node:test";
 
 async function render() {
@@ -14,6 +15,14 @@ async function render() {
 }
 
 test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () => {
+  await Promise.all([
+    "../public/resources/meslek-tanitim/tyt/acil-yardim-ve-afet-yoneticisi.pdf",
+    "../public/resources/meslek-tanitim/soz/film-tasarimi-ve-yonetmeni.pdf",
+    "../public/resources/meslek-tanitim/say/bilgisayar-muhendisi.pdf",
+    "../public/resources/meslek-tanitim/ea/avukat.pdf",
+    "../public/resources/meslek-tanitim/dil/ingilizce-ogretmeni.pdf",
+  ].map((path) => access(new URL(path, import.meta.url))));
+
   const response = await render();
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
@@ -30,9 +39,9 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
   assert.match(html, /Randevu ile/i);
   assert.match(html, /WhatsApp Üzerinden İletişime Geçin/i);
   assert.match(html, /Meslek Tanıtım Köşesi/i);
-  assert.match(html, /25 meslek dosyası/i);
+  assert.match(html, /115 meslek dosyası/i);
+  assert.match(html, /5 kategori/i);
   assert.match(html, /\/resources\/meslek-tanitim\/tyt\/acil-yardim-ve-afet-yoneticisi\.pdf/i);
-  assert.match(html, /\/resources\/meslek-tanitim\/soz\/film-tasarimi-ve-yonetmeni\.pdf/i);
   assert.doesNotMatch(html, /Gizlilik Politikası|KVKK Aydınlatma Metni|Kullanım Koşulları/i);
   assert.match(html, /src="\/images\/hero-gurbuz-govrek\.png"/i);
   assert.doesNotMatch(html, /\/_vinext\/image/);
