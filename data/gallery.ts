@@ -1,0 +1,16 @@
+import type { GalleryItem } from "@/types";
+
+export const galleryItems: GalleryItem[] = [
+  { src: "/images/hero-gurbuz-govrek.png", title: "Geleceğe doğru yol haritası", category: "Tanıtım", description: "Matematik eğitimi ve tercih danışmanlığını aynı hedefte buluşturan yaklaşım.", alt: "Gürbüz Gövrek, matematik ve üniversite temalı bir görselin önünde", position: "center" },
+  { src: "/images/university-guidance.png", title: "Üniversiteyi yerinde tanımak", category: "Rehberlik", description: "Öğrencilerle kampüs ortamında gerçekleştirilen rehberlik buluşması.", alt: "Gürbüz Gövrek öğrencilerle üniversite kampüsünde konuşuyor", position: "center" },
+  { src: "/images/student-success.png", title: "Aydınlık yarınlara birlikte", category: "Başarı", description: "Öğrenci ve aile odaklı danışmanlık yaklaşımını anlatan buluşma.", alt: "Gürbüz Gövrek öğrenci ve aile üyeleriyle kampüste", position: "center" },
+  { src: "/images/guidance-introduction.png", title: "Planlı danışmanlık", category: "Hakkında", description: "Her görüşmenin açık, sakin ve planlı ilerlemesini önemseyen çalışma biçimi.", alt: "Gürbüz Gövrek çalışma masasında not alıyor", position: "65% center" },
+  { src: "/images/one-to-one-consulting.png", title: "Birebir öğrenci danışmanlığı", category: "Danışmanlık", description: "Öğrenci hedeflerinin birlikte değerlendirildiği birebir çalışma ortamı.", alt: "Gürbüz Gövrek öğrencilerle masa etrafında görüşme yapıyor", position: "65% center" },
+  { src: "/images/mathematics-education.png", title: "Matematikte güçlü temel", category: "Matematik", description: "Analitik düşünmeyi ve sistemli çalışmayı destekleyen matematik eğitimi.", alt: "Gürbüz Gövrek dijital tahtada matematik dersi anlatıyor", position: "center" },
+  { src: "/images/expert-opinion.png", title: "Eğitim gündeminde uzman görüş", category: "Medya", description: "Tercih ve eğitim gündemine ilişkin açıklayıcı değerlendirmeler.", alt: "Gürbüz Gövrek televizyon stüdyosunda eğitim üzerine konuşuyor", position: "center" },
+  { src: "/images/campus-visits.png", title: "Kampüs ziyaretleri", category: "Kampüs", description: "Üniversite yaşamını yerinde görmeye yönelik kampüs buluşmaları.", alt: "Gürbüz Gövrek öğrencilerle üniversite kampüsünde", position: "center" },
+  { src: "/images/success-stories.png", title: "Öğrenci başarı hikâyeleri", category: "Başarı", description: "Hedef, motivasyon ve düzenli takiple şekillenen öğrenci yolculukları.", alt: "Gürbüz Gövrek öğrencilerle çalışma masasında", position: "center" },
+  { src: "/images/seminars.png", title: "Seminerler ve eğitim etkinlikleri", category: "Etkinlik", description: "Öğrenci ve velilerle bilgiyi buluşturan eğitim programları.", alt: "Gürbüz Gövrek sahnede öğrencilere seminer veriyor", position: "center" },
+  { src: "/images/preference-analysis.png", title: "Tercih analiz merkezi", category: "Analiz", description: "Üniversite seçeneklerini verilerle karşılaştıran danışmanlık yaklaşımı.", alt: "Gürbüz Gövrek ve örnek tercih analiz ekranı", position: "center" },
+  { src: "/images/contact-consulting.png", title: "İletişim ve ilk görüşme", category: "İletişim", description: "Danışmanlık sürecine ihtiyaçları anlayan bir ilk görüşmeyle başlamak.", alt: "Gürbüz Gövrek ofisinde çalışma masasında", position: "center" },
+];
