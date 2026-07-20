@@ -24,5 +24,7 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
   assert.match(html, /Doğru Tercih,.*Güçlü Bir Gelecek/is);
   assert.match(html, /Her Adımda Açık, Kişisel ve Güvenilir Rehberlik/i);
   assert.match(html, /İlk Görüşmenizi Planlayın/i);
+  assert.match(html, /src="\/images\/hero-gurbuz-govrek\.png"/i);
+  assert.doesNotMatch(html, /\/_vinext\/image/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|Building your site/i);
 });

@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { SiteImage as Image } from "@/components/ui/SiteImage";
 import { ArrowUpRight, BookOpenText, X } from "lucide-react";
 import { useCallback, useRef, useState } from "react";
 import { Container } from "@/components/ui/Container";
