@@ -51,7 +51,7 @@ MP4, WebM ve OGG dosyaları desteklenir. Büyük video dosyaları sitenin yükle
 `config/site.ts` dosyasındaki `contact` bölümünü bulun ve adresleri yazın:
 
 ```ts
-instagram: "https://www.instagram.com/kullaniciadi/",
+instagram: "https://www.instagram.com/gurbuz.govrek/",
 youtube: "https://www.youtube.com/@kanaladi",
 ```
 

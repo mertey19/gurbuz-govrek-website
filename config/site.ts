@@ -15,7 +15,7 @@ export const siteConfig = {
     emailHref: "mailto:gurbuzgovrek@gmail.com",
     hours: "WhatsApp üzerinden",
     location: "Yüz yüze ve online görüşme",
-    instagram: "",
+    instagram: "https://www.instagram.com/gurbuz.govrek/",
     youtube: "",
   },
   navigation: [
