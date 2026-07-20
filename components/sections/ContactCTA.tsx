@@ -1,8 +1,8 @@
 import { SiteImage as Image } from "@/components/ui/SiteImage";
-import { MessageCircle } from "lucide-react";
+import { Clock3, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { whatsappUrl } from "@/config/site";
+import { siteConfig, whatsappUrl } from "@/config/site";
 
 export function ContactCTA() {
   return (
@@ -14,10 +14,18 @@ export function ContactCTA() {
           <p className="eyebrow">İletişim</p>
           <h2 className="mt-4 font-serif text-4xl leading-tight font-semibold sm:text-5xl">WhatsApp Üzerinden İletişime Geçin</h2>
           <p className="mt-5 max-w-xl text-lg leading-8 text-white/68">Sorularınız ve danışmanlık hakkında bilgi almak için WhatsApp üzerinden doğrudan mesaj gönderebilirsiniz.</p>
-          <Button href={whatsappUrl} external className="mt-9 bg-[#25D366] text-white hover:bg-[#1fb95a]" showArrow={false}>
-            <MessageCircle className="size-5" aria-hidden="true" />
-            WhatsApp&apos;tan İletişime Geç
-          </Button>
+          <div className="mt-7 inline-flex items-center gap-3 rounded-full border border-white/14 bg-white/8 px-4 py-2.5 text-sm text-white/78 backdrop-blur-sm">
+            <Clock3 className="size-4 text-gold-light" aria-hidden="true" />
+            <span className="text-[10px] font-bold tracking-[.14em] text-white/48 uppercase">Çalışma saatleri</span>
+            <span className="h-4 w-px bg-white/18" aria-hidden="true" />
+            <strong className="font-semibold text-white">{siteConfig.contact.hours}</strong>
+          </div>
+          <div>
+            <Button href={whatsappUrl} external className="mt-6 bg-[#25D366] text-white hover:bg-[#1fb95a]" showArrow={false}>
+              <MessageCircle className="size-5" aria-hidden="true" />
+              WhatsApp&apos;tan İletişime Geç
+            </Button>
+          </div>
         </div>
       </Container>
     </section>

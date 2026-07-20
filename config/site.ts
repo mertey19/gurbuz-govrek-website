@@ -13,7 +13,7 @@ export const siteConfig = {
     phoneHref: "tel:+905013653371",
     email: "gurbuzgovrek@gmail.com",
     emailHref: "mailto:gurbuzgovrek@gmail.com",
-    hours: "WhatsApp üzerinden",
+    hours: "Randevu ile",
     location: "Yüz yüze ve online görüşme",
     instagram: "https://www.instagram.com/gurbuz.govrek/",
     youtube: "",
