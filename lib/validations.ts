@@ -18,5 +18,6 @@ export const appointmentSchema = z.object({
   message: z.string().trim().min(10, "Mesajınız en az 10 karakter olmalıdır.").max(800, "Mesajınız en fazla 800 karakter olabilir."),
   consent: z
     .boolean()
-    .refine((value) => value, "Devam etmek için onay vermelisiniz."),
+    .refine((value) => value, "Devam etmek için aydınlatma metnini okuduğunuzu belirtmelisiniz."),
+  website: z.string().max(0, "Form gönderilemedi.").optional(),
 });

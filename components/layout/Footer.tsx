@@ -9,11 +9,11 @@ import { useFocusTrap } from "@/hooks/useFocusTrap";
 const legalContent = {
   privacy: {
     title: "Gizlilik Politikası",
-    body: "Bu sitede yer alan randevu formu henüz bir veri işleme altyapısına bağlı değildir. Gerçek başvuru sistemi etkinleştirildiğinde; hangi verilerin hangi amaçla işlendiği, saklama süresi ve başvuru hakları bu metinde ayrıntılı olarak açıklanacaktır.",
+    body: "Randevu formunda paylaşılan ad soyad, telefon, e-posta, sınıf düzeyi, hizmet tercihi, görüşme şekli ve mesaj bilgileri yalnızca talebi değerlendirmek, görüşmeyi planlamak ve başvuru sahibiyle iletişim kurmak amacıyla kaydedilir. Bilgiler hizmetin işletilmesi için gerekli barındırma ve veritabanı altyapısında korunur; yasal zorunluluklar dışında amacı dışında kullanılmaz. Bilgi ve silme talepleri gurbuzgovrek@gmail.com adresine iletilebilir.",
   },
   kvkk: {
     title: "KVKK Aydınlatma Metni",
-    body: "İletişim ve randevu altyapısı devreye alınmadan önce veri sorumlusu bilgileri, kişisel verilerin işlenme amaçları, aktarım koşulları ve 6698 sayılı Kanun kapsamındaki haklar güncel ve doğrulanmış bilgilerle yayımlanacaktır.",
+    body: "Veri sorumlusu Gürbüz Gövrek'tir. Randevu formuyla elektronik ortamda toplanan kimlik, iletişim, eğitim ve talep bilgileri; randevu talebinin alınması, değerlendirilmesi, iletişim kurulması ve görüşmenin planlanması amaçlarıyla, 6698 sayılı Kanun'un 5/2-c maddesindeki sözleşmenin kurulmasıyla doğrudan ilgili ve gerekli olma hukuki sebebine dayanılarak işlenir. Veriler, hizmetin yürütülmesi için gerekli barındırma ve veritabanı hizmet sağlayıcılarıyla ve yasal zorunluluk halinde yetkili kurumlarla sınırlı olarak paylaşılabilir. Kanun'un 11. maddesindeki haklarınıza ilişkin başvurularınızı gurbuzgovrek@gmail.com adresine iletebilirsiniz.",
   },
   terms: {
     title: "Kullanım Koşulları",
@@ -60,8 +60,8 @@ export function Footer() {
           <div>
             <h3 className="text-sm font-bold tracking-wider text-gold-light uppercase">İletişim</h3>
             <ul className="mt-5 space-y-4 text-sm text-white/65">
-              <li className="flex gap-3"><Phone className="size-4 text-gold" aria-hidden="true" />{siteConfig.contact.phone || "Telefon bilgisi eklenecek"}</li>
-              <li className="flex gap-3"><Mail className="size-4 text-gold" aria-hidden="true" />{siteConfig.contact.email || "E-posta bilgisi eklenecek"}</li>
+              <li className="flex gap-3"><Phone className="size-4 text-gold" aria-hidden="true" /><a href={siteConfig.contact.phoneHref} className="hover:text-white">{siteConfig.contact.phone}</a></li>
+              <li className="flex gap-3"><Mail className="size-4 text-gold" aria-hidden="true" /><a href={siteConfig.contact.emailHref} className="break-all hover:text-white">{siteConfig.contact.email}</a></li>
             </ul>
             <div className="mt-6 flex gap-3">
               {[{ icon: Camera, label: "Instagram" }, { icon: Play, label: "YouTube" }].map(({ icon: Icon, label }) => (

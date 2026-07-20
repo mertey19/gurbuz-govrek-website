@@ -5,12 +5,14 @@ export const siteConfig = {
   description:
     "Matematik eğitimi, YKS tercih danışmanlığı, üniversite ve bölüm analizi, öğrenci koçluğu ve kişiye özel tercih yol haritası.",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://example.com",
-  whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "",
+  whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "905013653371",
   whatsappMessage:
     "Merhaba Gürbüz Hocam, danışmanlık hizmetleriniz hakkında bilgi almak istiyorum.",
   contact: {
-    phone: "",
-    email: "",
+    phone: "+90 501 365 33 71",
+    phoneHref: "tel:+905013653371",
+    email: "gurbuzgovrek@gmail.com",
+    emailHref: "mailto:gurbuzgovrek@gmail.com",
     hours: "Randevu ile",
     location: "Yüz yüze ve online görüşme",
     instagram: "",

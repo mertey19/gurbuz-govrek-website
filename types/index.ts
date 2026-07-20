@@ -32,4 +32,5 @@ export type AppointmentFormData = {
   meetingType: string;
   message: string;
   consent: boolean;
+  website?: string;
 };

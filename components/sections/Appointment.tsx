@@ -1,12 +1,12 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CheckCircle2, LoaderCircle, Send } from "lucide-react";
+import { CheckCircle2, CircleAlert, LoaderCircle, Send } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Container } from "@/components/ui/Container";
 import { SectionTitle } from "@/components/ui/SectionTitle";
-import { submitAppointment } from "@/lib/appointment";
+import { submitAppointment, type AppointmentResult } from "@/lib/appointment";
 import { appointmentSchema } from "@/lib/validations";
 import type { AppointmentFormData } from "@/types";
 
@@ -20,16 +20,17 @@ function FieldError({ message }: { message?: string }) {
 }
 
 export function Appointment() {
-  const [resultMessage, setResultMessage] = useState("");
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<AppointmentFormData>({
+  const [result, setResult] = useState<AppointmentResult | null>(null);
+  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<AppointmentFormData>({
     resolver: zodResolver(appointmentSchema),
-    defaultValues: { fullName: "", phone: "", email: "", gradeLevel: "", service: "", meetingType: "", message: "", consent: false },
+    defaultValues: { fullName: "", phone: "", email: "", gradeLevel: "", service: "", meetingType: "", message: "", consent: false, website: "" },
   });
 
   const onSubmit = async (data: AppointmentFormData) => {
-    setResultMessage("");
-    const result = await submitAppointment(data);
-    setResultMessage(result.message);
+    setResult(null);
+    const submissionResult = await submitAppointment(data);
+    setResult(submissionResult);
+    if (submissionResult.ok) reset();
   };
 
   const inputClass = "mt-2 min-h-12 w-full rounded-sm border border-navy/14 bg-white px-4 text-sm text-ink outline-none transition placeholder:text-ink/30 focus:border-gold focus:ring-2 focus:ring-gold/18";
@@ -39,12 +40,15 @@ export function Appointment() {
       <Container>
         <div className="grid gap-12 lg:grid-cols-[.72fr_1.28fr] lg:gap-20">
           <div>
-            <SectionTitle eyebrow="Randevu Formu" title="İlk Görüşmenizi Planlayın" description="İhtiyacınızı kısaca paylaşın; iletişim altyapısı etkinleştirildiğinde uygun görüşme modeli ve zamanı için dönüş yapılacaktır." />
+            <SectionTitle eyebrow="Randevu Formu" title="İlk Görüşmenizi Planlayın" description="İhtiyacınızı kısaca paylaşın; talebiniz güvenli biçimde kaydedilsin ve uygun görüşme modeli ile zamanı için sizinle iletişime geçilsin." />
             <div className="mt-8 border-l-2 border-gold bg-cream p-5 text-sm leading-7 text-ink/64">
-              Bu form şu anda gerçek bir backend sistemine bağlı değildir. Doldurduğunuz bilgiler tarayıcıdan herhangi bir sunucuya gönderilmez.
+              Formda paylaştığınız bilgiler yalnızca randevu talebinizi değerlendirmek ve sizinle iletişime geçmek amacıyla kaydedilir.
             </div>
           </div>
-          <form onSubmit={handleSubmit(onSubmit)} noValidate className="rounded-sm border border-navy/9 bg-cream/65 p-5 shadow-[0_20px_60px_rgba(7,26,51,.08)] sm:p-8 lg:p-10">
+          <form onSubmit={handleSubmit(onSubmit)} noValidate className="relative rounded-sm border border-navy/9 bg-cream/65 p-5 shadow-[0_20px_60px_rgba(7,26,51,.08)] sm:p-8 lg:p-10">
+            <div className="absolute -left-[10000px] h-px w-px overflow-hidden" aria-hidden="true">
+              <label>Web sitesi<input {...register("website")} type="text" tabIndex={-1} autoComplete="off" /></label>
+            </div>
             <div className="grid gap-5 sm:grid-cols-2">
               <label className="text-sm font-semibold text-navy">Ad Soyad <span aria-hidden="true" className="text-gold">*</span>
                 <input {...register("fullName")} autoComplete="name" className={inputClass} aria-invalid={Boolean(errors.fullName)} />
@@ -77,13 +81,18 @@ export function Appointment() {
             </label>
             <label className="mt-5 flex cursor-pointer items-start gap-3 text-sm leading-6 text-ink/65">
               <input {...register("consent")} type="checkbox" className="mt-1 size-4.5 shrink-0 accent-[#0B2C54]" aria-invalid={Boolean(errors.consent)} />
-              <span>Bilgilendirme metnini okudum; form doğrulaması amacıyla bilgileri girmeyi onaylıyorum.</span>
+              <span>KVKK Aydınlatma Metni&apos;ni okudum ve randevu talebim için gerekli bilgilerin kaydedileceğini biliyorum.</span>
             </label>
             <FieldError message={errors.consent?.message} />
             <button type="submit" disabled={isSubmitting} className="mt-7 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-sm bg-navy px-6 text-sm font-bold text-white transition hover:bg-blue-deep disabled:cursor-wait disabled:opacity-65 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold sm:w-auto">
-              {isSubmitting ? <><LoaderCircle className="size-4 animate-spin" aria-hidden="true" /> Doğrulanıyor...</> : <><Send className="size-4" aria-hidden="true" /> Randevu Talebi Oluştur</>}
+              {isSubmitting ? <><LoaderCircle className="size-4 animate-spin" aria-hidden="true" /> Gönderiliyor...</> : <><Send className="size-4" aria-hidden="true" /> Randevu Talebi Oluştur</>}
             </button>
-            {resultMessage && <div className="mt-6 flex gap-3 rounded-sm border border-[#2c7654]/22 bg-[#edf7f1] p-4 text-sm leading-6 text-[#245c43]" role="status"><CheckCircle2 className="mt-0.5 size-5 shrink-0" aria-hidden="true" />{resultMessage}</div>}
+            {result && (
+              <div className={`mt-6 flex gap-3 rounded-sm border p-4 text-sm leading-6 ${result.ok ? "border-[#2c7654]/22 bg-[#edf7f1] text-[#245c43]" : "border-[#9f2f2f]/20 bg-[#fff1f1] text-[#842626]"}`} role={result.ok ? "status" : "alert"}>
+                {result.ok ? <CheckCircle2 className="mt-0.5 size-5 shrink-0" aria-hidden="true" /> : <CircleAlert className="mt-0.5 size-5 shrink-0" aria-hidden="true" />}
+                <div><p>{result.message}</p>{result.ok && result.referenceId && <p className="mt-1 text-xs opacity-70">Başvuru kodu: {result.referenceId}</p>}</div>
+              </div>
+            )}
           </form>
         </div>
       </Container>

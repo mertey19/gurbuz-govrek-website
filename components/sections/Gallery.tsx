@@ -50,10 +50,10 @@ export function Gallery() {
       </Container>
 
       {activeIndex !== null && (
-        <div className="fixed inset-0 z-[80] flex items-center justify-center bg-[#020a14]/96 p-3 sm:p-7" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && close()}>
-          <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="gallery-title" className="relative grid max-h-[94vh] w-full max-w-6xl overflow-hidden rounded-sm bg-navy shadow-2xl lg:grid-cols-[1fr_330px]">
-            <div className="relative min-h-[45vh] bg-black lg:min-h-[72vh]">
-              <Image src={galleryItems[activeIndex].src} alt={galleryItems[activeIndex].alt} fill sizes="(max-width: 1024px) 100vw, 75vw" className="object-contain" />
+        <div className="fixed inset-0 z-[80] flex items-center justify-center overflow-y-auto bg-[#020a14]/96 p-3 sm:p-7" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && close()}>
+          <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="gallery-title" className="relative block max-h-[calc(100dvh-1.5rem)] w-full max-w-6xl overflow-y-auto rounded-sm bg-navy shadow-2xl sm:max-h-[calc(100dvh-3.5rem)] lg:grid lg:grid-cols-[minmax(0,1fr)_330px] lg:overflow-hidden">
+            <div className="relative aspect-video min-h-0 bg-black lg:aspect-auto lg:h-[min(72vh,720px)]">
+              <Image src={galleryItems[activeIndex].src} alt={galleryItems[activeIndex].alt} fill sizes="(max-width: 1024px) 100vw, 75vw" className="object-contain" style={{ objectFit: "contain" }} />
               <button type="button" onClick={previous} className="absolute top-1/2 left-3 flex size-12 -translate-y-1/2 items-center justify-center rounded-full bg-navy/75 text-white backdrop-blur focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold" aria-label="Önceki görsel"><ChevronLeft aria-hidden="true" /></button>
               <button type="button" onClick={next} className="absolute top-1/2 right-3 flex size-12 -translate-y-1/2 items-center justify-center rounded-full bg-navy/75 text-white backdrop-blur focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold" aria-label="Sonraki görsel"><ChevronRight aria-hidden="true" /></button>
             </div>

@@ -25,21 +25,27 @@ Site görselleri `public/images` klasöründedir. Kaynak arşivdeki 12 dosya anl
 
 ## İletişim bilgileri
 
-Telefon, e-posta, çalışma saatleri, görüşme konumu ve sosyal medya alanları `config/site.ts` dosyasındaki `contact` nesnesinden yönetilir. Doğrulanmış bilgi gelene kadar telefon ve e-posta alanları bilinçli olarak boş bırakılmıştır.
+Telefon, e-posta, çalışma saatleri, görüşme konumu ve sosyal medya alanları `config/site.ts` dosyasındaki `contact` nesnesinden yönetilir. Mevcut iletişim bilgileri `+90 501 365 33 71` ve `gurbuzgovrek@gmail.com` olarak tanımlıdır.
 
 ## WhatsApp ayarı
 
 `.env.example` dosyasını `.env.local` adıyla kopyalayın ve numarayı ülke koduyla, boşluksuz yazın:
 
 ```env
-NEXT_PUBLIC_WHATSAPP_NUMBER=905xxxxxxxxx
+NEXT_PUBLIC_WHATSAPP_NUMBER=905013653371
 ```
 
 Numara tanımlı değilse WhatsApp öğesi kırık bağlantı açmaz ve pasif görünür.
 
-## Randevu formunu backend'e bağlama
+## Randevu backend'i
 
-Form React Hook Form ve Zod ile tarayıcı tarafında doğrulanır. Şu anda hiçbir veri dışarı gönderilmez. Gerçek entegrasyon için `lib/appointment.ts` içindeki `submitAppointment` fonksiyonunu güvenli API çağrısıyla değiştirin. API tarafında tekrar doğrulama, KVKK metni, açık rıza kaydı, hata yönetimi, spam önleme ve hız sınırı eklenmelidir. Form verileri console'a yazdırılmaz.
+Form React Hook Form ve Zod ile tarayıcı tarafında doğrulanır; `/api/appointments` endpoint'i aynı verileri sunucuda yeniden doğrular ve D1 üzerindeki `appointments` tablosuna kaydeder. Şema `db/schema.ts`, üretilmiş migration ise `drizzle/` klasöründedir. Kısa süre içinde aynı telefon veya e-postayla yinelenen gönderimler engellenir; bot alanı, kaynak kontrolü, içerik türü ve istek boyutu kontrolleri uygulanır. Form verileri loglara yazdırılmaz.
+
+Yerel geliştirme sırasında D1 verileri proje içindeki `.wrangler/` durum klasöründe tutulur. Şema değişirse migration üretin:
+
+```bash
+npx drizzle-kit generate
+```
 
 ## Alan adı ve SEO
 

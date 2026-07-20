@@ -25,6 +25,8 @@ export default function Home() {
       jobTitle: "Matematik Öğretmeni ve Tercih Uzmanı",
       url: siteConfig.url,
       description: siteConfig.description,
+      email: siteConfig.contact.email,
+      telephone: siteConfig.contact.phone,
     },
     {
       "@context": "https://schema.org",
@@ -32,6 +34,8 @@ export default function Home() {
       name: siteConfig.name,
       url: siteConfig.url,
       description: siteConfig.description,
+      email: siteConfig.contact.email,
+      telephone: siteConfig.contact.phone,
       serviceType: [
         "Matematik Eğitimi",
         "YKS Tercih Danışmanlığı",

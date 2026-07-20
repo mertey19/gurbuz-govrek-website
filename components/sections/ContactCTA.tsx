@@ -5,10 +5,10 @@ import { Container } from "@/components/ui/Container";
 import { siteConfig } from "@/config/site";
 
 const contactRows = [
-  { icon: Phone, label: "Telefon", value: siteConfig.contact.phone || "Bilgi eklenecek" },
-  { icon: Mail, label: "E-posta", value: siteConfig.contact.email || "Bilgi eklenecek" },
-  { icon: Clock3, label: "Çalışma saatleri", value: siteConfig.contact.hours },
-  { icon: MapPin, label: "Görüşme", value: siteConfig.contact.location },
+  { icon: Phone, label: "Telefon", value: siteConfig.contact.phone, href: siteConfig.contact.phoneHref },
+  { icon: Mail, label: "E-posta", value: siteConfig.contact.email, href: siteConfig.contact.emailHref },
+  { icon: Clock3, label: "Çalışma saatleri", value: siteConfig.contact.hours, href: "" },
+  { icon: MapPin, label: "Görüşme", value: siteConfig.contact.location, href: "" },
 ];
 
 export function ContactCTA() {
@@ -22,7 +22,7 @@ export function ContactCTA() {
           <h2 className="mt-4 font-serif text-4xl leading-tight font-semibold sm:text-5xl">Doğru Yol Haritası İçin İlk Adımı Atın</h2>
           <p className="mt-5 max-w-xl text-lg leading-8 text-white/68">Öğrencinin hedeflerini, ihtiyaçlarını ve seçeneklerini birlikte değerlendirmek için ilk görüşmenizi planlayın.</p>
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
-            {contactRows.map(({ icon: Icon, label, value }) => <div key={label} className="flex items-center gap-3"><span className="flex size-10 shrink-0 items-center justify-center rounded-full border border-gold/38 text-gold-light"><Icon className="size-4" aria-hidden="true" /></span><div><p className="text-[10px] tracking-[.15em] text-white/42 uppercase">{label}</p><p className="mt-1 text-sm text-white/78">{value}</p></div></div>)}
+            {contactRows.map(({ icon: Icon, label, value, href }) => <div key={label} className="flex items-center gap-3"><span className="flex size-10 shrink-0 items-center justify-center rounded-full border border-gold/38 text-gold-light"><Icon className="size-4" aria-hidden="true" /></span><div><p className="text-[10px] tracking-[.15em] text-white/42 uppercase">{label}</p>{href ? <a href={href} className="mt-1 block text-sm text-white/78 transition hover:text-white">{value}</a> : <p className="mt-1 text-sm text-white/78">{value}</p>}</div></div>)}
           </div>
           <Button href="#randevu" className="mt-9">Randevu Oluştur</Button>
         </div>
