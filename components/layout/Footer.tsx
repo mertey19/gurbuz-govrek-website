@@ -1,4 +1,5 @@
-import { Camera, Mail, Phone, Play } from "lucide-react";
+import { Mail, Phone, Play } from "lucide-react";
+import { FaInstagram } from "react-icons/fa6";
 import { Container } from "@/components/ui/Container";
 import { siteConfig } from "@/config/site";
 
@@ -37,14 +38,15 @@ export function Footer() {
               <li className="flex gap-3"><Phone className="size-4 text-gold" aria-hidden="true" /><a href={siteConfig.contact.phoneHref} className="hover:text-white">{siteConfig.contact.phone}</a></li>
               <li className="flex gap-3"><Mail className="size-4 text-gold" aria-hidden="true" /><a href={siteConfig.contact.emailHref} className="break-all hover:text-white">{siteConfig.contact.email}</a></li>
             </ul>
-            <div className="mt-6 flex gap-3">
+            <div className="mt-6 flex flex-wrap gap-3">
               {[
-                { icon: Camera, label: "Instagram", href: siteConfig.contact.instagram },
+                { icon: FaInstagram, label: "Instagram", href: siteConfig.contact.instagram },
                 { icon: Play, label: "YouTube", href: siteConfig.contact.youtube },
-              ].map(({ icon: Icon, label, href }) => href ? (
-                <a key={label} href={href} target="_blank" rel="noreferrer" className="flex size-10 items-center justify-center rounded-full border border-white/20 text-white/70 transition hover:border-gold hover:text-gold-light" aria-label={`${label} sayfasını aç`}><Icon className="size-4" aria-hidden="true" /></a>
-              ) : (
-                <span key={label} className="flex size-10 cursor-not-allowed items-center justify-center rounded-full border border-white/15 text-white/35" aria-label={`${label} bağlantısı yakında`} title={`${label} bağlantısı eklenecek`}><Icon className="size-4" aria-hidden="true" /></span>
+              ].filter(({ href }) => Boolean(href)).map(({ icon: Icon, label, href }) => (
+                <a key={label} href={href} target="_blank" rel="noreferrer" className="inline-flex h-10 items-center gap-2 rounded-full border border-white/20 px-4 text-xs font-semibold text-white/75 transition hover:border-gold hover:bg-white/5 hover:text-gold-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold" aria-label={`${label} sayfasını aç`}>
+                  <Icon className="size-[18px]" aria-hidden="true" />
+                  <span>{label}</span>
+                </a>
               ))}
             </div>
           </div>
