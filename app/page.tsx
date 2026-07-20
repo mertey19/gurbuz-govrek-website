@@ -11,6 +11,7 @@ import { Hero } from "@/components/sections/Hero";
 import { Mathematics } from "@/components/sections/Mathematics";
 import { Media } from "@/components/sections/Media";
 import { Process } from "@/components/sections/Process";
+import { PresentationCorner } from "@/components/sections/PresentationCorner";
 import { Services } from "@/components/sections/Services";
 import { Stats } from "@/components/sections/Stats";
 import { SuccessStories } from "@/components/sections/SuccessStories";
@@ -57,6 +58,7 @@ export default function Home() {
         <Counseling />
         <AnalysisCenter />
         <CareerCorner />
+        <PresentationCorner />
         <CampusVisits />
         <SuccessStories />
         <Events />

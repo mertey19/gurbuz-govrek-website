@@ -21,6 +21,12 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
     "../public/resources/meslek-tanitim/say/bilgisayar-muhendisi.pdf",
     "../public/resources/meslek-tanitim/ea/avukat.pdf",
     "../public/resources/meslek-tanitim/dil/ingilizce-ogretmeni.pdf",
+    "../public/images/sunum-kosesi/seminer/01.webp",
+    "../public/images/sunum-kosesi/seminer/10.webp",
+    "../public/images/sunum-kosesi/ucak-uzay/01.webp",
+    "../public/images/sunum-kosesi/ucak-uzay/10.webp",
+    "../public/images/sunum-kosesi/endustri-isletme/01.webp",
+    "../public/images/sunum-kosesi/endustri-isletme/10.webp",
   ].map((path) => access(new URL(path, import.meta.url))));
 
   const response = await render();
@@ -41,6 +47,11 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
   assert.match(html, /Meslek Tanıtım Köşesi/i);
   assert.match(html, /115 meslek dosyası/i);
   assert.match(html, /5 kategori/i);
+  assert.match(html, /Sunum ve Seminer Köşesi/i);
+  assert.match(html, /30 özgün görsel/i);
+  assert.match(html, /3 ayrı içerik serisi/i);
+  assert.match(html, /Tercihler 2026/i);
+  assert.match(html, /\/images\/sunum-kosesi\/seminer\/01\.webp/i);
   assert.match(html, /\/resources\/meslek-tanitim\/tyt\/acil-yardim-ve-afet-yoneticisi\.pdf/i);
   assert.doesNotMatch(html, /Gizlilik Politikası|KVKK Aydınlatma Metni|Kullanım Koşulları/i);
   assert.match(html, /src="\/images\/hero-gurbuz-govrek\.png"/i);

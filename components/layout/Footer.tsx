@@ -29,6 +29,7 @@ export function Footer() {
               <li><a href="#danismanlik" className="hover:text-white">Tercih Danışmanlığı</a></li>
               <li><a href="#matematik" className="hover:text-white">Matematik Eğitimi</a></li>
               <li><a href="#analiz-merkezi" className="hover:text-white">Bölüm Analizi</a></li>
+              <li><a href="#sunum-kosesi" className="hover:text-white">Sunum Köşesi</a></li>
               <li><a href="#etkinlikler" className="hover:text-white">Seminerler</a></li>
             </ul>
           </div>
