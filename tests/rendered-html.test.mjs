@@ -23,10 +23,11 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
   assert.match(html, /Gürbüz Gövrek \| Matematik Öğretmeni ve Tercih Uzmanı/i);
   assert.match(html, /Doğru Tercih,.*Güçlü Bir Gelecek/is);
   assert.match(html, /Her Adımda Açık, Kişisel ve Güvenilir Rehberlik/i);
-  assert.match(html, /WhatsApp(?:&apos;|')tan (?:Bilgi Al|Görüş)/i);
+  assert.match(html, /WhatsApp(?:&apos;|')tan (?:Bilgi Al|Görüş|İletişime Geç)/i);
   assert.match(html, /https:\/\/wa\.me\/905013653371/i);
   assert.match(html, /https:\/\/www\.instagram\.com\/gurbuz\.govrek\//i);
-  assert.doesNotMatch(html, /<form\b|\/api\/appointments|Randevu Talebi Oluştur/i);
+  assert.doesNotMatch(html, /<form\b|\/api\/appointments|Randevu/i);
+  assert.match(html, /WhatsApp Üzerinden İletişime Geçin/i);
   assert.match(html, /src="\/images\/hero-gurbuz-govrek\.png"/i);
   assert.doesNotMatch(html, /\/_vinext\/image/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|Building your site/i);

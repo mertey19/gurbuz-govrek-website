@@ -13,7 +13,7 @@ const legalContent = {
   },
   kvkk: {
     title: "KVKK Aydınlatma Metni",
-    body: "Bu web sitesi doğrudan kişisel veri giriş formu kullanmaz ve ziyaretçi bilgilerini randevu veritabanına kaydetmez. WhatsApp üzerinden iletişime geçmeyi seçmeniz hâlinde paylaştığınız bilgiler görüşme talebinizi yanıtlamak ve iletişimi yürütmek amacıyla değerlendirilir. Kişisel verilerle ilgili başvurularınızı gurbuzgovrek@gmail.com adresine iletebilirsiniz.",
+    body: "Bu web sitesi kişisel veri giriş formu kullanmaz. WhatsApp üzerinden iletişime geçmeyi seçmeniz hâlinde paylaştığınız bilgiler mesajınızı yanıtlamak ve iletişimi yürütmek amacıyla değerlendirilir. Kişisel verilerle ilgili başvurularınızı gurbuzgovrek@gmail.com adresine iletebilirsiniz.",
   },
   terms: {
     title: "Kullanım Koşulları",

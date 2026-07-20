@@ -1,15 +1,8 @@
 import { SiteImage as Image } from "@/components/ui/SiteImage";
-import { Clock3, Mail, MapPin, Phone } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { siteConfig, whatsappUrl } from "@/config/site";
-
-const contactRows = [
-  { icon: Phone, label: "Telefon", value: siteConfig.contact.phone, href: siteConfig.contact.phoneHref },
-  { icon: Mail, label: "E-posta", value: siteConfig.contact.email, href: siteConfig.contact.emailHref },
-  { icon: Clock3, label: "Çalışma saatleri", value: siteConfig.contact.hours, href: "" },
-  { icon: MapPin, label: "Görüşme", value: siteConfig.contact.location, href: "" },
-];
+import { whatsappUrl } from "@/config/site";
 
 export function ContactCTA() {
   return (
@@ -19,12 +12,12 @@ export function ContactCTA() {
       <Container className="py-20 sm:py-24 lg:py-28">
         <div className="max-w-2xl">
           <p className="eyebrow">İletişim</p>
-          <h2 className="mt-4 font-serif text-4xl leading-tight font-semibold sm:text-5xl">Doğru Yol Haritası İçin İlk Adımı Atın</h2>
-          <p className="mt-5 max-w-xl text-lg leading-8 text-white/68">Öğrencinin hedeflerini, ihtiyaçlarını ve seçeneklerini birlikte değerlendirmek için ilk görüşmenizi planlayın.</p>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2">
-            {contactRows.map(({ icon: Icon, label, value, href }) => <div key={label} className="flex items-center gap-3"><span className="flex size-10 shrink-0 items-center justify-center rounded-full border border-gold/38 text-gold-light"><Icon className="size-4" aria-hidden="true" /></span><div><p className="text-[10px] tracking-[.15em] text-white/42 uppercase">{label}</p>{href ? <a href={href} className="mt-1 block text-sm text-white/78 transition hover:text-white">{value}</a> : <p className="mt-1 text-sm text-white/78">{value}</p>}</div></div>)}
-          </div>
-          <Button href={whatsappUrl} external className="mt-9">WhatsApp&apos;tan Görüş</Button>
+          <h2 className="mt-4 font-serif text-4xl leading-tight font-semibold sm:text-5xl">WhatsApp Üzerinden İletişime Geçin</h2>
+          <p className="mt-5 max-w-xl text-lg leading-8 text-white/68">Sorularınız ve danışmanlık hakkında bilgi almak için WhatsApp üzerinden doğrudan mesaj gönderebilirsiniz.</p>
+          <Button href={whatsappUrl} external className="mt-9 bg-[#25D366] text-white hover:bg-[#1fb95a]" showArrow={false}>
+            <MessageCircle className="size-5" aria-hidden="true" />
+            WhatsApp&apos;tan İletişime Geç
+          </Button>
         </div>
       </Container>
     </section>
