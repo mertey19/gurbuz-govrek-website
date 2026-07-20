@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu } from "lucide-react";
+import { Menu, MessageCircle } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
@@ -30,23 +30,23 @@ export function Header() {
             : "border-white/10 bg-navy/30 backdrop-blur-sm",
         )}
       >
-        <Container className="flex h-20 items-center justify-between gap-6 xl:h-22">
+        <Container className="flex h-20 max-w-[1500px] items-center justify-between gap-4 xl:h-22 xl:gap-5">
           <a
             href="#ana-sayfa"
-            className="shrink-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
+            className="shrink-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold xl:border-r xl:border-white/12 xl:pr-5 2xl:pr-8"
             aria-label="Gürbüz Gövrek ana sayfa"
           >
-            <p className="font-serif text-lg font-semibold tracking-[0.11em] text-white sm:text-xl">GÜRBÜZ GÖVREK</p>
-            <p className="mt-0.5 hidden text-[9px] font-bold tracking-[0.18em] text-gold-light uppercase sm:block">Matematik Öğretmeni · Tercih Uzmanı</p>
+            <p className="font-serif text-lg font-semibold tracking-[0.11em] text-white sm:text-xl 2xl:text-[1.35rem]">GÜRBÜZ GÖVREK</p>
+            <p className="mt-0.5 hidden whitespace-nowrap text-[9px] font-bold tracking-[0.18em] text-gold-light uppercase sm:block">Matematik Öğretmeni · Tercih Uzmanı</p>
           </a>
 
-          <nav className="hidden lg:block" aria-label="Ana navigasyon">
-            <ul className="flex items-center gap-5 xl:gap-7">
+          <nav className="hidden min-w-0 flex-1 lg:block" aria-label="Ana navigasyon">
+            <ul className="flex items-center justify-center gap-3 xl:gap-5 2xl:gap-7">
               {siteConfig.navigation.map((item) => (
                 <li key={item.href}>
                   <a
                     href={item.href}
-                    className="relative py-3 text-xs font-semibold text-white/78 transition after:absolute after:inset-x-0 after:bottom-1 after:h-px after:origin-right after:scale-x-0 after:bg-gold after:transition-transform hover:text-white hover:after:origin-left hover:after:scale-x-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold xl:text-sm"
+                    className="relative whitespace-nowrap py-3 text-xs font-semibold text-white/78 transition after:absolute after:inset-x-0 after:bottom-1 after:h-px after:origin-right after:scale-x-0 after:bg-gold after:transition-transform hover:text-white hover:after:origin-left hover:after:scale-x-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold 2xl:text-sm"
                   >
                     {item.label}
                   </a>
@@ -55,9 +55,10 @@ export function Header() {
             </ul>
           </nav>
 
-          <div className="flex items-center gap-3">
-            <Button href={whatsappUrl} external className="hidden xl:inline-flex" showArrow={false}>
-              WhatsApp&apos;tan Görüş
+          <div className="flex shrink-0 items-center gap-3">
+            <Button href={whatsappUrl} external className="hidden whitespace-nowrap rounded-full px-4 xl:inline-flex 2xl:px-5" showArrow={false}>
+              <MessageCircle className="size-4" aria-hidden="true" />
+              WhatsApp
             </Button>
             <button
               type="button"
