@@ -12,8 +12,8 @@ export function Mathematics() {
   return (
     <section id="matematik" className="section-space bg-cream">
       <Container>
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-18">
-          <Reveal className="relative aspect-[16/11] overflow-hidden rounded-sm shadow-[0_25px_70px_rgba(7,26,51,.16)]">
+        <div className="landscape-split grid items-center gap-12 lg:grid-cols-2 lg:gap-18">
+          <Reveal className="landscape-media relative aspect-[16/11] overflow-hidden rounded-sm shadow-[0_25px_70px_rgba(7,26,51,.16)]">
             <Image src="/images/mathematics-education.png" alt="Gürbüz Gövrek dijital tahtada matematik dersi anlatıyor" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover object-center" />
           </Reveal>
           <Reveal delay={0.08}>

@@ -30,10 +30,10 @@ export function Header() {
             : "border-white/10 bg-navy/30 backdrop-blur-sm",
         )}
       >
-        <Container className="flex h-20 max-w-[1500px] items-center justify-between gap-4 xl:h-22 xl:gap-5">
+        <Container className="site-header-inner flex h-20 max-w-[1500px] items-center justify-between gap-4 xl:h-22 xl:gap-5">
           <a
             href="#ana-sayfa"
-            className="shrink-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold xl:border-r xl:border-white/12 xl:pr-5 2xl:pr-8"
+            className="site-header-brand shrink-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold xl:border-r xl:border-white/12 xl:pr-5 2xl:pr-8"
             aria-label="Gürbüz Gövrek ana sayfa"
           >
             <p className="font-serif text-lg font-semibold tracking-[0.11em] text-white sm:text-xl 2xl:text-[1.35rem]">GÜRBÜZ GÖVREK</p>
@@ -63,7 +63,7 @@ export function Header() {
             <button
               type="button"
               onClick={() => setMenuOpen(true)}
-              className="flex size-11 items-center justify-center rounded-full border border-white/25 text-white lg:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+              className="site-header-menu-button flex size-11 items-center justify-center rounded-full border border-white/25 text-white lg:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
               aria-label="Menüyü aç"

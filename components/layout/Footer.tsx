@@ -6,7 +6,7 @@ import { siteConfig } from "@/config/site";
 export function Footer() {
   return (
     <footer className="bg-navy text-white">
-      <Container className="py-16 lg:py-20">
+      <Container className="landscape-footer py-16 lg:py-20">
         <div className="grid gap-12 border-b border-white/12 pb-14 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
           <div>
             <p className="font-serif text-2xl font-semibold tracking-[0.09em]">GÜRBÜZ GÖVREK</p>

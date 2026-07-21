@@ -197,9 +197,9 @@ export function PresentationCorner() {
             role="dialog"
             aria-modal="true"
             aria-labelledby="sunum-dialog-title"
-            className="relative block max-h-[calc(100dvh-1.5rem)] w-full max-w-6xl overflow-y-auto rounded-sm bg-navy shadow-2xl sm:max-h-[calc(100dvh-3rem)] lg:grid lg:grid-cols-[minmax(0,1fr)_320px] lg:overflow-hidden"
+            className="landscape-dialog relative block max-h-[calc(100dvh-1.5rem)] w-full max-w-6xl overflow-y-auto rounded-sm bg-navy shadow-2xl sm:max-h-[calc(100dvh-3rem)] lg:grid lg:grid-cols-[minmax(0,1fr)_320px] lg:overflow-hidden"
           >
-            <div className="relative aspect-square min-h-0 bg-white lg:h-[min(84vh,860px)]">
+            <div className="landscape-dialog-media relative aspect-square min-h-0 bg-white lg:h-[min(84vh,860px)]">
               <Image
                 src={activeSlide.src}
                 alt={activeSlide.alt}
@@ -225,7 +225,7 @@ export function PresentationCorner() {
               </button>
             </div>
 
-            <div className="relative flex min-h-52 flex-col justify-end p-7 text-white lg:p-9">
+            <div className="landscape-dialog-copy relative flex min-h-52 flex-col justify-end p-7 text-white lg:p-9">
               <button
                 type="button"
                 onClick={close}

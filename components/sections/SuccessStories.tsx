@@ -13,7 +13,7 @@ export function SuccessStories() {
           <SectionTitle eyebrow="Başarı Hikâyeleri" title="Her Yolculuk Kendi Başarısını Yazar" description="Kimlik ve sonuç bilgisi paylaşmadan, öğrencilerin danışmanlık sürecinde kazandığı karar netliğini ve çalışma disiplinini anlatan örnek yolculuklar." />
           <p className="border-l border-gold pl-5 text-sm leading-7 text-ink/58 lg:mb-2">Bu içerikler anonim ve düzenlenebilir örneklerdir; herhangi bir yerleşme garantisi veya doğrulanmamış başarı iddiası içermez.</p>
         </div>
-        <Reveal className="relative mt-12 aspect-[16/8] min-h-[330px] overflow-hidden rounded-sm bg-navy">
+        <Reveal className="landscape-tall-banner relative mt-12 aspect-[16/8] min-h-[330px] overflow-hidden rounded-sm bg-navy">
           <Image src="/images/success-stories.png" alt="Gürbüz Gövrek öğrencilerle çalışma masası etrafında" fill sizes="100vw" className="object-cover object-[62%_center] opacity-[.82]" />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,26,51,.78),rgba(7,26,51,.12))]" />
           <div className="absolute bottom-0 left-0 max-w-lg p-7 text-white sm:p-10"><p className="eyebrow">Birlikte ilerlemek</p><p className="mt-3 font-serif text-3xl leading-tight sm:text-4xl">Doğru sorular, açık hedefler ve sürdürülebilir bir çalışma düzeni.</p></div>

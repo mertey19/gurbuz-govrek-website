@@ -16,9 +16,9 @@ export function About() {
   return (
     <section id="hakkinda" className="section-space bg-cream">
       <Container>
-        <div className="grid items-center gap-12 lg:grid-cols-[.9fr_1.1fr] lg:gap-20">
+        <div className="landscape-split grid items-center gap-12 lg:grid-cols-[.9fr_1.1fr] lg:gap-20">
           <Reveal className="relative">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-sm bg-navy shadow-[0_30px_70px_rgba(7,26,51,.18)]">
+            <div className="landscape-media relative aspect-[4/5] overflow-hidden rounded-sm bg-navy shadow-[0_30px_70px_rgba(7,26,51,.18)]">
               <Image src="/images/guidance-introduction.png" alt="Gürbüz Gövrek çalışma masasında danışmanlık notları hazırlıyor" fill sizes="(max-width: 1024px) 100vw, 45vw" className="object-cover object-[62%_center]" />
             </div>
             <div className="absolute -right-4 -bottom-5 max-w-[230px] border-l-2 border-gold bg-white p-5 shadow-xl sm:-right-8 sm:p-6">

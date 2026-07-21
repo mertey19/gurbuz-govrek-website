@@ -34,8 +34,8 @@ export function MobileMenu({
   if (!open) return null;
 
   return (
-    <div ref={menuRef} className="fixed inset-0 z-50 bg-navy lg:hidden" role="dialog" aria-modal="true" aria-label="Mobil menü">
-      <div className="flex h-22 items-center justify-between border-b border-white/10 px-5">
+    <div ref={menuRef} className="mobile-menu-shell fixed inset-0 z-50 bg-navy lg:hidden" role="dialog" aria-modal="true" aria-label="Mobil menü">
+      <div className="mobile-menu-header flex h-22 items-center justify-between border-b border-white/10 px-5">
         <div>
           <p className="font-serif text-xl font-semibold tracking-[0.08em] text-white">GÜRBÜZ GÖVREK</p>
           <p className="mt-1 text-[10px] tracking-[0.18em] text-gold-light uppercase">Matematik · Tercih</p>
@@ -49,14 +49,14 @@ export function MobileMenu({
           <X aria-hidden="true" />
         </button>
       </div>
-      <nav className="flex h-[calc(100%-5.5rem)] flex-col justify-center px-6" aria-label="Mobil navigasyon">
-        <ul className="space-y-1">
+      <nav className="mobile-menu-nav flex h-[calc(100%-5.5rem)] flex-col justify-center px-6" aria-label="Mobil navigasyon">
+        <ul className="mobile-menu-links space-y-1">
           {siteConfig.navigation.map((item, index) => (
             <li key={item.href}>
               <a
                 href={item.href}
                 onClick={onClose}
-                className="group flex min-h-13 items-center gap-4 border-b border-white/8 py-3 font-serif text-2xl text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold"
+                className="mobile-menu-link group flex min-h-13 items-center gap-4 border-b border-white/8 py-3 font-serif text-2xl text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold"
               >
                 <span className="text-xs font-sans tracking-widest text-gold">0{index + 1}</span>
                 {item.label}
@@ -64,7 +64,7 @@ export function MobileMenu({
             </li>
           ))}
         </ul>
-        <Button href={whatsappUrl} external className="mt-8 w-full" onClick={onClose}>
+        <Button href={whatsappUrl} external className="mobile-menu-cta mt-8 w-full" onClick={onClose}>
           WhatsApp&apos;tan Görüş
         </Button>
       </nav>

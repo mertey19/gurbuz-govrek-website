@@ -17,7 +17,7 @@ export function AnalysisCenter() {
   return (
     <section id="analiz-merkezi" className="section-space overflow-hidden bg-[#06182e] text-white">
       <Container>
-        <div className="grid items-end gap-10 lg:grid-cols-[.85fr_1.15fr] lg:gap-16">
+        <div className="landscape-split grid items-end gap-10 lg:grid-cols-[.85fr_1.15fr] lg:gap-16">
           <Reveal>
             <SectionTitle eyebrow="Tercih Analiz Merkezi" title="Tercihleri Tahminlerle Değil, Verilerle Değerlendirin" description="Veriler kararın yerini almaz; seçenekleri daha açık görmenizi ve riskleri doğru okumanızı sağlar." tone="light" />
             <div className="mt-9 grid gap-3 sm:grid-cols-2">
@@ -30,7 +30,7 @@ export function AnalysisCenter() {
             </div>
           </Reveal>
           <Reveal delay={0.08}>
-            <div className="relative aspect-[16/10] overflow-hidden rounded-sm border border-white/10 bg-blue-deep shadow-[0_30px_80px_rgba(0,0,0,.3)]">
+            <div className="landscape-media relative aspect-[16/10] overflow-hidden rounded-sm border border-white/10 bg-blue-deep shadow-[0_30px_80px_rgba(0,0,0,.3)]">
               <Image src="/images/preference-analysis.png" alt="Gürbüz Gövrek ve tercih analizi yaklaşımını anlatan örnek veri panosu" fill sizes="(max-width: 1024px) 100vw, 55vw" className="object-cover object-center" />
             </div>
             <p className="mt-4 text-xs leading-5 text-white/42">Görsel, analiz yaklaşımını temsil eder. Gerçek değerlendirmeler güncel ve doğrulanmış öğrenci verileriyle kişiselleştirilir.</p>

@@ -11,7 +11,7 @@ export function FAQ() {
   return (
     <section id="sss" className="section-space bg-cream">
       <Container>
-        <div className="grid gap-10 lg:grid-cols-[.7fr_1.3fr] lg:gap-20">
+        <div className="landscape-split grid gap-10 lg:grid-cols-[.7fr_1.3fr] lg:gap-20">
           <div><SectionTitle eyebrow="Sık Sorulan Sorular" title="Karar Vermeden Önce Merak Ettikleriniz" description="Süreçle ilgili başka bir sorunuz varsa WhatsApp üzerinden doğrudan paylaşabilirsiniz." /></div>
           <div className="divide-y divide-navy/12 border-y border-navy/12">
             {faqItems.map((item, index) => {
