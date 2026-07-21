@@ -43,13 +43,13 @@ Sitede randevu formu bulunmaz. Tüm görüşme talepleri, sayfadaki WhatsApp but
 
 ## Alan adı ve SEO
 
-`.env.local` dosyasında gerçek alan adını tanımlayın:
+Sitenin kanonik alan adı `config/site.ts` içinde tek kaynak olarak sabitlenmiştir:
 
-```env
-NEXT_PUBLIC_SITE_URL=https://alanadiniz.com
+```ts
+export const CANONICAL_SITE_URL = "https://www.xn--grbzgvrek-47a5dc.com.tr";
 ```
 
-Bu değer canonical URL, sitemap, robots ve JSON-LD şemalarında kullanılır.
+Bu değer canonical URL, sitemap, robots ve JSON-LD şemalarında kullanılır. Hosting ortamında ayrıca bir site URL değişkeni tanımlanması gerekmez.
 
 ## Deployment
 

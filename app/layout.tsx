@@ -3,7 +3,7 @@ import { Manrope, Playfair_Display } from "next/font/google";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
-import { siteConfig } from "@/config/site";
+import { CANONICAL_SITE_URL, siteConfig } from "@/config/site";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -19,14 +19,14 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
+  metadataBase: new URL(`${CANONICAL_SITE_URL}/`),
   title: siteConfig.title,
   description: siteConfig.description,
-  alternates: { canonical: "/" },
+  alternates: { canonical: `${CANONICAL_SITE_URL}/` },
   openGraph: {
     type: "website",
     locale: "tr_TR",
-    url: "/",
+    url: `${CANONICAL_SITE_URL}/`,
     siteName: siteConfig.name,
     title: siteConfig.title,
     description: siteConfig.description,

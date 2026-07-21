@@ -1,10 +1,12 @@
+export const CANONICAL_SITE_URL = "https://www.xn--grbzgvrek-47a5dc.com.tr" as const;
+
 export const siteConfig = {
   name: "Gürbüz Gövrek",
   title: "Gürbüz Gövrek | Matematik Öğretmeni ve Tercih Uzmanı",
   tagLine: "Matematik Öğretmeni · Tercih Uzmanı",
   description:
     "Matematik eğitimi, YKS tercih danışmanlığı, üniversite ve bölüm analizi, öğrenci koçluğu ve kişiye özel tercih yol haritası.",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://example.com",
+  url: CANONICAL_SITE_URL,
   whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "905013653371",
   whatsappMessage:
     "Merhaba Gürbüz Hocam, danışmanlık hizmetleriniz hakkında bilgi almak istiyorum.",
