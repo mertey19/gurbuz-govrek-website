@@ -1,4 +1,6 @@
 export type PresentationCategory =
+  | "kontenjan"
+  | "yks-istatistikleri"
   | "seminer"
   | "tuma"
   | "ucak-uzay"
@@ -22,6 +24,7 @@ export interface PresentationCollection {
   label: string;
   shortLabel: string;
   description: string;
+  thumbnailFit?: "cover" | "contain";
   slides: readonly PresentationSlide[];
 }
 
@@ -41,7 +44,57 @@ function createSlides(
   });
 }
 
+function createNamedSlides(
+  directory: string,
+  slideTitles: readonly string[],
+  altPrefix: string,
+): readonly PresentationSlide[] {
+  return slideTitles.map((slideTitle, index) => ({
+    src: `/images/sunum-kosesi/${directory}/${String(index + 1).padStart(2, "0")}.webp`,
+    alt: `${altPrefix}: ${slideTitle}`,
+    title: slideTitle,
+  }));
+}
+
 export const presentationCollections: readonly PresentationCollection[] = [
+  {
+    id: "kontenjan",
+    label: "YKS Kontenjan Değişimi",
+    shortLabel: "Kontenjan",
+    description:
+      "YKS kontenjanlarının 2023–2026 yılları arasındaki değişimini genel, sayısal, eşit ağırlık ve sözel puan türleri üzerinden karşılaştıran güncel görsel seri.",
+    thumbnailFit: "contain",
+    slides: createNamedSlides(
+      "kontenjan",
+      [
+        "Genel Kontenjan Değişimi",
+        "Sayısal Kontenjan Değişimi I",
+        "Sayısal Kontenjan Değişimi II",
+        "Eşit Ağırlık ve Sözel Kontenjan Değişimi",
+      ],
+      "Gürbüz Gövrek YKS kontenjan değişimi",
+    ),
+  },
+  {
+    id: "yks-istatistikleri",
+    label: "YKS İstatistikleri",
+    shortLabel: "İstatistikler",
+    description:
+      "2021–2026 YKS verilerini test ortalamaları, puan aralıkları ve puan türlerine göre yığınsal dağılımlarla karşılaştıran 7 görsellik veri serisi.",
+    slides: createNamedSlides(
+      "yks-istatistikleri",
+      [
+        "YKS Testlerinin Ortalamaları",
+        "180 Puan Üstü Aday Sayıları",
+        "TYT Puanı Yığınsal Dağılım",
+        "Sayısal Puan Yığınsal Dağılım",
+        "Eşit Ağırlık Puanı Yığınsal Dağılım",
+        "Sözel Puan Yığınsal Dağılım",
+        "Dil Puanı Yığınsal Dağılım",
+      ],
+      "Gürbüz Gövrek YKS istatistikleri",
+    ),
+  },
   {
     id: "seminer",
     label: "Seminer Slaytları",

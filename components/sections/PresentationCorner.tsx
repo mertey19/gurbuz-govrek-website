@@ -14,7 +14,7 @@ import {
 import { useFocusTrap } from "@/hooks/useFocusTrap";
 
 export function PresentationCorner() {
-  const [category, setCategory] = useState<PresentationCategory>("seminer");
+  const [category, setCategory] = useState<PresentationCategory>("kontenjan");
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const activeCollection =
@@ -172,7 +172,11 @@ export function PresentationCorner() {
                   alt={slide.alt}
                   fill
                   sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
-                  className="object-cover transition duration-500 group-hover:scale-[1.025]"
+                  className={`transition duration-500 group-hover:scale-[1.025] ${
+                    activeCollection.thumbnailFit === "contain"
+                      ? "object-contain p-1"
+                      : "object-cover"
+                  }`}
                 />
                 <span className="absolute top-3 left-3 rounded-full bg-navy/88 px-2.5 py-1 text-[10px] font-bold tracking-wider text-white backdrop-blur">
                   {index + 1} / {activeCollection.slides.length}
