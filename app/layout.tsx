@@ -46,7 +46,14 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     images: ["/og.png"],
   },
-  icons: { icon: "/icon", shortcut: "/icon" },
+  icons: {
+    icon: [
+      { url: "/favicon-96x96.png", type: "image/png", sizes: "96x96" },
+      { url: "/favicon.ico", type: "image/x-icon" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: [{ url: "/apple-touch-icon.png", type: "image/png", sizes: "180x180" }],
+  },
 };
 
 export const viewport: Viewport = {

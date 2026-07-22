@@ -16,6 +16,9 @@ async function render() {
 
 test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () => {
   await Promise.all([
+    "../public/favicon-96x96.png",
+    "../public/favicon.ico",
+    "../public/apple-touch-icon.png",
     "../public/resources/meslek-tanitim/tyt/acil-yardim-ve-afet-yoneticisi.pdf",
     "../public/resources/meslek-tanitim/soz/film-tasarimi-ve-yonetmeni.pdf",
     "../public/resources/meslek-tanitim/say/bilgisayar-muhendisi.pdf",
@@ -51,6 +54,9 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
 
   const html = await response.text();
   assert.match(html, /<html[^>]*lang="tr"/i);
+  assert.match(html, /<link[^>]+rel="icon"[^>]+href="[^"]*\/favicon-96x96\.png"[^>]*>/i);
+  assert.match(html, /<link[^>]+rel="shortcut icon"[^>]+href="[^"]*\/favicon\.ico"[^>]*>/i);
+  assert.doesNotMatch(html, /\[object%20Object\]/i);
   assert.match(html, /Gürbüz Gövrek \| Matematik Öğretmeni ve Tercih Uzmanı/i);
   assert.match(html, /Doğru Tercih,.*Mutlu Bir Hayat/is);
   assert.match(html, /Tarsus’tan Başlayan Çok Yönlü Bir Eğitim Yolculuğu/i);
