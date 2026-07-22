@@ -21,7 +21,7 @@ export function Mathematics() {
             <ul className="mt-8 grid gap-3 sm:grid-cols-2">
               {items.map((item) => <li key={item} className="flex items-center gap-3 rounded-sm border border-navy/8 bg-white px-4 py-3.5 text-sm font-medium text-ink/75"><span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-gold/16 text-blue-deep"><Check className="size-3.5" aria-hidden="true" /></span>{item}</li>)}
             </ul>
-            <Button href={whatsappUrl} external variant="navy" className="mt-8">WhatsApp&apos;tan Bilgi Al</Button>
+            <Button href={whatsappUrl} external variant="whatsapp" className="mt-8">WhatsApp&apos;tan Bilgi Al</Button>
           </Reveal>
         </div>
       </Container>

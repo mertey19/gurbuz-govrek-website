@@ -56,7 +56,7 @@ export function Header() {
           </nav>
 
           <div className="flex shrink-0 items-center gap-3">
-            <Button href={whatsappUrl} external className="hidden whitespace-nowrap rounded-full px-4 xl:inline-flex 2xl:px-5" showArrow={false}>
+            <Button href={whatsappUrl} external variant="whatsapp" className="hidden whitespace-nowrap rounded-full px-4 xl:inline-flex 2xl:px-5" showArrow={false}>
               <MessageCircle className="size-4" aria-hidden="true" />
               WhatsApp
             </Button>

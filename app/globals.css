@@ -25,6 +25,10 @@
 }
 
 html {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-x: clip;
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
 }
@@ -32,10 +36,27 @@ html {
 body {
   margin: 0;
   overflow-x: hidden;
+  overflow-x: clip;
+  width: 100%;
+  max-width: 100%;
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
   text-rendering: optimizeLegibility;
+}
+
+main,
+header,
+footer,
+section {
+  min-width: 0;
+  max-width: 100%;
+}
+
+img,
+video,
+iframe {
+  max-width: 100%;
 }
 
 button,
@@ -57,6 +78,7 @@ select {
 }
 
 .section-space {
+  overflow-x: clip;
   padding-block: clamp(5rem, 9vw, 8.5rem);
 }
 
@@ -104,8 +126,50 @@ select {
     overflow-wrap: anywhere;
   }
 
-  #ana-sayfa > img {
-    object-position: 63% center;
+  .site-hero {
+    min-height: 0;
+    align-items: flex-start;
+    padding-top: 23rem;
+  }
+
+  .site-hero > img {
+    top: 5rem !important;
+    bottom: auto !important;
+    height: 19rem !important;
+    object-position: 62% center;
+  }
+
+  .site-hero-overlay {
+    top: 5rem;
+    bottom: auto;
+    height: 19rem;
+    background: linear-gradient(0deg, #071a33 0%, rgba(7, 26, 51, 0.18) 42%, rgba(7, 26, 51, 0.02) 76%);
+  }
+
+  .site-hero-bottom-fade {
+    display: none;
+  }
+
+  .hero-container {
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+  }
+
+  .hero-content {
+    max-width: none;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  .hero-title {
+    font-size: clamp(2.65rem, 13vw, 3.5rem);
+  }
+
+  .hero-actions a {
+    width: 100%;
   }
 }
 
@@ -148,15 +212,22 @@ select {
 
   .site-hero {
     min-height: 100svh;
+    align-items: center;
     padding-top: 4rem;
   }
 
   .site-hero > img {
+    top: 0 !important;
+    bottom: 0 !important;
+    height: 100% !important;
     object-position: 65% center;
   }
 
   .site-hero-overlay {
-    background: linear-gradient(90deg, rgba(7, 26, 51, 0.99) 0%, rgba(7, 26, 51, 0.96) 44%, rgba(7, 26, 51, 0.67) 66%, rgba(7, 26, 51, 0.18) 100%);
+    top: 0;
+    bottom: 0;
+    height: auto;
+    background: linear-gradient(90deg, rgba(7, 26, 51, 0.7) 0%, rgba(7, 26, 51, 0.54) 44%, rgba(7, 26, 51, 0.3) 68%, rgba(7, 26, 51, 0.08) 100%);
   }
 
   .hero-container {
@@ -166,6 +237,11 @@ select {
 
   .hero-content {
     max-width: min(66%, 37rem);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(7, 26, 51, 0.84);
+    padding: 1.25rem;
+    box-shadow: 0 20px 55px rgba(2, 10, 20, 0.3);
+    backdrop-filter: blur(3px);
   }
 
   .hero-eyebrow {

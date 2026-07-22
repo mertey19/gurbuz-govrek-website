@@ -20,14 +20,14 @@ export function Hero() {
         fill
         priority
         sizes="100vw"
-        className="object-cover object-[58%_center]"
+        className="object-cover object-[58%_center] brightness-[1.08] saturate-[1.04]"
       />
-      <div className="site-hero-overlay absolute inset-0 bg-[linear-gradient(90deg,rgba(7,26,51,.98)_0%,rgba(7,26,51,.94)_36%,rgba(7,26,51,.48)_68%,rgba(7,26,51,.22)_100%)]" />
-      <div className="absolute inset-x-0 bottom-0 h-40 bg-[linear-gradient(0deg,#071A33,transparent)]" />
+      <div className="site-hero-overlay absolute inset-0 bg-[linear-gradient(90deg,rgba(7,26,51,.58)_0%,rgba(7,26,51,.42)_40%,rgba(7,26,51,.18)_72%,rgba(7,26,51,.06)_100%)]" />
+      <div className="site-hero-bottom-fade absolute inset-x-0 bottom-0 h-40 bg-[linear-gradient(0deg,#071A33,transparent)]" />
       <div className="pointer-events-none absolute top-32 left-[8%] h-px w-24 bg-gold/70" />
 
       <Container className="hero-container relative z-10 py-16 sm:py-24">
-        <div className="hero-content max-w-2xl">
+        <div className="hero-content max-w-2xl rounded-sm border border-white/15 bg-navy/82 p-6 shadow-[0_28px_80px_rgba(2,10,20,.32)] backdrop-blur-[3px] sm:p-8 lg:p-10">
           <Reveal>
             <p className="hero-eyebrow eyebrow text-gold-light">Matematik Öğretmeni · Tercih Uzmanı</p>
           </Reveal>
@@ -43,7 +43,7 @@ export function Hero() {
           </Reveal>
           <Reveal delay={0.22}>
             <div className="hero-actions mt-9 flex flex-col gap-3 sm:flex-row">
-              <Button href={whatsappUrl} external>WhatsApp&apos;tan Bilgi Al</Button>
+              <Button href={whatsappUrl} external variant="whatsapp">WhatsApp&apos;tan Bilgi Al</Button>
               <Button href="#hizmetler" variant="outline">Hizmetleri İncele</Button>
             </div>
           </Reveal>

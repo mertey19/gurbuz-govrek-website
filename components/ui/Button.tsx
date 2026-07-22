@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 type ButtonProps = {
   href: string;
   children: ReactNode;
-  variant?: "gold" | "outline" | "navy" | "light";
+  variant?: "gold" | "outline" | "navy" | "light" | "whatsapp";
   className?: string;
   showArrow?: boolean;
   onClick?: () => void;
@@ -18,6 +18,7 @@ const variants = {
   outline: "border border-white/45 bg-white/5 text-white hover:bg-white/12",
   navy: "bg-navy text-white hover:bg-blue-deep",
   light: "border border-navy/15 bg-white text-navy hover:border-gold hover:text-blue-deep",
+  whatsapp: "bg-[#25D366] text-white shadow-[0_10px_28px_rgba(37,211,102,.24)] hover:bg-[#20bd5a]",
 };
 
 export function Button({

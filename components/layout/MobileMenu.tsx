@@ -64,7 +64,7 @@ export function MobileMenu({
             </li>
           ))}
         </ul>
-        <Button href={whatsappUrl} external className="mobile-menu-cta mt-8 w-full" onClick={onClose}>
+        <Button href={whatsappUrl} external variant="whatsapp" className="mobile-menu-cta mt-8 w-full" onClick={onClose}>
           WhatsApp&apos;tan Görüş
         </Button>
       </nav>

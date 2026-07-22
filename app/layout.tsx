@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Manrope, Playfair_Display } from "next/font/google";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
+import { SectionRail } from "@/components/layout/SectionRail";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { CANONICAL_SITE_URL, siteConfig } from "@/config/site";
 import "./globals.css";
@@ -60,6 +61,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className={`${manrope.variable} ${playfair.variable} antialiased`}>
         <a href="#main-content" className="skip-link">İçeriğe geç</a>
         <Header />
+        <SectionRail />
         {children}
         <Footer />
         <WhatsAppButton />

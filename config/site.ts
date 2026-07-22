@@ -36,7 +36,7 @@ export const siteConfig = {
 export const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber.replace(/\D/g, "")}?text=${encodeURIComponent(siteConfig.whatsappMessage)}`;
 
 export const stats = [
-  { value: "Birebir", label: "Öğrenci Görüşmesi" },
+  { value: "Bire Bir", label: "Öğrenci Görüşmesi" },
   { value: "Kişisel", label: "Tercih Yol Haritası" },
   { value: "Veriye Dayalı", label: "Üniversite Analizi" },
   { value: "Bütüncül", label: "Öğrenci ve Veli İletişimi" },

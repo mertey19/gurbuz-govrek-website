@@ -21,7 +21,7 @@ export function ContactCTA() {
             <strong className="font-semibold text-white">{siteConfig.contact.hours}</strong>
           </div>
           <div>
-            <Button href={whatsappUrl} external className="mt-6 bg-[#25D366] text-white hover:bg-[#1fb95a]" showArrow={false}>
+            <Button href={whatsappUrl} external variant="whatsapp" className="mt-6" showArrow={false}>
               <MessageCircle className="size-5" aria-hidden="true" />
               WhatsApp&apos;tan İletişime Geç
             </Button>

@@ -19,7 +19,7 @@ export function Events() {
           <ul className="mt-8 grid gap-3 sm:grid-cols-2">
             {eventTypes.map((event) => <li key={event} className="flex gap-3 text-sm text-white/74"><Check className="mt-0.5 size-4 shrink-0 text-gold-light" aria-hidden="true" />{event}</li>)}
           </ul>
-          <Button href={whatsappUrl} external className="mt-9">WhatsApp&apos;tan Bilgi Al</Button>
+          <Button href={whatsappUrl} external variant="whatsapp" className="mt-9">WhatsApp&apos;tan Bilgi Al</Button>
         </Reveal>
       </Container>
     </section>

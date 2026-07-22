@@ -3,7 +3,7 @@ import type { Service } from "@/types";
 export const services: Service[] = [
   {
     id: "tercih",
-    title: "Birebir Tercih Danışmanlığı",
+    title: "Bire Bir Tercih Danışmanlığı",
     description:
       "Hedef, ilgi alanı ve başarı sırasını birlikte değerlendirerek kişisel bir tercih stratejisi oluştururuz.",
     icon: "messages",
