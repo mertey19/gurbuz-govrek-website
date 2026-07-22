@@ -23,6 +23,7 @@ export const siteConfig = {
   navigation: [
     { label: "Ana Sayfa", href: "#ana-sayfa" },
     { label: "Hakkında", href: "#hakkinda" },
+    { label: "Özgeçmiş", href: "#ozgecmis" },
     { label: "Hizmetler", href: "#hizmetler" },
     { label: "Meslekler", href: "#meslek-kosesi" },
     { label: "Sunumlar", href: "#sunum-kosesi" },

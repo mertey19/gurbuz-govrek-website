@@ -33,7 +33,7 @@ export function Hero() {
           </Reveal>
           <Reveal delay={0.08}>
             <h1 className="hero-title mt-6 max-w-[11ch] font-serif text-5xl leading-[1.02] font-semibold text-balance sm:text-6xl lg:text-[5.2rem]">
-              Doğru Tercih, <span className="text-gold-light">Güçlü Bir Gelecek</span>
+              Doğru Tercih, <span className="text-gold-light">Mutlu Bir Hayat</span>
             </h1>
           </Reveal>
           <Reveal delay={0.15}>

@@ -52,7 +52,11 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
   const html = await response.text();
   assert.match(html, /<html[^>]*lang="tr"/i);
   assert.match(html, /Gürbüz Gövrek \| Matematik Öğretmeni ve Tercih Uzmanı/i);
-  assert.match(html, /Doğru Tercih,.*Güçlü Bir Gelecek/is);
+  assert.match(html, /Doğru Tercih,.*Mutlu Bir Hayat/is);
+  assert.match(html, /Tarsus’tan Başlayan Çok Yönlü Bir Eğitim Yolculuğu/i);
+  assert.match(html, /Yıldız Teknik Üniversitesi/i);
+  assert.match(html, /Pamukkale Üniversitesi/i);
+  assert.match(html, /Çukurova Üniversitesi/i);
   assert.match(html, /Her Adımda Açık, Kişisel ve Güvenilir Rehberlik/i);
   assert.match(html, /WhatsApp(?:&apos;|')tan (?:Bilgi Al|Görüş|İletişime Geç)/i);
   assert.match(html, /https:\/\/wa\.me\/905013653371/i);

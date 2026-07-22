@@ -4,6 +4,7 @@ import {
   BriefcaseBusiness,
   CalendarDays,
   CircleHelp,
+  GraduationCap,
   Home,
   Layers3,
   MessageCircle,
@@ -16,6 +17,7 @@ import { useEffect, useState } from "react";
 const sectionLinks = [
   { href: "#ana-sayfa", label: "Ana Sayfa", icon: Home },
   { href: "#hakkinda", label: "Hakkında", icon: UserRound },
+  { href: "#ozgecmis", label: "Özgeçmiş", icon: GraduationCap },
   { href: "#hizmetler", label: "Hizmetler", icon: Layers3 },
   { href: "#meslek-kosesi", label: "Meslekler", icon: BriefcaseBusiness },
   { href: "#sunum-kosesi", label: "Sunumlar", icon: Presentation },

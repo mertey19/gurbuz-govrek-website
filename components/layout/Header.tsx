@@ -8,6 +8,10 @@ import { siteConfig, whatsappUrl } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { MobileMenu } from "./MobileMenu";
 
+const desktopNavigation = siteConfig.navigation.filter(
+  ({ href }) => !["#basari", "#etkinlikler", "#sss"].includes(href),
+);
+
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -42,7 +46,7 @@ export function Header() {
 
           <nav className="hidden min-w-0 flex-1 lg:block" aria-label="Ana navigasyon">
             <ul className="flex items-center justify-center gap-3 xl:gap-5 2xl:gap-7">
-              {siteConfig.navigation.map((item) => (
+              {desktopNavigation.map((item) => (
                 <li key={item.href}>
                   <a
                     href={item.href}
