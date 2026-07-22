@@ -60,19 +60,21 @@ export function Header() {
           </nav>
 
           <div className="flex shrink-0 items-center gap-3">
-            <Button href={whatsappUrl} external variant="whatsapp" className="hidden whitespace-nowrap rounded-full px-4 xl:inline-flex 2xl:px-5" showArrow={false}>
-              <MessageCircle className="size-4" aria-hidden="true" />
-              WhatsApp
-            </Button>
+            <div className="hidden xl:block">
+              <Button href={whatsappUrl} external variant="whatsapp" className="whitespace-nowrap rounded-full px-4 2xl:px-5" showArrow={false}>
+                <MessageCircle className="size-4" aria-hidden="true" />
+                WhatsApp
+              </Button>
+            </div>
             <button
               type="button"
               onClick={() => setMenuOpen(true)}
-              className="site-header-menu-button flex size-11 items-center justify-center rounded-full border border-white/25 text-white lg:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+              className="site-header-menu-button flex size-11 shrink-0 items-center justify-center rounded-full border border-white/25 text-white lg:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
               aria-label="Menüyü aç"
             >
-              <Menu aria-hidden="true" />
+              <Menu className="size-5" aria-hidden="true" />
             </button>
           </div>
         </Container>
