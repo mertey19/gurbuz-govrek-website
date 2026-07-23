@@ -3,6 +3,7 @@ import { AnalysisCenter } from "@/components/sections/AnalysisCenter";
 import { Biography } from "@/components/sections/Biography";
 import { CampusVisits } from "@/components/sections/CampusVisits";
 import { CareerCorner } from "@/components/sections/CareerCorner";
+import { Comments } from "@/components/sections/Comments";
 import { ContactCTA } from "@/components/sections/ContactCTA";
 import { Counseling } from "@/components/sections/Counseling";
 import { Events } from "@/components/sections/Events";
@@ -63,6 +64,7 @@ export default function Home() {
         <PresentationCorner />
         <CampusVisits />
         <SuccessStories />
+        <Comments />
         <Events />
         <Media />
         <Gallery />

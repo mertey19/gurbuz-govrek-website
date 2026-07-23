@@ -28,6 +28,7 @@ export const siteConfig = {
     { label: "Meslekler", href: "#meslek-kosesi" },
     { label: "Sunumlar", href: "#sunum-kosesi" },
     { label: "Başarı Hikâyeleri", href: "#basari" },
+    { label: "Yorumlar", href: "#yorumlar" },
     { label: "Etkinlikler", href: "#etkinlikler" },
     { label: "Sık Sorulanlar", href: "#sss" },
     { label: "İletişim", href: "#iletisim" },
