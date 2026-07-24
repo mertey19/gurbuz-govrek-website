@@ -286,7 +286,9 @@ select {
     top: 5rem !important;
     bottom: auto !important;
     height: 19rem !important;
-    object-position: 62% center;
+    background: #071a33;
+    object-fit: contain;
+    object-position: center center;
   }
 
   .site-hero-overlay {

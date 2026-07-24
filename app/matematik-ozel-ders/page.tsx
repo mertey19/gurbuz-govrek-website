@@ -263,14 +263,14 @@ export default function MatematikOzelDersPage() {
               </div>
             </div>
 
-            <div className="relative aspect-[4/3] overflow-hidden rounded-sm border border-white/12 shadow-[0_28px_80px_rgba(0,0,0,.3)]">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-sm border border-white/12 bg-navy shadow-[0_28px_80px_rgba(0,0,0,.3)]">
               <Image
                 src="/images/mathematics-education.png"
                 alt="Gürbüz Gövrek dijital tahtada bire bir matematik dersi anlatıyor"
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 46vw"
-                className="object-cover object-center"
+                className="object-contain"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-navy/30 to-transparent" aria-hidden="true" />
             </div>
