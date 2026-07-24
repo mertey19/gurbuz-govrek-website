@@ -3,6 +3,7 @@ import { Manrope, Playfair_Display } from "next/font/google";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { SectionRail } from "@/components/layout/SectionRail";
+import { MobileCallBar } from "@/components/ui/MobileCallBar";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { CANONICAL_SITE_URL, siteConfig } from "@/config/site";
 import "./globals.css";
@@ -72,6 +73,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         {children}
         <Footer />
         <WhatsAppButton />
+        <MobileCallBar />
       </body>
     </html>
   );

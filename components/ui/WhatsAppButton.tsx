@@ -25,7 +25,7 @@ export function WhatsAppButton() {
       href={url}
       target="_blank"
       rel="noreferrer"
-      className="fixed right-4 bottom-4 z-40 flex size-13 items-center justify-center rounded-full bg-[#25D366] text-white shadow-xl transition hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-navy"
+      className="fixed right-4 bottom-[calc(5.5rem+env(safe-area-inset-bottom))] z-40 flex size-13 items-center justify-center rounded-full bg-[#25D366] text-white shadow-xl transition hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-navy md:bottom-4"
       aria-label="WhatsApp üzerinden bilgi alın"
     >
       <MessageCircle aria-hidden="true" className="size-6" />

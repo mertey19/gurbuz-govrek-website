@@ -111,6 +111,8 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
   assert.match(html, /\/blog\/denizlide-yks-tercih-danismani-nasil-secilir/i);
   assert.match(html, /Matematik Özel Ders ve Akademik Takip/i);
   assert.match(html, /href="\/matematik-ozel-ders"/i);
+  assert.match(html, /Hemen Ara/i);
+  assert.match(html, /aria-label="\+90 501 365 33 71 numarasını hemen ara"/i);
   assert.match(html, /Ben Kimim\?/i);
   assert.match(html, /Eğitim &amp; Danışmanlık/i);
   assert.match(html, /Matematik &amp; Özel Ders/i);
