@@ -2,13 +2,13 @@ import assert from "node:assert/strict";
 import { access } from "node:fs/promises";
 import test from "node:test";
 
-async function render() {
+async function render(pathname = "/") {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
   workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
   const { default: worker } = await import(workerUrl.href);
 
   return worker.fetch(
-    new Request("http://localhost/", { headers: { accept: "text/html" } }),
+    new Request(`http://localhost${pathname}`, { headers: { accept: "text/html" } }),
     { ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) } },
     { waitUntil() {}, passThroughOnException() {} },
   );
@@ -107,10 +107,57 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
   assert.match(html, /Bitki Koruma ve Tarla Bitkileri/i);
   assert.match(html, /Biyolog ve Kimyager/i);
   assert.match(html, /Diyetisyenlik ve Eczacılık/i);
+  assert.match(html, /Tercih Sürecinde Doğru Karar İçin Güncel Rehberler/i);
+  assert.match(html, /\/blog\/denizli-yks-tercih-danismanligi/i);
   assert.match(html, /\/images\/sunum-kosesi\/kontenjan\/01\.webp/i);
   assert.match(html, /\/resources\/meslek-tanitim\/tyt\/acil-yardim-ve-afet-yoneticisi\.pdf/i);
   assert.doesNotMatch(html, /Gizlilik Politikası|KVKK Aydınlatma Metni|Kullanım Koşulları/i);
   assert.match(html, /src="\/images\/hero-gurbuz-govrek\.png"/i);
   assert.doesNotMatch(html, /\/_vinext\/image/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|Building your site/i);
+});
+
+test("blog liste sayfasını ve Denizli YKS tercih yazısını sunucu tarafında oluşturur", async () => {
+  const blogResponse = await render("/blog");
+  assert.equal(blogResponse.status, 200);
+  const blogHtml = await blogResponse.text();
+  assert.match(blogHtml, /Üniversite Tercihinde Bilinçli Kararlar İçin Rehberler/i);
+  assert.match(blogHtml, /Denizli YKS Tercih Danışmanlığı ile Doğru Üniversite Tercihi Nasıl Yapılır/i);
+  assert.match(blogHtml, /rel="canonical" href="https:\/\/www\.xn--grbzgvrek-47a5dc\.com\.tr\/blog"/i);
+
+  const articleResponse = await render("/blog/denizli-yks-tercih-danismanligi");
+  assert.equal(articleResponse.status, 200);
+  const articleHtml = await articleResponse.text();
+  assert.match(articleHtml, /<article\b/i);
+  assert.match(articleHtml, /En Sık Yapılan Tercih Hataları/i);
+  assert.match(articleHtml, /Sık Sorulan Sorular/i);
+  assert.match(articleHtml, /ÖSYM — YKS duyuruları ve tercih kılavuzları/i);
+  assert.match(
+    articleHtml,
+    /rel="canonical" href="https:\/\/www\.xn--grbzgvrek-47a5dc\.com\.tr\/blog\/denizli-yks-tercih-danismanligi"/i,
+  );
+  assert.match(articleHtml, /"@type":"Article"/i);
+  assert.match(articleHtml, /"@type":"FAQPage"/i);
+});
+
+test("sitemap blog adreslerini yalnızca kanonik alan adıyla üretir", async () => {
+  const response = await render("/sitemap.xml");
+  assert.equal(response.status, 200);
+  const xml = await response.text();
+  const locations = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+
+  assert.ok(locations.length >= 3);
+  assert.ok(locations.every((location) => location.startsWith("https://www.xn--grbzgvrek-47a5dc.com.tr/")));
+  assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/blog"));
+  assert.ok(
+    locations.includes(
+      "https://www.xn--grbzgvrek-47a5dc.com.tr/blog/denizli-yks-tercih-danismanligi",
+    ),
+  );
+  assert.ok(
+    locations.every(
+      (location) =>
+        !/vercel\.app|akdenizkasabi|^http:\/\//i.test(location),
+    ),
+  );
 });

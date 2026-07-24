@@ -1,4 +1,5 @@
 import { Mail, Phone, Play } from "lucide-react";
+import Link from "next/link";
 import { FaInstagram } from "react-icons/fa6";
 import { Container } from "@/components/ui/Container";
 import { siteConfig } from "@/config/site";
@@ -26,11 +27,12 @@ export function Footer() {
           <div>
             <h3 className="text-sm font-bold tracking-wider text-gold-light uppercase">Hizmetler</h3>
             <ul className="mt-5 space-y-3 text-sm text-white/65">
-              <li><a href="#danismanlik" className="hover:text-white">Tercih Danışmanlığı</a></li>
-              <li><a href="#matematik" className="hover:text-white">Matematik Eğitimi</a></li>
-              <li><a href="#analiz-merkezi" className="hover:text-white">Bölüm Analizi</a></li>
-              <li><a href="#sunum-kosesi" className="hover:text-white">Sunum Köşesi</a></li>
-              <li><a href="#etkinlikler" className="hover:text-white">Seminerler</a></li>
+              <li><Link href="/#danismanlik" className="hover:text-white">Tercih Danışmanlığı</Link></li>
+              <li><Link href="/#matematik" className="hover:text-white">Matematik Eğitimi</Link></li>
+              <li><Link href="/#analiz-merkezi" className="hover:text-white">Bölüm Analizi</Link></li>
+              <li><Link href="/#sunum-kosesi" className="hover:text-white">Sunum Köşesi</Link></li>
+              <li><Link href="/blog" className="hover:text-white">YKS Tercih Blogu</Link></li>
+              <li><Link href="/#etkinlikler" className="hover:text-white">Seminerler</Link></li>
             </ul>
           </div>
           <div>

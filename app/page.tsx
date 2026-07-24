@@ -1,6 +1,7 @@
 import { About } from "@/components/sections/About";
 import { AnalysisCenter } from "@/components/sections/AnalysisCenter";
 import { Biography } from "@/components/sections/Biography";
+import { BlogPreview } from "@/components/sections/BlogPreview";
 import { CampusVisits } from "@/components/sections/CampusVisits";
 import { CareerCorner } from "@/components/sections/CareerCorner";
 import { Comments } from "@/components/sections/Comments";
@@ -27,9 +28,11 @@ export default function Home() {
       name: siteConfig.name,
       jobTitle: "Matematik Öğretmeni ve Tercih Uzmanı",
       url: siteConfig.url,
+      image: `${siteConfig.url}/images/hero-gurbuz-govrek.png`,
       description: siteConfig.description,
       email: siteConfig.contact.email,
       telephone: siteConfig.contact.phone,
+      sameAs: [siteConfig.contact.instagram],
     },
     {
       "@context": "https://schema.org",
@@ -39,12 +42,25 @@ export default function Home() {
       description: siteConfig.description,
       email: siteConfig.contact.email,
       telephone: siteConfig.contact.phone,
+      areaServed: {
+        "@type": "City",
+        name: "Denizli",
+      },
+      sameAs: [siteConfig.contact.instagram],
       serviceType: [
         "Matematik Eğitimi",
         "YKS Tercih Danışmanlığı",
         "Üniversite ve Bölüm Analizi",
         "Öğrenci Koçluğu",
       ],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: siteConfig.name,
+      alternateName: "Gürbüz Gövrek Tercih Danışmanlığı",
+      url: `${siteConfig.url}/`,
+      inLanguage: "tr-TR",
     },
   ];
 
@@ -66,6 +82,7 @@ export default function Home() {
         <SuccessStories />
         <Comments />
         <Events />
+        <BlogPreview />
         <Media />
         <Gallery />
         <FAQ />

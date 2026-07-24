@@ -15,16 +15,16 @@ import {
 import { useEffect, useState } from "react";
 
 const sectionLinks = [
-  { href: "#ana-sayfa", label: "Ana Sayfa", icon: Home },
-  { href: "#hakkinda", label: "Hakkında", icon: UserRound },
-  { href: "#ozgecmis", label: "Özgeçmiş", icon: GraduationCap },
-  { href: "#hizmetler", label: "Hizmetler", icon: Layers3 },
-  { href: "#meslek-kosesi", label: "Meslekler", icon: BriefcaseBusiness },
-  { href: "#sunum-kosesi", label: "Sunumlar", icon: Presentation },
-  { href: "#basari", label: "Başarı Hikâyeleri", icon: Trophy },
-  { href: "#etkinlikler", label: "Etkinlikler", icon: CalendarDays },
-  { href: "#sss", label: "Sık Sorulanlar", icon: CircleHelp },
-  { href: "#iletisim", label: "İletişim", icon: MessageCircle },
+  { href: "/#ana-sayfa", label: "Ana Sayfa", icon: Home },
+  { href: "/#hakkinda", label: "Hakkında", icon: UserRound },
+  { href: "/#ozgecmis", label: "Özgeçmiş", icon: GraduationCap },
+  { href: "/#hizmetler", label: "Hizmetler", icon: Layers3 },
+  { href: "/#meslek-kosesi", label: "Meslekler", icon: BriefcaseBusiness },
+  { href: "/#sunum-kosesi", label: "Sunumlar", icon: Presentation },
+  { href: "/#basari", label: "Başarı Hikâyeleri", icon: Trophy },
+  { href: "/#etkinlikler", label: "Etkinlikler", icon: CalendarDays },
+  { href: "/#sss", label: "Sık Sorulanlar", icon: CircleHelp },
+  { href: "/#iletisim", label: "İletişim", icon: MessageCircle },
 ] as const;
 
 export function SectionRail() {
@@ -32,7 +32,7 @@ export function SectionRail() {
 
   useEffect(() => {
     const sections = sectionLinks
-      .map(({ href }) => document.getElementById(href.slice(1)))
+      .map(({ href }) => document.getElementById(href.split("#")[1] ?? ""))
       .filter((section): section is HTMLElement => Boolean(section));
 
     const observer = new IntersectionObserver(
@@ -41,7 +41,7 @@ export function SectionRail() {
           .filter((entry) => entry.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
 
-        if (visible) setActiveHref(`#${visible.target.id}`);
+        if (visible) setActiveHref(`/#${visible.target.id}`);
       },
       { rootMargin: "-24% 0px -62%", threshold: [0, 0.1, 0.35] },
     );

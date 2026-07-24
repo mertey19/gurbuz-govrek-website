@@ -1,6 +1,7 @@
 "use client";
 
 import { Menu, MessageCircle } from "lucide-react";
+import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
@@ -9,7 +10,8 @@ import { cn } from "@/lib/utils";
 import { MobileMenu } from "./MobileMenu";
 
 const desktopNavigation = siteConfig.navigation.filter(
-  ({ href }) => !["#basari", "#etkinlikler", "#sss"].includes(href),
+  ({ href }) =>
+    !["/#ozgecmis", "/#basari", "/#yorumlar", "/#etkinlikler", "/#sss"].includes(href),
 );
 
 export function Header() {
@@ -35,14 +37,14 @@ export function Header() {
         )}
       >
         <Container className="site-header-inner flex h-20 max-w-[1500px] items-center justify-between gap-4 xl:h-22 xl:gap-5">
-          <a
-            href="#ana-sayfa"
+          <Link
+            href="/"
             className="site-header-brand shrink-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold xl:border-r xl:border-white/12 xl:pr-5 2xl:pr-8"
             aria-label="Gürbüz Gövrek ana sayfa"
           >
             <p className="font-serif text-lg font-semibold tracking-[0.11em] text-white sm:text-xl 2xl:text-[1.35rem]">GÜRBÜZ GÖVREK</p>
             <p className="mt-0.5 hidden whitespace-nowrap text-[9px] font-bold tracking-[0.18em] text-gold-light uppercase sm:block">Matematik Öğretmeni · Tercih Uzmanı</p>
-          </a>
+          </Link>
 
           <nav className="hidden min-w-0 flex-1 lg:block" aria-label="Ana navigasyon">
             <ul className="flex items-center justify-center gap-3 xl:gap-5 2xl:gap-7">
