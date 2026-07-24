@@ -19,11 +19,11 @@ export const services: Service[] = [
   },
   {
     id: "matematik",
-    title: "Matematik Akademik Takibi",
+    title: "Matematik Özel Ders ve Akademik Takip",
     description:
       "Konu eksiklerini belirler, öğrencinin seviyesine uygun çalışma planı ve soru çözüm yaklaşımı geliştiririz.",
     icon: "calculator",
-    href: "#matematik",
+    href: "/matematik-ozel-ders",
   },
   {
     id: "kocluk",

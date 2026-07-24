@@ -49,7 +49,7 @@ export function MobileMenu({
           <X aria-hidden="true" />
         </button>
       </div>
-      <nav className="mobile-menu-nav flex h-[calc(100%-5.5rem)] flex-col justify-center px-6" aria-label="Mobil navigasyon">
+      <nav className="mobile-menu-nav flex h-[calc(100%-5.5rem)] flex-col justify-start overflow-y-auto px-6 py-5" aria-label="Mobil navigasyon">
         <ul className="mobile-menu-links space-y-1">
           {siteConfig.navigation.map((item, index) => (
             <li key={item.href}>

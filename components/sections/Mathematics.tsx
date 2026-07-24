@@ -17,11 +17,14 @@ export function Mathematics() {
             <Image src="/images/mathematics-education.png" alt="Gürbüz Gövrek dijital tahtada matematik dersi anlatıyor" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover object-center" />
           </Reveal>
           <Reveal delay={0.08}>
-            <SectionTitle eyebrow="Matematik Eğitimi" title="Matematikte Güçlü Temel" description="Anlaşılır anlatım, sistemli çalışma ve düzenli geri bildirimle öğrencinin matematikle kurduğu ilişkiyi güçlendiriyoruz." />
+            <SectionTitle eyebrow="Matematik Özel Ders" title="Matematikte Güçlü Temel" description="Ortaokul, lise ve TYT–AYT hazırlığında anlaşılır anlatım, sistemli çalışma ve düzenli geri bildirimle öğrencinin matematikle kurduğu ilişkiyi güçlendiriyoruz." />
             <ul className="mt-8 grid gap-3 sm:grid-cols-2">
               {items.map((item) => <li key={item} className="flex items-center gap-3 rounded-sm border border-navy/8 bg-white px-4 py-3.5 text-sm font-medium text-ink/75"><span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-gold/16 text-blue-deep"><Check className="size-3.5" aria-hidden="true" /></span>{item}</li>)}
             </ul>
-            <Button href={whatsappUrl} external variant="whatsapp" className="mt-8">WhatsApp&apos;tan Bilgi Al</Button>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Button href="/matematik-ozel-ders" variant="navy">Özel Ders Detayları</Button>
+              <Button href={whatsappUrl} external variant="whatsapp">WhatsApp&apos;tan Bilgi Al</Button>
+            </div>
           </Reveal>
         </div>
       </Container>

@@ -109,12 +109,32 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
   assert.match(html, /Diyetisyenlik ve Eczacılık/i);
   assert.match(html, /Tercih Sürecinde Doğru Karar İçin Güncel Rehberler/i);
   assert.match(html, /\/blog\/denizlide-yks-tercih-danismani-nasil-secilir/i);
+  assert.match(html, /Matematik Özel Ders ve Akademik Takip/i);
+  assert.match(html, /href="\/matematik-ozel-ders"/i);
   assert.match(html, /\/images\/sunum-kosesi\/kontenjan\/01\.webp/i);
   assert.match(html, /\/resources\/meslek-tanitim\/tyt\/acil-yardim-ve-afet-yoneticisi\.pdf/i);
   assert.doesNotMatch(html, /Gizlilik Politikası|KVKK Aydınlatma Metni|Kullanım Koşulları/i);
   assert.match(html, /src="\/images\/hero-gurbuz-govrek\.png"/i);
   assert.doesNotMatch(html, /\/_vinext\/image/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|Building your site/i);
+});
+
+test("matematik özel ders sayfasını SEO verileriyle oluşturur", async () => {
+  const response = await render("/matematik-ozel-ders");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+
+  assert.match(html, /Matematikte Ezber Değil, Anlama ve Uygulama/i);
+  assert.match(html, /Ortaokul, lise ve TYT–AYT hazırlığında/i);
+  assert.match(html, /Seviye ve İhtiyaç Analizi/i);
+  assert.match(html, /Matematik Özel Ders Hakkında/i);
+  assert.match(html, /WhatsApp’tan Bilgi Al/i);
+  assert.match(html, /"@type":"Service"/i);
+  assert.match(html, /"@type":"FAQPage"/i);
+  assert.match(
+    html,
+    /rel="canonical" href="https:\/\/www\.xn--grbzgvrek-47a5dc\.com\.tr\/matematik-ozel-ders"/i,
+  );
 });
 
 test("blog liste sayfasını ve Denizli YKS tercih yazısını sunucu tarafında oluşturur", async () => {
@@ -184,9 +204,10 @@ test("sitemap blog adreslerini yalnızca kanonik alan adıyla üretir", async ()
   const xml = await response.text();
   const locations = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
 
-  assert.equal(locations.length, 7);
+  assert.equal(locations.length, 8);
   assert.ok(locations.every((location) => location.startsWith("https://www.xn--grbzgvrek-47a5dc.com.tr/")));
   assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/blog"));
+  assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/matematik-ozel-ders"));
   assert.ok(
     locations.includes(
       "https://www.xn--grbzgvrek-47a5dc.com.tr/blog/denizli-yks-tercih-danismanligi",

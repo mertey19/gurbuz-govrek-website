@@ -25,6 +25,7 @@ export const siteConfig = {
     { label: "Hakkında", href: "/#hakkinda" },
     { label: "Özgeçmiş", href: "/#ozgecmis" },
     { label: "Hizmetler", href: "/#hizmetler" },
+    { label: "Özel Ders", href: "/matematik-ozel-ders" },
     { label: "Meslekler", href: "/#meslek-kosesi" },
     { label: "Sunumlar", href: "/#sunum-kosesi" },
     { label: "Başarı Hikâyeleri", href: "/#basari" },
