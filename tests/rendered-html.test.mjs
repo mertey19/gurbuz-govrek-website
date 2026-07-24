@@ -111,6 +111,8 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
   assert.match(html, /\/blog\/denizlide-yks-tercih-danismani-nasil-secilir/i);
   assert.match(html, /Matematik Özel Ders ve Akademik Takip/i);
   assert.match(html, /href="\/matematik-ozel-ders"/i);
+  assert.match(html, /href="\/denizli-tercih-danismanligi"/i);
+  assert.match(html, /href="\/denizli-tercih-danismani"/i);
   assert.match(html, /href="\/denizli-yks-tercih-danismanligi"/i);
   assert.match(html, /href="\/denizli-ogrenci-koclugu"/i);
   assert.match(html, /href="\/universite-bolum-analizi"/i);
@@ -153,8 +155,18 @@ test("SEO hizmet ve uzmanlık sayfalarını ayrı kanonik adreslerle oluşturur"
   const pages = [
     {
       path: "/denizli-yks-tercih-danismanligi",
-      heading: /YKS Tercihlerinizi Veriye ve Sizi Tanıyan Bir Sürece Dayandırın/i,
+      heading: /Denizli Tercih Danışmanlığı ile YKS Tercihlerinizi Veriye Dayandırın/i,
       canonical: "/denizli-yks-tercih-danismanligi",
+    },
+    {
+      path: "/denizli-tercih-danismanligi",
+      heading: /Denizli Tercih Danışmanlığı: Doğru Üniversite ve Bölüm İçin Kişisel Yol Haritası/i,
+      canonical: "/denizli-tercih-danismanligi",
+    },
+    {
+      path: "/denizli-tercih-danismani",
+      heading: /Denizli Tercih Danışmanı Arayan Öğrenciler İçin Veriye Dayalı Rehberlik/i,
+      canonical: "/denizli-tercih-danismani",
     },
     {
       path: "/denizli-ogrenci-koclugu",
@@ -188,9 +200,9 @@ test("SEO hizmet ve uzmanlık sayfalarını ayrı kanonik adreslerle oluşturur"
   assert.equal(profileResponse.status, 200);
   const profileHtml = await profileResponse.text();
   assert.match(profileHtml, /Matematik Öğretmenliği ile Tercih Rehberliğini Buluşturan Eğitimci/i);
-  assert.match(profileHtml, /Basına Yansıyan Eğitim Çalışmaları/i);
-  assert.match(profileHtml, /YGS’de Gazipaşa birincisi Körfez’den/i);
-  assert.match(profileHtml, /LYS’de ilk bine girenlere plaket/i);
+  assert.doesNotMatch(profileHtml, /Basına Yansıyan Eğitim Çalışmaları/i);
+  assert.doesNotMatch(profileHtml, /YGS’de Gazipaşa birincisi Körfez’den/i);
+  assert.doesNotMatch(profileHtml, /LYS’de ilk bine girenlere plaket/i);
   assert.match(profileHtml, /"@type":"ProfilePage"/i);
   assert.match(
     profileHtml,
@@ -265,7 +277,7 @@ test("sitemap blog adreslerini yalnızca kanonik alan adıyla üretir", async ()
   const xml = await response.text();
   const locations = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
 
-  assert.equal(locations.length, 12);
+  assert.equal(locations.length, 14);
   assert.ok(locations.every((location) => location.startsWith("https://www.xn--grbzgvrek-47a5dc.com.tr/")));
   assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/blog"));
   assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/matematik-ozel-ders"));
@@ -273,6 +285,14 @@ test("sitemap blog adreslerini yalnızca kanonik alan adıyla üretir", async ()
     locations.includes(
       "https://www.xn--grbzgvrek-47a5dc.com.tr/denizli-yks-tercih-danismanligi",
     ),
+  );
+  assert.ok(
+    locations.includes(
+      "https://www.xn--grbzgvrek-47a5dc.com.tr/denizli-tercih-danismanligi",
+    ),
+  );
+  assert.ok(
+    locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/denizli-tercih-danismani"),
   );
   assert.ok(
     locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/denizli-ogrenci-koclugu"),

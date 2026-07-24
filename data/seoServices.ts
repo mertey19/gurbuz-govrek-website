@@ -3,6 +3,7 @@ export type SeoServicePage = {
   serviceName: string;
   title: string;
   description: string;
+  keywords?: readonly string[];
   eyebrow: string;
   heading: string;
   lead: string;
@@ -40,14 +41,21 @@ export type SeoServicePage = {
 
 export const yksPreferenceService: SeoServicePage = {
   path: "/denizli-yks-tercih-danismanligi",
-  serviceName: "YKS Tercih Danışmanlığı",
-  title: "Denizli YKS Tercih Danışmanlığı | Gürbüz Gövrek",
+  serviceName: "Denizli YKS Tercih Danışmanlığı",
+  title: "Denizli Tercih Danışmanlığı | YKS Tercih Danışmanı",
   description:
-    "Denizli’de yüz yüze ve online YKS tercih danışmanlığı. Başarı sırası, kontenjan, bölüm olanakları ve öğrenci hedefleriyle kişisel tercih yol haritası.",
-  eyebrow: "Denizli · Yüz Yüze ve Online",
-  heading: "YKS Tercihlerinizi Veriye ve Sizi Tanıyan Bir Sürece Dayandırın",
+    "Denizli tercih danışmanlığı ve YKS tercih danışmanı desteği. Başarı sırası, kontenjan, bölüm olanakları ve öğrenci hedefleriyle kişisel tercih listesi.",
+  keywords: [
+    "Denizli tercih danışmanlığı",
+    "Denizli tercih danışmanı",
+    "Denizli YKS tercih danışmanlığı",
+    "YKS tercih danışmanı",
+    "üniversite tercih danışmanlığı Denizli",
+  ],
+  eyebrow: "Denizli Tercih Danışmanlığı · Yüz Yüze ve Online",
+  heading: "Denizli Tercih Danışmanlığı ile YKS Tercihlerinizi Veriye Dayandırın",
   lead:
-    "Tercih listesi yalnızca puanların sıralandığı bir tablo değildir. Öğrencinin hedefi, ilgi alanı, şehir ve kampüs beklentisi ile güncel program verileri birlikte değerlendirilerek açıklanabilir bir karar planına dönüştürülür.",
+    "Denizli’de tercih danışmanı arayan öğrenciler için tercih listesi yalnızca puanların sıralandığı bir tablo değildir. Öğrencinin hedefi, ilgi alanı, şehir ve kampüs beklentisi ile güncel program verileri birlikte değerlendirilerek açıklanabilir bir karar planına dönüştürülür.",
   image: "/images/one-to-one-consulting.png",
   imageAlt:
     "Gürbüz Gövrek Denizli’de öğrenciyle bire bir YKS tercih danışmanlığı görüşmesi yapıyor",
@@ -136,19 +144,263 @@ export const yksPreferenceService: SeoServicePage = {
   ],
   related: [
     {
+      label: "Denizli Tercih Danışmanlığı",
+      href: "/denizli-tercih-danismanligi",
+      description: "Tercih sürecinin kapsamını ve görüşmede nasıl ilerlediğimizi inceleyin.",
+    },
+    {
+      label: "Denizli Tercih Danışmanı",
+      href: "/denizli-tercih-danismani",
+      description: "Tercih danışmanı seçerken bakılması gereken ölçütleri görün.",
+    },
+    {
       label: "Üniversite ve Bölüm Analizi",
       href: "/universite-bolum-analizi",
       description: "Programları akademik yapı, kampüs ve kariyer olanaklarıyla karşılaştırın.",
     },
+  ],
+};
+
+export const denizliPreferenceConsultingService: SeoServicePage = {
+  path: "/denizli-tercih-danismanligi",
+  serviceName: "Denizli Tercih Danışmanlığı",
+  title: "Denizli Tercih Danışmanlığı | Üniversite Tercih Danışmanı",
+  description:
+    "Denizli tercih danışmanlığı hizmetiyle üniversite, bölüm ve şehir seçeneklerini veriye dayalı değerlendirin. YKS tercih döneminde yüz yüze ve online destek.",
+  keywords: [
+    "Denizli tercih danışmanlığı",
+    "tercih danışmanlığı Denizli",
+    "üniversite tercih danışmanlığı",
+    "YKS tercih danışmanlığı",
+    "Denizli üniversite tercih danışmanı",
+  ],
+  eyebrow: "Denizli · Üniversite Tercih Süreci",
+  heading: "Denizli Tercih Danışmanlığı: Doğru Üniversite ve Bölüm İçin Kişisel Yol Haritası",
+  lead:
+    "Tercih dönemi, öğrencinin yalnızca sıralamasına göre değil; hedeflerine, güçlü yönlerine, bölüm beklentilerine ve aileyle birlikte konuşulan gerçek koşullara göre planlanmalıdır. Denizli tercih danışmanlığı sürecinde amaç, öğrencinin neden o listeyi yazdığını açıkça anlayabildiği bir karar zemini oluşturmaktır.",
+  image: "/images/preference-analysis.png",
+  imageAlt:
+    "Denizli tercih danışmanlığı görüşmesinde üniversite ve bölüm seçenekleri değerlendiriliyor",
+  highlights: [
+    { value: "Denizli", label: "Yüz yüze görüşme" },
+    { value: "Online", label: "Farklı şehirlerden destek" },
+    { value: "Veriye Dayalı", label: "Tercih listesi" },
+  ],
+  audienceTitle: "Denizli Tercih Danışmanlığı Kimler İçin Uygun?",
+  audienceIntro:
+    "Öğrenci ve velinin aynı masada daha sakin, daha açık ve daha veriye dayalı karar verebilmesi için yapılandırılır.",
+  audience: [
     {
-      label: "Öğrenci Koçluğu",
-      href: "/denizli-ogrenci-koclugu",
-      description: "Hedef, çalışma düzeni ve takip sürecini birlikte planlayın.",
+      title: "Üniversite ve bölüm kararı netleşmeyen öğrenciler",
+      description:
+        "Benzer görünen bölümlerin ders planları, mezuniyet sonrası alanları ve öğrencinin ilgileri birlikte değerlendirilir.",
     },
     {
-      label: "YKS Tercih Rehberi",
-      href: "/blog",
-      description: "Tercih dönemine yönelik güncel ve kaynaklı yazıları inceleyin.",
+      title: "Tercih listesindeki riskleri görmek isteyen aileler",
+      description:
+        "Sıralama aralıkları, kontenjan değişimleri ve özel koşullar tek tek konuşularak listenin mantığı netleştirilir.",
+    },
+    {
+      title: "Denizli’de yüz yüze tercih danışmanı arayanlar",
+      description:
+        "Görüşmeler randevu ile planlanır; ihtiyaç hâlinde online destekle süreç devam ettirilebilir.",
+    },
+  ],
+  processTitle: "Tercih Danışmanlığı Görüşmesi Nasıl İlerler?",
+  processIntro:
+    "Süreç, öğrencinin kendisini ve seçeneklerini daha doğru okumasını sağlayan aşamalı bir değerlendirmeyle ilerler.",
+  process: [
+    {
+      title: "Öğrencinin hedefini ve beklentisini anlama",
+      description:
+        "Puan türü, başarı sırası, şehir beklentisi, bölüm ilgisi ve aile koşulları açıkça konuşulur.",
+    },
+    {
+      title: "Üniversite ve bölüm seçeneklerini karşılaştırma",
+      description:
+        "Ders içerikleri, kontenjanlar, özel koşullar, kampüs ve kariyer olanakları aynı çerçevede incelenir.",
+    },
+    {
+      title: "Tercih listesini risk dengesine göre kurma",
+      description:
+        "Liste; iddialı, dengeli ve daha güvenli seçenekler arasında öğrencinin hedefleriyle uyumlu biçimde düzenlenir.",
+    },
+    {
+      title: "Son kontrol ve başvuru öncesi netleştirme",
+      description:
+        "Tercih sırası, özel koşullar ve kritik tarihler yeniden kontrol edilerek öğrencinin içi rahat bir listeyle ilerlemesi sağlanır.",
+    },
+  ],
+  benefitsTitle: "Görüşmede Hangi Başlıklar Ele Alınır?",
+  benefitsIntro:
+    "Hazır liste yerine öğrencinin kendi önceliklerini taşıyan, gerekçeli ve açıklanabilir bir tercih planı hedeflenir.",
+  benefits: [
+    "Denizli’de yüz yüze veya online tercih danışmanlığı planı",
+    "YKS başarı sırası ve puan türünün gerçekçi yorumlanması",
+    "Üniversite, bölüm, şehir ve kampüs seçeneklerinin karşılaştırılması",
+    "Kontenjan değişimleri ve geçmiş yıl eğilimlerinin değerlendirilmesi",
+    "Özel koşullar, burs, ücret ve program ayrıntılarının kontrol edilmesi",
+    "Öğrenci ve veli için anlaşılır tercih stratejisi oluşturulması",
+  ],
+  faqs: [
+    {
+      question: "Denizli tercih danışmanlığı yüz yüze mi yapılıyor?",
+      answer:
+        "Denizli’de randevu ile yüz yüze görüşme planlanabilir. Farklı şehirlerdeki öğrenciler veya devam görüşmeleri için online seçenek de kullanılabilir.",
+    },
+    {
+      question: "Tercih danışmanlığı sadece YKS öğrencileri için mi?",
+      answer:
+        "Ana çalışma YKS ve üniversite tercih dönemine yöneliktir. Bölüm, şehir, vakıf-devlet üniversitesi karşılaştırması gibi karar başlıkları da ayrıca ele alınabilir.",
+    },
+    {
+      question: "Tercih listesi kaç görüşmede hazırlanır?",
+      answer:
+        "Öğrencinin seçenekleri ve hazırlık durumuna göre değişir. Çoğu süreçte ilk analiz, liste taslağı ve son kontrol adımları ayrı ayrı değerlendirilir.",
+    },
+    {
+      question: "Yerleşme garantisi veriliyor mu?",
+      answer:
+        "Hayır. Tercih danışmanlığının amacı garanti vermek değil; verileri doğru okuyarak belirsizliği azaltan, gerekçeli ve dengeli bir liste oluşturmaktır.",
+    },
+  ],
+  related: [
+    {
+      label: "Denizli YKS Tercih Danışmanlığı",
+      href: "/denizli-yks-tercih-danismanligi",
+      description: "YKS tercih dönemine özel ayrıntılı çalışma sürecini inceleyin.",
+    },
+    {
+      label: "Denizli Tercih Danışmanı",
+      href: "/denizli-tercih-danismani",
+      description: "Tercih danışmanı seçerken dikkat edilecek ölçütleri okuyun.",
+    },
+    {
+      label: "Üniversite ve Bölüm Analizi",
+      href: "/universite-bolum-analizi",
+      description: "Bölüm ve üniversite seçeneklerini karşılaştırmalı değerlendirin.",
+    },
+  ],
+};
+
+export const denizliPreferenceConsultantService: SeoServicePage = {
+  path: "/denizli-tercih-danismani",
+  serviceName: "Denizli Tercih Danışmanı",
+  title: "Denizli Tercih Danışmanı | Gürbüz Gövrek",
+  description:
+    "Denizli tercih danışmanı Gürbüz Gövrek ile YKS tercih listesi, üniversite-bölüm analizi, başarı sırası ve öğrenci hedefleri birlikte değerlendirilir.",
+  keywords: [
+    "Denizli tercih danışmanı",
+    "tercih danışmanı Denizli",
+    "YKS tercih danışmanı Denizli",
+    "üniversite tercih danışmanı",
+    "Gürbüz Gövrek tercih danışmanı",
+  ],
+  eyebrow: "Tercih Danışmanı · Denizli",
+  heading: "Denizli Tercih Danışmanı Arayan Öğrenciler İçin Veriye Dayalı Rehberlik",
+  lead:
+    "İyi bir tercih danışmanı öğrencinin yerine karar vermez; öğrencinin seçenekleri daha iyi görmesini, riskleri anlamasını ve kendi hedefiyle uyumlu bir liste hazırlamasını sağlar. Gürbüz Gövrek ile süreç, matematik öğretmenliği deneyimi ve tercih rehberliği bakışıyla kişisel olarak ele alınır.",
+  image: "/images/one-to-one-consulting.png",
+  imageAlt:
+    "Denizli tercih danışmanı Gürbüz Gövrek öğrenciyle tercih listesi üzerine görüşüyor",
+  highlights: [
+    { value: "Bire Bir", label: "Tercih görüşmesi" },
+    { value: "Kişisel", label: "Öğrenci hedefleri" },
+    { value: "Kontrollü", label: "Liste son kontrolü" },
+  ],
+  audienceTitle: "Tercih Danışmanı Seçerken Nelere Bakılmalı?",
+  audienceIntro:
+    "Tercih döneminde en değerli şey, öğrenciyi panikten çıkarıp kararları anlaşılır ölçütlerle konuşabilmektir.",
+  audience: [
+    {
+      title: "Veriyi açıklayarak çalışan bir danışman",
+      description:
+        "Başarı sırası, kontenjan ve önceki yıl verileri tek başına değil, öğrencinin hedefleriyle birlikte yorumlanmalıdır.",
+    },
+    {
+      title: "Öğrenciyi tanımaya zaman ayıran yaklaşım",
+      description:
+        "Bölüm ilgisi, şehir beklentisi, akademik alışkanlıklar ve aile koşulları kararın doğal parçası olarak ele alınır.",
+    },
+    {
+      title: "Son kararı öğrenciyle birlikte netleştiren süreç",
+      description:
+        "Liste yazılırken öğrencinin neden o sırayı tercih ettiğini anlayabilmesi ve içinin rahat olması hedeflenir.",
+    },
+  ],
+  processTitle: "Gürbüz Gövrek ile Tercih Danışmanı Süreci",
+  processIntro:
+    "Görüşme; hızlı, ezbere ve tek tip bir liste yerine öğrencinin seçeneklerini açan bir çalışma olarak tasarlanır.",
+  process: [
+    {
+      title: "Ön görüşme ve ihtiyaç analizi",
+      description:
+        "Öğrencinin başarı sırası, hedefleri, kararsız kaldığı bölümler ve aile beklentileri dinlenir.",
+    },
+    {
+      title: "Bölüm ve üniversite seçeneklerini daraltma",
+      description:
+        "Benzer bölümler, şehirler ve üniversiteler arasında öğrencinin önceliklerine göre karşılaştırma yapılır.",
+    },
+    {
+      title: "Tercih listesi stratejisi oluşturma",
+      description:
+        "Listenin üst, orta ve güvenli alanları dengelenir; özel koşullar ve sıralama riskleri kontrol edilir.",
+    },
+    {
+      title: "Son karar ve başvuru kontrolü",
+      description:
+        "Tercih sırası, program kodları ve dikkat edilmesi gereken detaylar başvuru öncesinde tekrar gözden geçirilir.",
+    },
+  ],
+  benefitsTitle: "Denizli Tercih Danışmanı Görüşmesinde Kazanımlar",
+  benefitsIntro:
+    "Amaç öğrencinin sadece bir liste alması değil, kararının arkasındaki gerekçeyi anlayarak ilerlemesidir.",
+  benefits: [
+    "Tercih sürecinde panik ve bilgi karmaşasının azalması",
+    "YKS başarı sırasının daha gerçekçi yorumlanması",
+    "Üniversite ve bölüm alternatiflerinin netleşmesi",
+    "Aile ve öğrencinin aynı karar dilinde buluşması",
+    "Özel koşulların ve kritik detayların gözden kaçmaması",
+    "Başvuru öncesinde dengeli ve açıklanabilir son liste",
+  ],
+  faqs: [
+    {
+      question: "Denizli tercih danışmanı ile ne zaman görüşülmeli?",
+      answer:
+        "Sonuçlar açıklandıktan sonra liste daha somut hazırlanır. Ancak bölüm ve üniversite araştırması için sonuç öncesinde de ön görüşme yapılabilir.",
+    },
+    {
+      question: "Sadece liste hazırlamak için görüşme yapılabilir mi?",
+      answer:
+        "Evet, fakat listenin sağlam olması için öğrencinin hedefleri, özel koşullar ve bölüm seçenekleri de birlikte değerlendirilir.",
+    },
+    {
+      question: "Görüşmeye veli katılabilir mi?",
+      answer:
+        "Evet. Öğrencinin karar alanı korunarak velinin soruları ve kaygıları da açık biçimde ele alınabilir.",
+    },
+    {
+      question: "Online tercih danışmanı desteği var mı?",
+      answer:
+        "Evet. Denizli dışındaki öğrenciler için online görüşme yapılabilir; belge ve liste kontrolleri dijital olarak paylaşılabilir.",
+    },
+  ],
+  related: [
+    {
+      label: "Denizli Tercih Danışmanlığı",
+      href: "/denizli-tercih-danismanligi",
+      description: "Tercih sürecinin kapsamını ve görüşme başlıklarını inceleyin.",
+    },
+    {
+      label: "YKS Tercih Danışmanlığı",
+      href: "/denizli-yks-tercih-danismanligi",
+      description: "YKS tercih listesi hazırlama sürecinin ayrıntılarına bakın.",
+    },
+    {
+      label: "Denizli’de YKS Tercih Danışmanı Nasıl Seçilir?",
+      href: "/blog/denizlide-yks-tercih-danismani-nasil-secilir",
+      description: "Danışman seçerken dikkat edilmesi gereken ölçütleri blog yazısında okuyun.",
     },
   ],
 };

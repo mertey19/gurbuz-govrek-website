@@ -34,6 +34,8 @@ export default function Home() {
       telephone: siteConfig.contact.phone,
       sameAs: [siteConfig.contact.instagram],
       knowsAbout: [
+        "Denizli Tercih Danışmanlığı",
+        "Denizli Tercih Danışmanı",
         "Matematik Eğitimi",
         "YKS Tercih Danışmanlığı",
         "Üniversite ve Bölüm Analizi",
@@ -54,6 +56,8 @@ export default function Home() {
       },
       sameAs: [siteConfig.contact.instagram],
       serviceType: [
+        "Denizli Tercih Danışmanlığı",
+        "Denizli Tercih Danışmanı",
         "Matematik Eğitimi",
         "YKS Tercih Danışmanlığı",
         "Üniversite ve Bölüm Analizi",

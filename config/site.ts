@@ -5,7 +5,7 @@ export const siteConfig = {
   title: "Gürbüz Gövrek | Matematik Öğretmeni ve Tercih Uzmanı",
   tagLine: "Matematik Öğretmeni · Tercih Uzmanı",
   description:
-    "Matematik eğitimi, YKS tercih danışmanlığı, üniversite ve bölüm analizi, öğrenci koçluğu ve kişiye özel tercih yol haritası.",
+    "Denizli tercih danışmanlığı, YKS tercih danışmanı desteği, matematik eğitimi, üniversite ve bölüm analizi, öğrenci koçluğu ve kişiye özel tercih yol haritası.",
   url: CANONICAL_SITE_URL,
   whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "905013653371",
   whatsappMessage:
@@ -43,13 +43,14 @@ export const siteNavigationGroups = [
     items: [
       { label: "Hakkımda", href: "/gurbuz-govrek", description: "Eğitim yaklaşımı ve rehberlik anlayışı" },
       { label: "Özgeçmiş", href: "/gurbuz-govrek#egitim-yolculugu", description: "Eğitim ve mesleki deneyim" },
-      { label: "Basında Gürbüz Gövrek", href: "/gurbuz-govrek#basinda", description: "Doğrulanabilir haber ve basın arşivi" },
     ],
   },
   {
     label: "Eğitim & Danışmanlık",
     items: [
       { label: "Tüm Hizmetler", href: "/#hizmetler", description: "Çalışma alanlarının tamamı" },
+      { label: "Denizli Tercih Danışmanlığı", href: "/denizli-tercih-danismanligi", description: "Üniversite tercih süreci için kişisel yol haritası" },
+      { label: "Denizli Tercih Danışmanı", href: "/denizli-tercih-danismani", description: "Tercih danışmanı seçerken dikkat edilecek ölçütler" },
       { label: "YKS Tercih Danışmanlığı", href: "/denizli-yks-tercih-danismanligi", description: "Kişiye özel tercih yol haritası" },
       { label: "Üniversite ve Bölüm Analizi", href: "/universite-bolum-analizi", description: "Programları verilerle karşılaştırma" },
       { label: "Öğrenci Koçluğu", href: "/denizli-ogrenci-koclugu", description: "Hedef, planlama ve akademik takip" },

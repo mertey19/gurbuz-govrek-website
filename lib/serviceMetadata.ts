@@ -8,6 +8,7 @@ export function createServiceMetadata(page: SeoServicePage): Metadata {
   return {
     title: page.title,
     description: page.description,
+    keywords: page.keywords,
     alternates: { canonical: url },
     authors: [{ name: siteConfig.name, url: `${CANONICAL_SITE_URL}/gurbuz-govrek` }],
     robots: { index: true, follow: true },

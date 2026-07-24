@@ -3,11 +3,11 @@ import type { Service } from "@/types";
 export const services: Service[] = [
   {
     id: "tercih",
-    title: "Bire Bir Tercih Danışmanlığı",
+    title: "Denizli Tercih Danışmanlığı",
     description:
-      "Hedef, ilgi alanı ve başarı sırasını birlikte değerlendirerek kişisel bir tercih stratejisi oluştururuz.",
+      "Denizli’de tercih danışmanı desteğiyle hedef, ilgi alanı ve başarı sırasını birlikte değerlendirerek kişisel tercih stratejisi oluştururuz.",
     icon: "messages",
-    href: "/denizli-yks-tercih-danismanligi",
+    href: "/denizli-tercih-danismanligi",
   },
   {
     id: "universite",

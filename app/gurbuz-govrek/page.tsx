@@ -5,7 +5,6 @@ import {
   BookOpenText,
   GraduationCap,
   MessageCircle,
-  Newspaper,
   ShieldCheck,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
@@ -16,7 +15,7 @@ import { CANONICAL_SITE_URL, siteConfig, whatsappUrl } from "@/config/site";
 const pageUrl = `${CANONICAL_SITE_URL}/gurbuz-govrek`;
 const title = "Gürbüz Gövrek Kimdir? | Matematik Öğretmeni ve Tercih Uzmanı";
 const description =
-  "Gürbüz Gövrek’in eğitim yolculuğu, matematik öğretmenliği, öğrenci rehberliği yaklaşımı, çalışma alanları ve basına yansıyan eğitim çalışmaları.";
+  "Gürbüz Gövrek’in eğitim yolculuğu, matematik öğretmenliği, öğrenci rehberliği yaklaşımı ve çalışma alanları.";
 
 export const metadata: Metadata = {
   title,
@@ -77,25 +76,6 @@ const expertise = [
     title: "Üniversite ve Bölüm Analizi",
     text: "Ders planı, akademik yapı, kontenjan, kampüs ve kariyer olanaklarını karşılaştırmalı değerlendirme.",
     href: "/universite-bolum-analizi",
-  },
-] as const;
-
-const pressArchive = [
-  {
-    source: "Haber3",
-    date: "20 Nisan 2012",
-    title: "YGS’de Gazipaşa birincisi Körfez’den",
-    description:
-      "Gazipaşa’daki YGS başarısına ilişkin haberde Gürbüz Gövrek’in eğitim yöneticisi olarak değerlendirmelerine yer verildi.",
-    href: "https://www.haber3.com/guncel/ygsde-gazipasa-birincisi-korfezden-haberi-1257476",
-  },
-  {
-    source: "Haberin Adresi",
-    date: "17 Temmuz 2014",
-    title: "LYS’de ilk bine girenlere plaket",
-    description:
-      "Isparta’daki öğrenci başarılarının aktarıldığı haberde Gürbüz Gövrek’in eğitim koordinatörü olarak görüşleri yayımlandı.",
-    href: "https://www.haberinadresi.com/diger/lysde-ilk-bine-girenlere-plaket-h7321-189326h",
   },
 ] as const;
 
@@ -277,56 +257,6 @@ export default function GurbuzGovrekPage() {
                   </span>
                   <span className="mt-4 block text-sm leading-7 text-ink/62">{item.text}</span>
                 </Link>
-              ))}
-            </div>
-          </Container>
-        </section>
-
-        <section id="basinda" className="section-space scroll-mt-24 bg-cream">
-          <Container>
-            <div className="grid items-end gap-8 lg:grid-cols-[1fr_.75fr]">
-              <div>
-                <p className="eyebrow">Basında Gürbüz Gövrek</p>
-                <h2 className="mt-5 font-serif text-4xl font-semibold leading-tight text-navy sm:text-5xl">
-                  Basına Yansıyan Eğitim Çalışmaları
-                </h2>
-              </div>
-              <p className="text-base leading-8 text-ink/62">
-                Aşağıdaki bağlantılar, bağımsız haber kuruluşlarında yayımlanmış arşiv
-                içerikleridir. Kaynak başlığı ve yayın tarihiyle birlikte sunulmuştur.
-              </p>
-            </div>
-            <div className="mt-12 grid gap-5 lg:grid-cols-2">
-              {pressArchive.map((item) => (
-                <article
-                  key={item.href}
-                  className="rounded-sm border border-navy/10 bg-white p-7 shadow-[0_16px_45px_rgba(7,26,51,.06)] sm:p-8"
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="flex size-11 items-center justify-center rounded-sm bg-navy text-gold-light">
-                      <Newspaper className="size-5" aria-hidden="true" />
-                    </span>
-                    <div>
-                      <p className="text-xs font-extrabold tracking-[.13em] text-blue-deep uppercase">
-                        {item.source}
-                      </p>
-                      <p className="mt-1 text-xs text-ink/45">{item.date}</p>
-                    </div>
-                  </div>
-                  <h3 className="mt-6 font-serif text-2xl font-semibold leading-tight text-navy">
-                    {item.title}
-                  </h3>
-                  <p className="mt-4 text-sm leading-7 text-ink/62">{item.description}</p>
-                  <a
-                    href={item.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-bold text-blue-deep focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-gold"
-                  >
-                    Haberi kaynağında aç
-                    <ArrowUpRight className="size-4" aria-hidden="true" />
-                  </a>
-                </article>
               ))}
             </div>
           </Container>

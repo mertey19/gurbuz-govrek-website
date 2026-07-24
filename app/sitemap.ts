@@ -29,6 +29,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.95,
     },
     {
+      url: `${CANONICAL_SITE_URL}/denizli-tercih-danismanligi`,
+      lastModified: new Date("2026-07-24"),
+      changeFrequency: "monthly",
+      priority: 0.95,
+    },
+    {
+      url: `${CANONICAL_SITE_URL}/denizli-tercih-danismani`,
+      lastModified: new Date("2026-07-24"),
+      changeFrequency: "monthly",
+      priority: 0.95,
+    },
+    {
       url: `${CANONICAL_SITE_URL}/denizli-ogrenci-koclugu`,
       lastModified: new Date("2026-07-24"),
       changeFrequency: "monthly",
