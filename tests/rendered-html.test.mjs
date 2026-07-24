@@ -111,6 +111,10 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
   assert.match(html, /\/blog\/denizlide-yks-tercih-danismani-nasil-secilir/i);
   assert.match(html, /Matematik Özel Ders ve Akademik Takip/i);
   assert.match(html, /href="\/matematik-ozel-ders"/i);
+  assert.match(html, /href="\/denizli-yks-tercih-danismanligi"/i);
+  assert.match(html, /href="\/denizli-ogrenci-koclugu"/i);
+  assert.match(html, /href="\/universite-bolum-analizi"/i);
+  assert.match(html, /href="\/gurbuz-govrek"/i);
   assert.match(html, /Hemen Ara/i);
   assert.match(html, /aria-label="\+90 501 365 33 71 numarasını hemen ara"/i);
   assert.match(html, /Ben Kimim\?/i);
@@ -142,6 +146,55 @@ test("matematik özel ders sayfasını SEO verileriyle oluşturur", async () => 
   assert.match(
     html,
     /rel="canonical" href="https:\/\/www\.xn--grbzgvrek-47a5dc\.com\.tr\/matematik-ozel-ders"/i,
+  );
+});
+
+test("SEO hizmet ve uzmanlık sayfalarını ayrı kanonik adreslerle oluşturur", async () => {
+  const pages = [
+    {
+      path: "/denizli-yks-tercih-danismanligi",
+      heading: /YKS Tercihlerinizi Veriye ve Sizi Tanıyan Bir Sürece Dayandırın/i,
+      canonical: "/denizli-yks-tercih-danismanligi",
+    },
+    {
+      path: "/denizli-ogrenci-koclugu",
+      heading: /Hedefi Günlük Çalışma Düzenine Dönüştüren Kişisel Takip/i,
+      canonical: "/denizli-ogrenci-koclugu",
+    },
+    {
+      path: "/universite-bolum-analizi",
+      heading: /Bölüm Adının Ötesine Geçin/i,
+      canonical: "/universite-bolum-analizi",
+    },
+  ];
+
+  for (const page of pages) {
+    const response = await render(page.path);
+    assert.equal(response.status, 200);
+    const html = await response.text();
+    assert.match(html, page.heading);
+    assert.match(html, /"@type":"Service"/i);
+    assert.match(html, /"@type":"FAQPage"/i);
+    assert.match(
+      html,
+      new RegExp(
+        `rel="canonical" href="https:\\/\\/www\\.xn--grbzgvrek-47a5dc\\.com\\.tr${page.canonical}"`,
+        "i",
+      ),
+    );
+  }
+
+  const profileResponse = await render("/gurbuz-govrek");
+  assert.equal(profileResponse.status, 200);
+  const profileHtml = await profileResponse.text();
+  assert.match(profileHtml, /Matematik Öğretmenliği ile Tercih Rehberliğini Buluşturan Eğitimci/i);
+  assert.match(profileHtml, /Basına Yansıyan Eğitim Çalışmaları/i);
+  assert.match(profileHtml, /YGS’de Gazipaşa birincisi Körfez’den/i);
+  assert.match(profileHtml, /LYS’de ilk bine girenlere plaket/i);
+  assert.match(profileHtml, /"@type":"ProfilePage"/i);
+  assert.match(
+    profileHtml,
+    /rel="canonical" href="https:\/\/www\.xn--grbzgvrek-47a5dc\.com\.tr\/gurbuz-govrek"/i,
   );
 });
 
@@ -212,10 +265,22 @@ test("sitemap blog adreslerini yalnızca kanonik alan adıyla üretir", async ()
   const xml = await response.text();
   const locations = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
 
-  assert.equal(locations.length, 8);
+  assert.equal(locations.length, 12);
   assert.ok(locations.every((location) => location.startsWith("https://www.xn--grbzgvrek-47a5dc.com.tr/")));
   assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/blog"));
   assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/matematik-ozel-ders"));
+  assert.ok(
+    locations.includes(
+      "https://www.xn--grbzgvrek-47a5dc.com.tr/denizli-yks-tercih-danismanligi",
+    ),
+  );
+  assert.ok(
+    locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/denizli-ogrenci-koclugu"),
+  );
+  assert.ok(
+    locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/universite-bolum-analizi"),
+  );
+  assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/gurbuz-govrek"));
   assert.ok(
     locations.includes(
       "https://www.xn--grbzgvrek-47a5dc.com.tr/blog/denizli-yks-tercih-danismanligi",

@@ -22,6 +22,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.9,
     },
+    {
+      url: `${CANONICAL_SITE_URL}/denizli-yks-tercih-danismanligi`,
+      lastModified: new Date("2026-07-24"),
+      changeFrequency: "monthly",
+      priority: 0.95,
+    },
+    {
+      url: `${CANONICAL_SITE_URL}/denizli-ogrenci-koclugu`,
+      lastModified: new Date("2026-07-24"),
+      changeFrequency: "monthly",
+      priority: 0.85,
+    },
+    {
+      url: `${CANONICAL_SITE_URL}/universite-bolum-analizi`,
+      lastModified: new Date("2026-07-24"),
+      changeFrequency: "monthly",
+      priority: 0.85,
+    },
+    {
+      url: `${CANONICAL_SITE_URL}/gurbuz-govrek`,
+      lastModified: new Date("2026-07-24"),
+      changeFrequency: "monthly",
+      priority: 0.85,
+    },
   ];
 
   return [

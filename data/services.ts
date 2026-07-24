@@ -7,7 +7,7 @@ export const services: Service[] = [
     description:
       "Hedef, ilgi alanı ve başarı sırasını birlikte değerlendirerek kişisel bir tercih stratejisi oluştururuz.",
     icon: "messages",
-    href: "#danismanlik",
+    href: "/denizli-yks-tercih-danismanligi",
   },
   {
     id: "universite",
@@ -15,7 +15,7 @@ export const services: Service[] = [
     description:
       "Programları; akademik yapı, kontenjan, kampüs ve kariyer olanaklarıyla karşılaştırmalı olarak inceleriz.",
     icon: "university",
-    href: "#analiz-merkezi",
+    href: "/universite-bolum-analizi",
   },
   {
     id: "matematik",
@@ -31,7 +31,7 @@ export const services: Service[] = [
     description:
       "Gerçekçi hedefler, düzenli takip ve açık geri bildirimle öğrencinin çalışma düzenini güçlendiririz.",
     icon: "compass",
-    href: "#danismanlik",
+    href: "/denizli-ogrenci-koclugu",
   },
   {
     id: "kampus",

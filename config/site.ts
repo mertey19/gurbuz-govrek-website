@@ -22,8 +22,8 @@ export const siteConfig = {
   },
   navigation: [
     { label: "Ana Sayfa", href: "/#ana-sayfa" },
-    { label: "Hakkında", href: "/#hakkinda" },
-    { label: "Özgeçmiş", href: "/#ozgecmis" },
+    { label: "Hakkında", href: "/gurbuz-govrek" },
+    { label: "Özgeçmiş", href: "/gurbuz-govrek#egitim-yolculugu" },
     { label: "Hizmetler", href: "/#hizmetler" },
     { label: "Özel Ders", href: "/matematik-ozel-ders" },
     { label: "Meslekler", href: "/#meslek-kosesi" },
@@ -41,17 +41,18 @@ export const siteNavigationGroups = [
   {
     label: "Ben Kimim?",
     items: [
-      { label: "Hakkımda", href: "/#hakkinda", description: "Eğitim yaklaşımı ve rehberlik anlayışı" },
-      { label: "Özgeçmiş", href: "/#ozgecmis", description: "Eğitim ve mesleki deneyim" },
+      { label: "Hakkımda", href: "/gurbuz-govrek", description: "Eğitim yaklaşımı ve rehberlik anlayışı" },
+      { label: "Özgeçmiş", href: "/gurbuz-govrek#egitim-yolculugu", description: "Eğitim ve mesleki deneyim" },
+      { label: "Basında Gürbüz Gövrek", href: "/gurbuz-govrek#basinda", description: "Doğrulanabilir haber ve basın arşivi" },
     ],
   },
   {
     label: "Eğitim & Danışmanlık",
     items: [
       { label: "Tüm Hizmetler", href: "/#hizmetler", description: "Çalışma alanlarının tamamı" },
-      { label: "YKS Tercih Danışmanlığı", href: "/#danismanlik", description: "Kişiye özel tercih yol haritası" },
-      { label: "Üniversite ve Bölüm Analizi", href: "/#analiz-merkezi", description: "Programları verilerle karşılaştırma" },
-      { label: "Öğrenci Koçluğu", href: "/#danismanlik", description: "Hedef, planlama ve akademik takip" },
+      { label: "YKS Tercih Danışmanlığı", href: "/denizli-yks-tercih-danismanligi", description: "Kişiye özel tercih yol haritası" },
+      { label: "Üniversite ve Bölüm Analizi", href: "/universite-bolum-analizi", description: "Programları verilerle karşılaştırma" },
+      { label: "Öğrenci Koçluğu", href: "/denizli-ogrenci-koclugu", description: "Hedef, planlama ve akademik takip" },
       { label: "Meslek Seçimi Danışmanlığı", href: "/#meslek-kosesi", description: "Meslekleri ve çalışma alanlarını tanıma" },
     ],
   },

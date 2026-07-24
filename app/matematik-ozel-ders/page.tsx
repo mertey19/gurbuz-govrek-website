@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: pageUrl },
-  authors: [{ name: siteConfig.name, url: CANONICAL_SITE_URL }],
+  authors: [{ name: siteConfig.name, url: `${CANONICAL_SITE_URL}/gurbuz-govrek` }],
   robots: { index: true, follow: true },
   openGraph: {
     type: "website",
@@ -163,7 +163,7 @@ export default function MatematikOzelDersPage() {
         "@type": "Person",
         name: siteConfig.name,
         jobTitle: "Matematik Öğretmeni",
-        url: CANONICAL_SITE_URL,
+        url: `${CANONICAL_SITE_URL}/gurbuz-govrek`,
         telephone: siteConfig.contact.phone,
       },
       serviceType: [

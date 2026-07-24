@@ -45,7 +45,7 @@ export function BlogArticleLayout({
       author: {
         "@type": "Person",
         name: siteConfig.name,
-        url: CANONICAL_SITE_URL,
+        url: `${CANONICAL_SITE_URL}/gurbuz-govrek`,
       },
       publisher: {
         "@type": "Person",
@@ -125,7 +125,12 @@ export function BlogArticleLayout({
                     {post.description}
                   </p>
                   <div className="mt-7 flex flex-wrap gap-x-6 gap-y-3 text-xs text-white/58">
-                    <span className="font-bold text-white">{siteConfig.name}</span>
+                    <Link
+                      href="/gurbuz-govrek"
+                      className="font-bold text-white underline decoration-gold/55 underline-offset-4 transition hover:decoration-gold"
+                    >
+                      {siteConfig.name}
+                    </Link>
                     <span className="inline-flex items-center gap-1.5">
                       <CalendarDays className="size-4 text-gold" aria-hidden="true" />
                       {post.publishedAtLabel}
@@ -231,6 +236,12 @@ export function BlogArticleLayout({
                     <MessageCircle className="size-5" aria-hidden="true" />
                     WhatsApp’tan Görüş
                   </a>
+                  <Link
+                    href="/denizli-yks-tercih-danismanligi"
+                    className="mt-3 inline-flex min-h-11 w-full items-center justify-center rounded-sm border border-white/22 px-5 py-3 text-sm font-bold text-white/82 transition hover:border-gold hover:text-gold-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-gold"
+                  >
+                    Danışmanlık Sürecini İncele
+                  </Link>
                 </div>
                 <Link
                   href="/blog"

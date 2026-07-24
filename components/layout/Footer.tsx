@@ -27,12 +27,12 @@ export function Footer() {
           <div>
             <h3 className="text-sm font-bold tracking-wider text-gold-light uppercase">Hizmetler</h3>
             <ul className="mt-5 space-y-3 text-sm text-white/65">
-              <li><Link href="/#danismanlik" className="hover:text-white">Tercih Danışmanlığı</Link></li>
+              <li><Link href="/denizli-yks-tercih-danismanligi" className="hover:text-white">Tercih Danışmanlığı</Link></li>
               <li><Link href="/matematik-ozel-ders" className="hover:text-white">Matematik Özel Ders</Link></li>
-              <li><Link href="/#analiz-merkezi" className="hover:text-white">Bölüm Analizi</Link></li>
+              <li><Link href="/universite-bolum-analizi" className="hover:text-white">Bölüm Analizi</Link></li>
+              <li><Link href="/denizli-ogrenci-koclugu" className="hover:text-white">Öğrenci Koçluğu</Link></li>
               <li><Link href="/#sunum-kosesi" className="hover:text-white">Sunum Köşesi</Link></li>
               <li><Link href="/blog" className="hover:text-white">YKS Tercih Blogu</Link></li>
-              <li><Link href="/#etkinlikler" className="hover:text-white">Seminerler</Link></li>
             </ul>
           </div>
           <div>
