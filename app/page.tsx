@@ -80,6 +80,7 @@ export default function Home() {
         <Hero />
         <Stats />
         <About />
+        <PresentationCorner />
         <Biography />
         <Services />
         <Process />
@@ -87,7 +88,6 @@ export default function Home() {
         <Counseling />
         <AnalysisCenter />
         <CareerCorner />
-        <PresentationCorner />
         <CampusVisits />
         <SuccessStories />
         <Comments />

@@ -75,6 +75,7 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
   assert.doesNotMatch(html, /\[object%20Object\]/i);
   assert.match(html, /Gürbüz Gövrek \| Matematik Öğretmeni ve Tercih Uzmanı/i);
   assert.match(html, /Doğru Tercih,.*Mutlu Bir Hayat/is);
+  assert.match(html, /Gürbüz Gövrek öğrencilerle kampüs ortamında tercih ve üniversite üzerine konuşuyor/i);
   assert.match(html, /Tarsus’tan Başlayan Çok Yönlü Bir Eğitim Yolculuğu/i);
   assert.match(html, /Yıldız Teknik Üniversitesi/i);
   assert.match(html, /Pamukkale Üniversitesi/i);
@@ -120,6 +121,7 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
   assert.match(html, /Hemen Ara/i);
   assert.match(html, /aria-label="\+90 501 365 33 71 numarasını hemen ara"/i);
   assert.match(html, /Ben Kimim\?/i);
+  assert.doesNotMatch(html, /Basında Gürbüz Gövrek|Basına Yansıyan Eğitim Çalışmaları/i);
   assert.match(html, /Eğitim &amp; Danışmanlık/i);
   assert.match(html, /Matematik &amp; Özel Ders/i);
   assert.match(html, /Öğrenci Deneyimleri/i);
