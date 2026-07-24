@@ -108,7 +108,7 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
   assert.match(html, /Biyolog ve Kimyager/i);
   assert.match(html, /Diyetisyenlik ve Eczacılık/i);
   assert.match(html, /Tercih Sürecinde Doğru Karar İçin Güncel Rehberler/i);
-  assert.match(html, /\/blog\/denizli-yks-tercih-danismanligi/i);
+  assert.match(html, /\/blog\/denizlide-yks-tercih-danismani-nasil-secilir/i);
   assert.match(html, /\/images\/sunum-kosesi\/kontenjan\/01\.webp/i);
   assert.match(html, /\/resources\/meslek-tanitim\/tyt\/acil-yardim-ve-afet-yoneticisi\.pdf/i);
   assert.doesNotMatch(html, /Gizlilik Politikası|KVKK Aydınlatma Metni|Kullanım Koşulları/i);
@@ -123,6 +123,10 @@ test("blog liste sayfasını ve Denizli YKS tercih yazısını sunucu tarafında
   const blogHtml = await blogResponse.text();
   assert.match(blogHtml, /Üniversite Tercihinde Bilinçli Kararlar İçin Rehberler/i);
   assert.match(blogHtml, /Denizli YKS Tercih Danışmanlığı ile Doğru Üniversite Tercihi Nasıl Yapılır/i);
+  assert.match(blogHtml, /Denizli’de YKS Tercih Danışmanı Nasıl Seçilir/i);
+  assert.match(blogHtml, /Başarı Sırasına Göre Tercih Listesi Nasıl Hazırlanır/i);
+  assert.match(blogHtml, /Vakıf mı Devlet Üniversitesi mi\? Karar Verirken 8 Ölçüt/i);
+  assert.match(blogHtml, /Üniversite ve Bölüm Seçerken Yapılan 10 Hata/i);
   assert.match(blogHtml, /rel="canonical" href="https:\/\/www\.xn--grbzgvrek-47a5dc\.com\.tr\/blog"/i);
 
   const articleResponse = await render("/blog/denizli-yks-tercih-danismanligi");
@@ -138,6 +142,40 @@ test("blog liste sayfasını ve Denizli YKS tercih yazısını sunucu tarafında
   );
   assert.match(articleHtml, /"@type":"Article"/i);
   assert.match(articleHtml, /"@type":"FAQPage"/i);
+
+  const newArticles = [
+    {
+      path: "/blog/denizlide-yks-tercih-danismani-nasil-secilir",
+      title: /Denizli’de YKS Tercih Danışmanı Nasıl Seçilir/i,
+      content: /Danışman Seçerken Bakılması Gereken 7 Ölçüt/i,
+    },
+    {
+      path: "/blog/basari-sirasina-gore-tercih-listesi-nasil-hazirlanir",
+      title: /Başarı Sırasına Göre Tercih Listesi Nasıl Hazırlanır/i,
+      content: /Tercih Listesi Hazırlamanın 7 Adımı/i,
+    },
+    {
+      path: "/blog/vakif-mi-devlet-universitesi-mi",
+      title: /Vakıf mı Devlet Üniversitesi mi\? Karar Verirken 8 Ölçüt/i,
+      content: /Bursun Ayrıntılarını Yazılı Olarak Doğrulayın/i,
+    },
+    {
+      path: "/blog/universite-bolum-secerken-yapilan-hatalar",
+      title: /Üniversite ve Bölüm Seçerken Yapılan 10 Hata/i,
+      content: /En Sık Karşılaşılan 10 Tercih Hatası/i,
+    },
+  ];
+
+  for (const article of newArticles) {
+    const response = await render(article.path);
+    assert.equal(response.status, 200);
+    const html = await response.text();
+    assert.match(html, article.title);
+    assert.match(html, article.content);
+    assert.match(html, /"@type":"Article"/i);
+    assert.match(html, /"@type":"FAQPage"/i);
+    assert.match(html, new RegExp(`rel="canonical" href="https:\\/\\/www\\.xn--grbzgvrek-47a5dc\\.com\\.tr${article.path}"`, "i"));
+  }
 });
 
 test("sitemap blog adreslerini yalnızca kanonik alan adıyla üretir", async () => {
@@ -146,12 +184,32 @@ test("sitemap blog adreslerini yalnızca kanonik alan adıyla üretir", async ()
   const xml = await response.text();
   const locations = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
 
-  assert.ok(locations.length >= 3);
+  assert.equal(locations.length, 7);
   assert.ok(locations.every((location) => location.startsWith("https://www.xn--grbzgvrek-47a5dc.com.tr/")));
   assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/blog"));
   assert.ok(
     locations.includes(
       "https://www.xn--grbzgvrek-47a5dc.com.tr/blog/denizli-yks-tercih-danismanligi",
+    ),
+  );
+  assert.ok(
+    locations.includes(
+      "https://www.xn--grbzgvrek-47a5dc.com.tr/blog/denizlide-yks-tercih-danismani-nasil-secilir",
+    ),
+  );
+  assert.ok(
+    locations.includes(
+      "https://www.xn--grbzgvrek-47a5dc.com.tr/blog/basari-sirasina-gore-tercih-listesi-nasil-hazirlanir",
+    ),
+  );
+  assert.ok(
+    locations.includes(
+      "https://www.xn--grbzgvrek-47a5dc.com.tr/blog/vakif-mi-devlet-universitesi-mi",
+    ),
+  );
+  assert.ok(
+    locations.includes(
+      "https://www.xn--grbzgvrek-47a5dc.com.tr/blog/universite-bolum-secerken-yapilan-hatalar",
     ),
   );
   assert.ok(

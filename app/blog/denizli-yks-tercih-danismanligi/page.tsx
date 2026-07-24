@@ -11,9 +11,10 @@ import {
 import { Container } from "@/components/ui/Container";
 import { SiteImage as Image } from "@/components/ui/SiteImage";
 import { CANONICAL_SITE_URL, siteConfig, whatsappUrl } from "@/config/site";
-import { blogPosts } from "@/data/blogPosts";
+import { blogPosts, getBlogPost } from "@/data/blogPosts";
 
-const post = blogPosts[0];
+const post = getBlogPost("denizli-yks-tercih-danismanligi");
+const relatedPosts = blogPosts.filter((item) => item.slug !== post.slug).slice(0, 4);
 const articleUrl = `${CANONICAL_SITE_URL}/blog/${post.slug}`;
 
 export const metadata: Metadata = {
@@ -420,6 +421,21 @@ export default function DenizliYksTercihDanismanligiPage() {
                       </a>
                     </li>
                   </ul>
+                </section>
+
+                <section aria-labelledby="ilgili-yazilar">
+                  <h2 id="ilgili-yazilar">İlgili Yazılar</h2>
+                  <div className="mt-6 grid gap-3">
+                    {relatedPosts.map((relatedPost) => (
+                      <Link
+                        key={relatedPost.slug}
+                        href={`/blog/${relatedPost.slug}`}
+                        className="rounded-sm border border-navy/10 bg-cream px-5 py-4 font-bold leading-6 text-blue-deep transition hover:border-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+                      >
+                        {relatedPost.title}
+                      </Link>
+                    ))}
+                  </div>
                 </section>
 
                 <p className="mt-10 border-t border-navy/10 pt-6 text-xs leading-6 text-ink/48">
