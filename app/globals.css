@@ -45,7 +45,7 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1023px) {
   body {
     padding-bottom: calc(4.75rem + env(safe-area-inset-bottom));
   }

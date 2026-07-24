@@ -3,7 +3,7 @@ import { siteConfig } from "@/config/site";
 
 export function MobileCallBar() {
   return (
-    <div className="mobile-call-bar fixed inset-x-0 bottom-0 z-40 border-t border-white/12 bg-navy/96 px-3 pt-2 pb-[calc(.5rem+env(safe-area-inset-bottom))] shadow-[0_-12px_35px_rgba(7,26,51,.24)] backdrop-blur-md md:hidden">
+    <div className="mobile-call-bar fixed inset-x-0 bottom-0 z-40 border-t border-white/12 bg-navy/96 px-3 pt-2 pb-[calc(.5rem+env(safe-area-inset-bottom))] shadow-[0_-12px_35px_rgba(7,26,51,.24)] backdrop-blur-md lg:hidden">
       <a
         href={siteConfig.contact.phoneHref}
         className="mobile-call-button flex min-h-13 w-full items-center justify-center gap-3 rounded-sm bg-gold px-5 py-2.5 text-navy transition active:scale-[.99] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
