@@ -111,6 +111,12 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
   assert.match(html, /\/blog\/denizlide-yks-tercih-danismani-nasil-secilir/i);
   assert.match(html, /Matematik Özel Ders ve Akademik Takip/i);
   assert.match(html, /href="\/matematik-ozel-ders"/i);
+  assert.match(html, /Ben Kimim\?/i);
+  assert.match(html, /Eğitim &amp; Danışmanlık/i);
+  assert.match(html, /Matematik &amp; Özel Ders/i);
+  assert.match(html, /Öğrenci Deneyimleri/i);
+  assert.match(html, /Öğrenci ve Veli Yorumları/i);
+  assert.match(html, /YKS Tercih Blogu/i);
   assert.match(html, /\/images\/sunum-kosesi\/kontenjan\/01\.webp/i);
   assert.match(html, /\/resources\/meslek-tanitim\/tyt\/acil-yardim-ve-afet-yoneticisi\.pdf/i);
   assert.doesNotMatch(html, /Gizlilik Politikası|KVKK Aydınlatma Metni|Kullanım Koşulları/i);
