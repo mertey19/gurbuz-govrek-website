@@ -11,7 +11,13 @@ export type PresentationCategory =
   | "mimarlik-insaat"
   | "tip-dis"
   | "hukuk-psikoloji"
-  | "ekonomi-isletme";
+  | "ekonomi-isletme"
+  | "molekuler-kimya-biyomuhendislik"
+  | "siber-guvenlik-bilgi-guvenligi"
+  | "bilisim-sistemleri-ybs"
+  | "bitki-koruma-tarla-bitkileri"
+  | "biyolog-kimyager"
+  | "diyetisyen-eczaci";
 
 export interface PresentationSlide {
   src: string;
@@ -226,6 +232,78 @@ export const presentationCollections: readonly PresentationCollection[] = [
       "ekonomi-isletme",
       "Çalışma Ekonomisi ve İşletme",
       "Çalışma Ekonomisi ve İşletme karşılaştırmalı bölüm tanıtım sunumu",
+    ),
+  },
+  {
+    id: "molekuler-kimya-biyomuhendislik",
+    label: "Moleküler Biyoloji ve Genetik & Kimya-Biyoloji Mühendisliği",
+    shortLabel: "Moleküler & Kimya-Biyoloji",
+    description:
+      "Moleküler biyoloji ve genetik ile kimya-biyoloji mühendisliğini eğitim içeriği, laboratuvar çalışmaları, üretim süreçleri ve kariyer alanları üzerinden karşılaştıran seri.",
+    slides: createSlides(
+      "molekuler-kimya-biyomuhendislik",
+      "Moleküler Biyoloji ve Genetik & Kimya-Biyoloji Mühendisliği",
+      "Moleküler Biyoloji ve Genetik ile Kimya-Biyoloji Mühendisliği karşılaştırmalı kariyer sunumu",
+    ),
+  },
+  {
+    id: "siber-guvenlik-bilgi-guvenligi",
+    label: "Siber Güvenlik ve Bilgi Güvenliği",
+    shortLabel: "Siber & Bilgi Güvenliği",
+    description:
+      "Siber güvenlik ve bilgi güvenliği alanlarını görevler, teknik yetkinlikler, eğitim yolları ve dijital dünyadaki kariyer fırsatlarıyla ele alan seri.",
+    slides: createSlides(
+      "siber-guvenlik-bilgi-guvenligi",
+      "Siber Güvenlik ve Bilgi Güvenliği",
+      "Siber Güvenlik ve Bilgi Güvenliği karşılaştırmalı kariyer sunumu",
+    ),
+  },
+  {
+    id: "bilisim-sistemleri-ybs",
+    label: "Bilişim Sistemleri Mühendisliği ve Yönetim Bilişim Sistemleri",
+    shortLabel: "Bilişim Sistemleri & YBS",
+    description:
+      "Bilişim sistemleri mühendisliği ile yönetim bilişim sistemlerini teknoloji, iş süreçleri, analiz, strateji ve mezuniyet sonrası kariyer seçenekleriyle karşılaştıran seri.",
+    slides: createSlides(
+      "bilisim-sistemleri-ybs",
+      "Bilişim Sistemleri Mühendisliği ve Yönetim Bilişim Sistemleri",
+      "Bilişim Sistemleri Mühendisliği ve Yönetim Bilişim Sistemleri karşılaştırmalı kariyer sunumu",
+    ),
+  },
+  {
+    id: "bitki-koruma-tarla-bitkileri",
+    label: "Bitki Koruma ve Tarla Bitkileri",
+    shortLabel: "Bitki Koruma & Tarla",
+    description:
+      "Bitki koruma ve tarla bitkileri bölümlerini eğitim, üretim, koruma, çalışma alanları ve geleceğin tarım teknolojileri açısından karşılaştıran seri.",
+    slides: createSlides(
+      "bitki-koruma-tarla-bitkileri",
+      "Bitki Koruma ve Tarla Bitkileri",
+      "Bitki Koruma ve Tarla Bitkileri karşılaştırmalı kariyer sunumu",
+    ),
+  },
+  {
+    id: "biyolog-kimyager",
+    label: "Biyolog ve Kimyager",
+    shortLabel: "Biyolog & Kimyager",
+    description:
+      "Biyolog ve kimyager mesleklerini eğitim süreci, laboratuvar ortamı, araştırma alanları ve kariyer yolları üzerinden karşılaştıran seri.",
+    slides: createSlides(
+      "biyolog-kimyager",
+      "Biyolog ve Kimyager",
+      "Biyolog ve Kimyager karşılaştırmalı kariyer sunumu",
+    ),
+  },
+  {
+    id: "diyetisyen-eczaci",
+    label: "Diyetisyenlik ve Eczacılık",
+    shortLabel: "Diyetisyen & Eczacı",
+    description:
+      "Diyetisyenlik ve eczacılığı eğitim, uzmanlık, çalışma ortamı, insan sağlığına katkı ve kariyer seçenekleri açısından karşılaştıran seri.",
+    slides: createSlides(
+      "diyetisyen-eczaci",
+      "Diyetisyenlik ve Eczacılık",
+      "Diyetisyenlik ve Eczacılık karşılaştırmalı kariyer sunumu",
     ),
   },
 ];

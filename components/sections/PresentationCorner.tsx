@@ -110,7 +110,7 @@ export function PresentationCorner() {
             </select>
           </label>
           <div
-            className="hidden gap-2 rounded-sm border border-white/10 bg-white/[.045] p-2 md:grid md:grid-cols-3 xl:grid-cols-4"
+            className="hidden gap-2 rounded-sm border border-white/10 bg-white/[.045] p-2 md:grid md:grid-cols-3 xl:grid-cols-5"
             role="tablist"
             aria-label="Sunum kategorileri"
           >
