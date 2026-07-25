@@ -12,6 +12,7 @@ import {
   TrendingDown,
   TrendingUp,
 } from "lucide-react";
+import { CityPicker } from "@/components/tercih/CityPicker";
 import { whatsappUrl } from "@/config/site";
 import { getForecast, FORECAST_YEAR } from "@/data/tercihTespitleri";
 import {
@@ -152,22 +153,7 @@ export function TercihRobot({
             Daralt (isteğe bağlı, birden fazla seçilebilir)
           </legend>
 
-          <div>
-            <label htmlFor="city" className="block text-sm font-bold text-navy">
-              Şehir
-            </label>
-            {/* Çoklu seçim: Ctrl/Cmd ile birden fazla il işaretlenebilir. */}
-            <select id="city" name="city" multiple size={6} className={`${FIELD} h-auto`}>
-              {cities.map((city) => (
-                <option key={city} value={city}>
-                  {city}
-                </option>
-              ))}
-            </select>
-            <p className="mt-1.5 text-xs text-ink/45">
-              Ctrl (Mac&apos;te Cmd) ile birden fazla il seçebilirsiniz.
-            </p>
-          </div>
+          <CityPicker cities={cities} />
 
           <div>
             <span className="block text-sm font-bold text-navy">Kurum türü</span>
