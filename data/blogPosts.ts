@@ -8,7 +8,7 @@ export const blogPosts = [
     publishedAt: "2026-07-24",
     publishedAtLabel: "24 Temmuz 2026",
     readingTime: "7 dakika",
-    image: "/images/one-to-one-consulting.png",
+    image: "/images/one-to-one-consulting.webp",
     imageAlt:
       "Gürbüz Gövrek öğrenciyle bire bir görüşmede üniversite tercih seçeneklerini değerlendiriyor",
   },
@@ -21,7 +21,7 @@ export const blogPosts = [
     publishedAt: "2026-07-24",
     publishedAtLabel: "24 Temmuz 2026",
     readingTime: "8 dakika",
-    image: "/images/preference-analysis.png",
+    image: "/images/preference-analysis.webp",
     imageAlt:
       "YKS başarı sırası ve üniversite seçeneklerinin yer aldığı tercih analizi görüşmesi",
   },
@@ -34,7 +34,7 @@ export const blogPosts = [
     publishedAt: "2026-07-24",
     publishedAtLabel: "24 Temmuz 2026",
     readingTime: "8 dakika",
-    image: "/images/university-guidance.png",
+    image: "/images/university-guidance.webp",
     imageAlt:
       "Öğrencilerin devlet ve vakıf üniversitesi seçeneklerini karşılaştırdığı tercih danışmanlığı",
   },
@@ -47,7 +47,7 @@ export const blogPosts = [
     publishedAt: "2026-07-24",
     publishedAtLabel: "24 Temmuz 2026",
     readingTime: "7 dakika",
-    image: "/images/guidance-introduction.png",
+    image: "/images/guidance-introduction.webp",
     imageAlt:
       "Üniversite ve bölüm seçimi hakkında öğrencilere rehberlik sunan Gürbüz Gövrek",
   },
@@ -60,7 +60,7 @@ export const blogPosts = [
     publishedAt: "2026-07-24",
     publishedAtLabel: "24 Temmuz 2026",
     readingTime: "8 dakika",
-    image: "/images/preference-analysis.png",
+    image: "/images/preference-analysis.webp",
     imageAlt:
       "Gürbüz Gövrek öğrencilerle YKS başarı sırası ve üniversite tercih seçeneklerini değerlendiriyor",
   },

@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     description,
     images: [
       {
-        url: "/images/guidance-introduction.png",
+        url: "/images/guidance-introduction.webp",
         width: 1280,
         height: 720,
         alt: "Matematik öğretmeni ve tercih uzmanı Gürbüz Gövrek",
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title,
     description,
-    images: ["/images/guidance-introduction.png"],
+    images: ["/images/guidance-introduction.webp"],
   },
 };
 
@@ -92,7 +92,7 @@ export default function GurbuzGovrekPage() {
         name: siteConfig.name,
         jobTitle: "Matematik Öğretmeni ve Tercih Uzmanı",
         url: pageUrl,
-        image: `${CANONICAL_SITE_URL}/images/guidance-introduction.png`,
+        image: `${CANONICAL_SITE_URL}/images/guidance-introduction.webp`,
         description,
         email: siteConfig.contact.email,
         telephone: siteConfig.contact.phone,
@@ -138,7 +138,7 @@ export default function GurbuzGovrekPage() {
             <div className="relative order-2 lg:order-1">
               <div className="relative aspect-[4/5] max-h-[650px] overflow-hidden rounded-sm border border-white/12 shadow-2xl">
                 <Image
-                  src="/images/guidance-introduction.png"
+                  src="/images/guidance-introduction.webp"
                   alt="Matematik öğretmeni ve tercih uzmanı Gürbüz Gövrek çalışma masasında"
                   fill
                   priority

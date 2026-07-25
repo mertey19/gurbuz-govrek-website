@@ -25,7 +25,7 @@ export function Media() {
           <div>
             <SectionTitle eyebrow="Medyada / Eğitim Gündeminde" title="Tercih Sürecini Anlaşılır Kılan Uzman Görüşleri" description="Öğrencilerin ve velilerin en çok merak ettiği başlıkları, karar vermeyi kolaylaştıran kısa ve açık değerlendirmelerle ele alıyoruz." />
             <div className="landscape-media relative mt-9 aspect-[16/11] overflow-hidden rounded-sm shadow-[0_25px_60px_rgba(7,26,51,.15)]">
-              <Image src="/images/expert-opinion.png" alt="Gürbüz Gövrek televizyon stüdyosunda eğitim gündemini değerlendiriyor" fill sizes="(max-width: 1024px) 100vw, 42vw" className="object-cover object-center" />
+              <Image src="/images/expert-opinion.webp" alt="Gürbüz Gövrek televizyon stüdyosunda eğitim gündemini değerlendiriyor" fill sizes="(max-width: 1024px) 100vw, 42vw" className="object-cover object-center" />
             </div>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">

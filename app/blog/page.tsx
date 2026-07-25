@@ -20,13 +20,13 @@ export const metadata: Metadata = {
     url: `${CANONICAL_SITE_URL}/blog`,
     title,
     description,
-    images: ["/og.png"],
+    images: ["/og.jpg"],
   },
   twitter: {
     card: "summary_large_image",
     title,
     description,
-    images: ["/og.png"],
+    images: ["/og.jpg"],
   },
 };
 

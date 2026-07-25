@@ -11,7 +11,7 @@ const eventTypes = ["YKS Tercih Seminerleri", "Üniversite Tanıtım Buluşmalar
 export function Events() {
   return (
     <section id="etkinlikler" className="relative isolate overflow-hidden bg-navy text-white">
-      <Image src="/images/seminars.png" alt="Gürbüz Gövrek sahnede öğrencilere seminer veriyor" fill sizes="100vw" className="-z-20 object-cover object-[64%_center]" />
+      <Image src="/images/seminars.webp" alt="Gürbüz Gövrek sahnede öğrencilere seminer veriyor" fill sizes="100vw" className="-z-20 object-cover object-[64%_center]" />
       <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(7,26,51,.98)_0%,rgba(7,26,51,.9)_48%,rgba(7,26,51,.28)_100%)]" />
       <Container className="section-space">
         <Reveal className="max-w-2xl">

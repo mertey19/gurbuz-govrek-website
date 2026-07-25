@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     description,
     images: [
       {
-        url: "/images/mathematics-education.png",
+        url: "/images/mathematics-education.webp",
         width: 1280,
         height: 720,
         alt: "Gürbüz Gövrek ile bire bir matematik özel ders çalışması",
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title,
     description,
-    images: ["/images/mathematics-education.png"],
+    images: ["/images/mathematics-education.webp"],
   },
 };
 
@@ -265,7 +265,7 @@ export default function MatematikOzelDersPage() {
 
             <div className="relative aspect-[4/3] overflow-hidden rounded-sm border border-white/12 bg-navy shadow-[0_28px_80px_rgba(0,0,0,.3)]">
               <Image
-                src="/images/mathematics-education.png"
+                src="/images/mathematics-education.webp"
                 alt="Gürbüz Gövrek dijital tahtada bire bir matematik dersi anlatıyor"
                 fill
                 priority
@@ -342,7 +342,7 @@ export default function MatematikOzelDersPage() {
             <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
               <div className="relative aspect-[16/11] overflow-hidden rounded-sm shadow-[0_25px_70px_rgba(7,26,51,.15)]">
                 <Image
-                  src="/images/one-to-one-consulting.png"
+                  src="/images/one-to-one-consulting.webp"
                   alt="Öğrencinin seviyesine göre hazırlanan bire bir matematik çalışma planı"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"

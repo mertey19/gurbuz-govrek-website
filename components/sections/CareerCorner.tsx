@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { ArrowUpRight, BookOpenCheck, FileText, Search } from "lucide-react";
 import { useState } from "react";
 import { Container } from "@/components/ui/Container";
@@ -119,8 +120,8 @@ export function CareerCorner() {
               ))}
             </div>
 
-            {filteredResources.length > initialLimit && (
-              <div className="mt-9 flex justify-center">
+            <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
+              {filteredResources.length > initialLimit && (
                 <button
                   type="button"
                   onClick={() => setShowAll((current) => !current)}
@@ -128,8 +129,15 @@ export function CareerCorner() {
                 >
                   {showAll ? "Daha Az Göster" : `Tümünü Göster (${filteredResources.length})`}
                 </button>
-              </div>
-            )}
+              )}
+              <Link
+                href="/meslekler"
+                className="inline-flex min-h-12 items-center gap-2 rounded-full border border-navy/15 bg-navy px-6 text-sm font-bold text-gold-light transition hover:bg-blue-deep focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
+              >
+                Puan Türüne Göre İncele
+                <ArrowUpRight className="size-4" aria-hidden="true" />
+              </Link>
+            </div>
           </>
         ) : (
           <div className="mt-8 rounded-sm border border-dashed border-navy/20 bg-cream/45 px-6 py-14 text-center">

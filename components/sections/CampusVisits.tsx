@@ -17,7 +17,7 @@ export function CampusVisits() {
       <Container>
         <div className="landscape-split grid gap-12 lg:grid-cols-2 lg:gap-18">
           <Reveal className="landscape-media relative aspect-[16/12] overflow-hidden rounded-sm lg:aspect-auto lg:min-h-[610px]">
-            <Image src="/images/campus-visits.png" alt="Gürbüz Gövrek öğrencilerle üniversite kampüsünde görüşüyor" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover object-[64%_center]" />
+            <Image src="/images/campus-visits.webp" alt="Gürbüz Gövrek öğrencilerle üniversite kampüsünde görüşüyor" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover object-[64%_center]" />
           </Reveal>
           <Reveal delay={0.08} className="flex flex-col justify-center">
             <SectionTitle eyebrow="Kampüs Ziyaretleri" title="Üniversiteleri Yerinde Tanıyın" description="Kampüs ortamını, fakülteleri, öğrenci yaşamını ve üniversitenin sunduğu olanakları yerinde gözlemleyerek tercih sürecini daha bilinçli hale getirin." />

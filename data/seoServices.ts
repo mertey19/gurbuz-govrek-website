@@ -56,7 +56,7 @@ export const yksPreferenceService: SeoServicePage = {
   heading: "Denizli Tercih Danışmanlığı ile YKS Tercihlerinizi Veriye Dayandırın",
   lead:
     "Denizli’de tercih danışmanı arayan öğrenciler için tercih listesi yalnızca puanların sıralandığı bir tablo değildir. Öğrencinin hedefi, ilgi alanı, şehir ve kampüs beklentisi ile güncel program verileri birlikte değerlendirilerek açıklanabilir bir karar planına dönüştürülür.",
-  image: "/images/one-to-one-consulting.png",
+  image: "/images/one-to-one-consulting.webp",
   imageAlt:
     "Gürbüz Gövrek Denizli’de öğrenciyle bire bir YKS tercih danışmanlığı görüşmesi yapıyor",
   highlights: [
@@ -178,7 +178,7 @@ export const denizliPreferenceConsultingService: SeoServicePage = {
   heading: "Denizli Tercih Danışmanlığı: Doğru Üniversite ve Bölüm İçin Kişisel Yol Haritası",
   lead:
     "Tercih dönemi, öğrencinin yalnızca sıralamasına göre değil; hedeflerine, güçlü yönlerine, bölüm beklentilerine ve aileyle birlikte konuşulan gerçek koşullara göre planlanmalıdır. Denizli tercih danışmanlığı sürecinde amaç, öğrencinin neden o listeyi yazdığını açıkça anlayabildiği bir karar zemini oluşturmaktır.",
-  image: "/images/preference-analysis.png",
+  image: "/images/preference-analysis.webp",
   imageAlt:
     "Denizli tercih danışmanlığı görüşmesinde üniversite ve bölüm seçenekleri değerlendiriliyor",
   highlights: [
@@ -300,7 +300,7 @@ export const denizliPreferenceConsultantService: SeoServicePage = {
   heading: "Denizli Tercih Danışmanı Arayan Öğrenciler İçin Veriye Dayalı Rehberlik",
   lead:
     "İyi bir tercih danışmanı öğrencinin yerine karar vermez; öğrencinin seçenekleri daha iyi görmesini, riskleri anlamasını ve kendi hedefiyle uyumlu bir liste hazırlamasını sağlar. Gürbüz Gövrek ile süreç, matematik öğretmenliği deneyimi ve tercih rehberliği bakışıyla kişisel olarak ele alınır.",
-  image: "/images/one-to-one-consulting.png",
+  image: "/images/one-to-one-consulting.webp",
   imageAlt:
     "Denizli tercih danışmanı Gürbüz Gövrek öğrenciyle tercih listesi üzerine görüşüyor",
   highlights: [
@@ -415,7 +415,7 @@ export const studentCoachingService: SeoServicePage = {
   heading: "Hedefi Günlük Çalışma Düzenine Dönüştüren Kişisel Takip",
   lead:
     "Öğrenci koçluğu hazır bir program vermekten ibaret değildir. Öğrencinin mevcut düzeni, okul ve sınav takvimi, güçlü yönleri ve zorlandığı noktalar birlikte değerlendirilerek sürdürülebilir bir çalışma sistemi kurulur.",
-  image: "/images/student-success.png",
+  image: "/images/student-success.webp",
   imageAlt:
     "Gürbüz Gövrek öğrenci ve ailesiyle Denizli’de öğrenci koçluğu görüşmesinde",
   highlights: [
@@ -530,7 +530,7 @@ export const universityAnalysisService: SeoServicePage = {
   heading: "Bölüm Adının Ötesine Geçin, Üniversite Deneyiminin Tamamını İnceleyin",
   lead:
     "Aynı bölüm adı farklı üniversitelerde farklı ders planları, eğitim dili, akademik olanaklar ve kampüs deneyimleri sunabilir. Analiz çalışması, öğrencinin önceliklerini bu farklılıklarla eşleştirerek seçenekleri anlaşılır hâle getirir.",
-  image: "/images/preference-analysis.png",
+  image: "/images/preference-analysis.webp",
   imageAlt:
     "Gürbüz Gövrek üniversite ve bölüm seçeneklerini karşılaştırmalı analiz ediyor",
   highlights: [

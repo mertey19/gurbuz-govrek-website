@@ -14,7 +14,7 @@ export function Mathematics() {
       <Container>
         <div className="landscape-split grid items-center gap-12 lg:grid-cols-2 lg:gap-18">
           <Reveal className="landscape-media relative aspect-[16/11] overflow-hidden rounded-sm bg-navy shadow-[0_25px_70px_rgba(7,26,51,.16)]">
-            <Image src="/images/mathematics-education.png" alt="Gürbüz Gövrek dijital tahtada matematik dersi anlatıyor" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-contain" />
+            <Image src="/images/mathematics-education.webp" alt="Gürbüz Gövrek dijital tahtada matematik dersi anlatıyor" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-contain" />
           </Reveal>
           <Reveal delay={0.08}>
             <SectionTitle eyebrow="Matematik Özel Ders" title="Matematikte Güçlü Temel" description="Ortaokul, lise ve TYT–AYT hazırlığında anlaşılır anlatım, sistemli çalışma ve düzenli geri bildirimle öğrencinin matematikle kurduğu ilişkiyi güçlendiriyoruz." />

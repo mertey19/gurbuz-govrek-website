@@ -35,6 +35,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# claude code — kişisel izin ayarları paylaşılmaz, launch.json paylaşılır
+.claude/settings.local.json
+
 # typescript
 next-env.d.ts
 /dist/

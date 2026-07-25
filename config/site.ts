@@ -26,7 +26,7 @@ export const siteConfig = {
     { label: "Özgeçmiş", href: "/gurbuz-govrek#egitim-yolculugu" },
     { label: "Hizmetler", href: "/#hizmetler" },
     { label: "Özel Ders", href: "/matematik-ozel-ders" },
-    { label: "Meslekler", href: "/#meslek-kosesi" },
+    { label: "Meslekler", href: "/meslekler" },
     { label: "Sunumlar", href: "/#sunum-kosesi" },
     { label: "Başarı Hikâyeleri", href: "/#basari" },
     { label: "Yorumlar", href: "/#yorumlar" },
@@ -54,7 +54,7 @@ export const siteNavigationGroups = [
       { label: "YKS Tercih Danışmanlığı", href: "/denizli-yks-tercih-danismanligi", description: "Kişiye özel tercih yol haritası" },
       { label: "Üniversite ve Bölüm Analizi", href: "/universite-bolum-analizi", description: "Programları verilerle karşılaştırma" },
       { label: "Öğrenci Koçluğu", href: "/denizli-ogrenci-koclugu", description: "Hedef, planlama ve akademik takip" },
-      { label: "Meslek Seçimi Danışmanlığı", href: "/#meslek-kosesi", description: "Meslekleri ve çalışma alanlarını tanıma" },
+      { label: "Meslek Seçimi Danışmanlığı", href: "/meslekler", description: "Meslekleri ve çalışma alanlarını tanıma" },
     ],
   },
   {
@@ -77,7 +77,7 @@ export const siteNavigationGroups = [
     label: "Kaynaklar",
     items: [
       { label: "YKS Tercih Blogu", href: "/blog", description: "Güncel rehberler ve uzman yazıları" },
-      { label: "Meslek Tanıtım Köşesi", href: "/#meslek-kosesi", description: "115 meslek tanıtım dosyası" },
+      { label: "Meslek Tanıtım Köşesi", href: "/meslekler", description: "115 meslek tanıtım dosyası" },
       { label: "Sunum ve Seminer Köşesi", href: "/#sunum-kosesi", description: "180 özgün eğitim görseli" },
       { label: "Etkinlikler", href: "/#etkinlikler", description: "Seminer ve öğrenci buluşmaları" },
       { label: "Sık Sorulan Sorular", href: "/#sss", description: "Merak edilen konuların yanıtları" },

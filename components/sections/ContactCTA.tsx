@@ -7,7 +7,7 @@ import { siteConfig, whatsappUrl } from "@/config/site";
 export function ContactCTA() {
   return (
     <section id="iletisim" className="relative isolate overflow-hidden bg-navy text-white">
-      <Image src="/images/contact-consulting.png" alt="Gürbüz Gövrek ofisinde danışmanlık görüşmesine hazırlanıyor" fill sizes="100vw" className="-z-20 object-cover object-[66%_center]" />
+      <Image src="/images/contact-consulting.webp" alt="Gürbüz Gövrek ofisinde danışmanlık görüşmesine hazırlanıyor" fill sizes="100vw" className="-z-20 object-cover object-[66%_center]" />
       <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(7,26,51,.98)_0%,rgba(7,26,51,.94)_46%,rgba(7,26,51,.4)_100%)]" />
       <Container className="landscape-cta py-20 sm:py-24 lg:py-28">
         <div className="max-w-2xl">

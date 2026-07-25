@@ -127,10 +127,11 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
   assert.match(html, /Öğrenci Deneyimleri/i);
   assert.match(html, /Öğrenci ve Veli Yorumları/i);
   assert.match(html, /YKS Tercih Blogu/i);
-  assert.match(html, /\/images\/sunum-kosesi\/kontenjan\/01\.webp/i);
+  // Sunum ızgarası küçük resim sürümünü yükler; tam boyutlu dosya yalnızca büyütme penceresinde kullanılır.
+  assert.match(html, /\/images\/sunum-kosesi\/kontenjan\/01-thumb\.webp/i);
   assert.match(html, /\/resources\/meslek-tanitim\/tyt\/acil-yardim-ve-afet-yoneticisi\.pdf/i);
   assert.doesNotMatch(html, /Gizlilik Politikası|KVKK Aydınlatma Metni|Kullanım Koşulları/i);
-  assert.match(html, /src="\/images\/hero-gurbuz-govrek\.png"/i);
+  assert.match(html, /src="\/images\/hero-gurbuz-govrek\.webp"/i);
   assert.doesNotMatch(html, /\/_vinext\/image/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape|Building your site/i);
 });
@@ -279,9 +280,12 @@ test("sitemap blog adreslerini yalnızca kanonik alan adıyla üretir", async ()
   const xml = await response.text();
   const locations = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
 
-  assert.equal(locations.length, 14);
+  assert.equal(locations.length, 20);
   assert.ok(locations.every((location) => location.startsWith("https://www.xn--grbzgvrek-47a5dc.com.tr/")));
   assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/blog"));
+  assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/meslekler"));
+  assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/meslekler/sayisal"));
+  assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/meslekler/tyt"));
   assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/matematik-ozel-ders"));
   assert.ok(
     locations.includes(

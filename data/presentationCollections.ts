@@ -21,6 +21,11 @@ export type PresentationCategory =
 
 export interface PresentationSlide {
   src: string;
+  /**
+   * 480px kenarlı küçük resim. Izgara slaytları ~%20 genişlikte gösterdiği için
+   * tam boyutlu (1254px) dosyayı indirmek gereksiz; büyütme penceresi `src` kullanır.
+   */
+  thumb: string;
   alt: string;
   title: string;
 }
@@ -42,8 +47,10 @@ function createSlides(
 ): readonly PresentationSlide[] {
   return Array.from({ length: count }, (_, index) => {
     const slideNumber = index + 1;
+    const base = `/images/sunum-kosesi/${directory}/${String(slideNumber).padStart(2, "0")}`;
     return {
-      src: `/images/sunum-kosesi/${directory}/${String(slideNumber).padStart(2, "0")}.webp`,
+      src: `${base}.webp`,
+      thumb: `${base}-thumb.webp`,
       alt: `${altPrefix}, ${slideNumber}. slayt`,
       title: `${title} · Slayt ${slideNumber}`,
     };
@@ -55,11 +62,15 @@ function createNamedSlides(
   slideTitles: readonly string[],
   altPrefix: string,
 ): readonly PresentationSlide[] {
-  return slideTitles.map((slideTitle, index) => ({
-    src: `/images/sunum-kosesi/${directory}/${String(index + 1).padStart(2, "0")}.webp`,
-    alt: `${altPrefix}: ${slideTitle}`,
-    title: slideTitle,
-  }));
+  return slideTitles.map((slideTitle, index) => {
+    const base = `/images/sunum-kosesi/${directory}/${String(index + 1).padStart(2, "0")}`;
+    return {
+      src: `${base}.webp`,
+      thumb: `${base}-thumb.webp`,
+      alt: `${altPrefix}: ${slideTitle}`,
+      title: slideTitle,
+    };
+  });
 }
 
 export const presentationCollections: readonly PresentationCollection[] = [

@@ -33,7 +33,7 @@ export function Counseling() {
           </Reveal>
           <Reveal delay={0.08} className="relative">
             <div className="landscape-media relative aspect-[4/5] overflow-hidden rounded-sm bg-cream shadow-[0_25px_70px_rgba(7,26,51,.16)]">
-              <Image src="/images/one-to-one-consulting.png" alt="Gürbüz Gövrek öğrencilerle bire bir danışmanlık görüşmesinde" fill sizes="(max-width: 1024px) 100vw, 45vw" className="object-cover object-[66%_center]" />
+              <Image src="/images/one-to-one-consulting.webp" alt="Gürbüz Gövrek öğrencilerle bire bir danışmanlık görüşmesinde" fill sizes="(max-width: 1024px) 100vw, 45vw" className="object-cover object-[66%_center]" />
             </div>
             <div className="absolute -bottom-6 -left-5 hidden max-w-xs bg-navy p-6 text-white shadow-xl sm:block">
               <p className="font-serif text-xl leading-7">Hedefleri dinleyen, seçenekleri açıklayan, kararı birlikte güçlendiren bir yaklaşım.</p>

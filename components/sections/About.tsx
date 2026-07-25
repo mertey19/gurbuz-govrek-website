@@ -19,7 +19,7 @@ export function About() {
         <div className="landscape-split grid items-center gap-12 lg:grid-cols-[.9fr_1.1fr] lg:gap-20">
           <Reveal className="relative">
             <div className="landscape-media relative aspect-[4/5] overflow-hidden rounded-sm bg-navy shadow-[0_30px_70px_rgba(7,26,51,.18)]">
-              <Image src="/images/university-guidance.png" alt="Gürbüz Gövrek öğrencilerle kampüs ortamında tercih ve üniversite üzerine konuşuyor" fill sizes="(max-width: 1024px) 100vw, 45vw" className="object-cover object-[58%_center]" />
+              <Image src="/images/university-guidance.webp" alt="Gürbüz Gövrek öğrencilerle kampüs ortamında tercih ve üniversite üzerine konuşuyor" fill sizes="(max-width: 1024px) 100vw, 45vw" className="object-cover object-[58%_center]" />
             </div>
             <div className="absolute -right-4 -bottom-5 max-w-[230px] border-l-2 border-gold bg-white p-5 shadow-xl sm:-right-8 sm:p-6">
               <p className="font-serif text-lg leading-7 text-navy">“Doğru tercih, öğrenciyi tanımakla başlar.”</p>

@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { CANONICAL_SITE_URL } from "@/config/site";
 import { blogPosts } from "@/data/blogPosts";
+import { careerCategories } from "@/data/careerCategories";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -58,10 +59,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.85,
     },
+    {
+      url: `${CANONICAL_SITE_URL}/meslekler`,
+      lastModified: new Date("2026-07-25"),
+      changeFrequency: "monthly",
+      priority: 0.85,
+    },
   ];
 
   return [
     ...staticRoutes,
+    ...careerCategories.map((category) => ({
+      url: `${CANONICAL_SITE_URL}/meslekler/${category.slug}`,
+      lastModified: new Date("2026-07-25"),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    })),
     ...blogPosts.map((post) => ({
       url: `${CANONICAL_SITE_URL}/blog/${post.slug}`,
       lastModified: new Date(post.publishedAt),

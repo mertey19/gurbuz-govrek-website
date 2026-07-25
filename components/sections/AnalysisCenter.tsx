@@ -31,7 +31,7 @@ export function AnalysisCenter() {
           </Reveal>
           <Reveal delay={0.08}>
             <div className="landscape-media relative aspect-[16/10] overflow-hidden rounded-sm border border-white/10 bg-blue-deep shadow-[0_30px_80px_rgba(0,0,0,.3)]">
-              <Image src="/images/preference-analysis.png" alt="Gürbüz Gövrek ve tercih analizi yaklaşımını anlatan örnek veri panosu" fill sizes="(max-width: 1024px) 100vw, 55vw" className="object-cover object-center" />
+              <Image src="/images/preference-analysis.webp" alt="Gürbüz Gövrek ve tercih analizi yaklaşımını anlatan örnek veri panosu" fill sizes="(max-width: 1024px) 100vw, 55vw" className="object-cover object-center" />
             </div>
             <p className="mt-4 text-xs leading-5 text-white/42">Görsel, analiz yaklaşımını temsil eder. Gerçek değerlendirmeler güncel ve doğrulanmış öğrenci verileriyle kişiselleştirilir.</p>
           </Reveal>

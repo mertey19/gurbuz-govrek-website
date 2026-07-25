@@ -15,7 +15,7 @@ export function Hero() {
   return (
     <section id="ana-sayfa" className="site-hero relative isolate flex min-h-[760px] items-center overflow-hidden bg-navy pt-28 text-white sm:min-h-[820px] lg:min-h-[850px]">
       <Image
-        src="/images/hero-gurbuz-govrek.png"
+        src="/images/hero-gurbuz-govrek.webp"
         alt="Gürbüz Gövrek, matematik ve üniversite temalı bir çalışma görselinde"
         fill
         priority

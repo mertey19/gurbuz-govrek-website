@@ -168,7 +168,7 @@ export function PresentationCorner() {
                 aria-label={`${slide.title} görselini büyüt`}
               >
                 <Image
-                  src={slide.src}
+                  src={slide.thumb}
                   alt={slide.alt}
                   fill
                   sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
