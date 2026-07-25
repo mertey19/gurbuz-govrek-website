@@ -43,6 +43,14 @@ async function ensureSchema() {
       rank INTEGER NOT NULL,
       score NUMERIC(10, 5),
       quota INTEGER,
+      -- Geçmiş yıl sıralama ve kontenjanları: trend gösterimi için tutulur.
+      -- rank sütunu 2025 sırasını, quota sütunu 2026 kontenjanını taşır.
+      rank_2024 INTEGER,
+      rank_2023 INTEGER,
+      rank_2022 INTEGER,
+      quota_2025 INTEGER,
+      quota_2024 INTEGER,
+      quota_2023 INTEGER,
       conditions TEXT,
       prof INTEGER,
       doctor INTEGER,
@@ -53,6 +61,16 @@ async function ensureSchema() {
       imported_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     )
   `;
+
+  // Tablo daha önce oluşturulmuşsa CREATE TABLE yeni sütunları eklemez.
+  for (const column of [
+    "rank_2024", "rank_2023", "rank_2022",
+    "quota_2025", "quota_2024", "quota_2023",
+  ]) {
+    await sql.query(
+      `ALTER TABLE tercih_programs ADD COLUMN IF NOT EXISTS ${column} INTEGER`,
+    );
+  }
 
   // Robot sorgusu daima (puan türü, sıralama) üzerinden filtreler.
   await sql`
@@ -75,7 +93,8 @@ async function insertBatch(rows) {
     INSERT INTO tercih_programs (
       level, program_code, kind, city, university, faculty, department,
       duration, score_type, rank, score, quota, conditions,
-      prof, doctor, lecturers, accredited, tus, dus
+      prof, doctor, lecturers, accredited, tus, dus,
+      rank_2024, rank_2023, rank_2022, quota_2025, quota_2024, quota_2023
     )
     SELECT * FROM UNNEST(
       ${column("level")}::varchar[],
@@ -96,7 +115,13 @@ async function insertBatch(rows) {
       ${column("lecturers")}::integer[],
       ${column("accredited")}::varchar[],
       ${column("tus")}::varchar[],
-      ${column("dus")}::varchar[]
+      ${column("dus")}::varchar[],
+      ${column("rank_2024")}::integer[],
+      ${column("rank_2023")}::integer[],
+      ${column("rank_2022")}::integer[],
+      ${column("quota_2025")}::integer[],
+      ${column("quota_2024")}::integer[],
+      ${column("quota_2023")}::integer[]
     )
   `;
 }

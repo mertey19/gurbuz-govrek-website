@@ -28,7 +28,9 @@ SHEETS = {
         "cols": {
             "program_code": 0, "kind": 1, "city": 2, "university": 3,
             "faculty": 4, "department": 5, "duration": 6, "score_type": 7,
-            "rank": 8, "quota": 12, "conditions": 16, "school_first": 17,
+            "rank": 8, "rank_2024": 9, "rank_2023": 10, "rank_2022": 11,
+            "quota": 12, "quota_2025": 13, "quota_2024": 14, "quota_2023": 15,
+            "conditions": 16, "school_first": 17,
             "prof": 21, "doctor": 22, "lecturers": 23,
             "accredited": 24, "tus": 25, "dus": 26,
         },
@@ -143,6 +145,14 @@ def main():
                     "rank": rank,
                     "score": to_float(cell("score")),
                     "quota": to_int(cell("quota")),
+                    # Geçmiş yıl sütunları yalnızca güncel LİSANS düzeninde var;
+                    # diğer sayfalarda None kalır.
+                    "rank_2024": to_int(cell("rank_2024")),
+                    "rank_2023": to_int(cell("rank_2023")),
+                    "rank_2022": to_int(cell("rank_2022")),
+                    "quota_2025": to_int(cell("quota_2025")),
+                    "quota_2024": to_int(cell("quota_2024")),
+                    "quota_2023": to_int(cell("quota_2023")),
                     "conditions": clean_text(cell("conditions")),
                     "prof": to_int(cell("prof")),
                     "doctor": to_int(cell("doctor")),
