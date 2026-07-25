@@ -168,18 +168,24 @@ export const denizliPreferenceConsultingService: SeoServicePage = {
   serviceName: "Denizli Tercih Danışmanlığı",
   title: "Denizli Tercih Danışmanlığı | Üniversite Tercih Danışmanı",
   description:
-    "Denizli tercih danışmanlığı hizmetiyle üniversite, bölüm ve şehir seçeneklerini veriye dayalı değerlendirin. YKS tercih döneminde yüz yüze ve online destek.",
+    "Denizli tercih danışmanlığı ve tercih koçluğu ile üniversite, bölüm ve şehir seçeneklerini veriye dayalı değerlendirin. YKS tercih döneminde yüz yüze ve online destek.",
   // Genel "tercih danışmanlığı" niyetinin ana sayfası. YKS'ye özel sorgular
   // /denizli-yks-tercih-danismanligi sayfasına, "danışman arıyorum" niyeti ise
   // /denizli-tercih-danismani sayfasına bırakılır.
+  //
+  // "Tercih koçluğu" da burada karşılanır: kullanıcı aynı ihtiyacı arıyor, yalnızca
+  // farklı kelime kullanıyor. Ayrı sayfa açmak bu sayfayla yamyamlık yaratırdı.
+  // Öğrenci koçluğu ve YKS koçluğu ise /denizli-ogrenci-koclugu sayfasına aittir.
   keywords: [
     "Denizli tercih danışmanlığı",
+    "Denizli tercih koçluğu",
+    "tercih koçluğu Denizli",
     "tercih danışmanlığı Denizli",
     "üniversite tercih danışmanlığı Denizli",
     "bölüm seçimi danışmanlığı Denizli",
   ],
   eyebrow: "Denizli · Üniversite Tercih Süreci",
-  heading: "Denizli Tercih Danışmanlığı: Doğru Üniversite ve Bölüm İçin Kişisel Yol Haritası",
+  heading: "Denizli Tercih Danışmanlığı ve Tercih Koçluğu: Doğru Üniversite ve Bölüm İçin Kişisel Yol Haritası",
   lead:
     "Tercih dönemi, öğrencinin yalnızca sıralamasına göre değil; hedeflerine, güçlü yönlerine, bölüm beklentilerine ve aileyle birlikte konuşulan gerçek koşullara göre planlanmalıdır. Denizli tercih danışmanlığı sürecinde amaç, öğrencinin neden o listeyi yazdığını açıkça anlayabildiği bir karar zemini oluşturmaktır.",
   image: "/images/preference-analysis.webp",
@@ -247,6 +253,11 @@ export const denizliPreferenceConsultingService: SeoServicePage = {
     "Öğrenci ve veli için anlaşılır tercih stratejisi oluşturulması",
   ],
   faqs: [
+    {
+      question: "Tercih koçluğu ile tercih danışmanlığı arasında fark var mı?",
+      answer:
+        "Uygulamada aynı süreci anlatan iki adlandırmadır; öğrenciler ve veliler her iki ifadeyi de kullanır. İkisinde de yapılan iş aynıdır: başarı sırasının yorumlanması, program seçeneklerinin karşılaştırılması ve riskli–güvenli dengesi gözetilerek tercih listesinin kurulması. Denizli’de tercih koçluğu ararken karşılaştığınız hizmet ile burada anlatılan tercih danışmanlığı aynı çalışmadır. Çalışma düzeni, deneme takibi ve motivasyon gibi başlıklar ise ayrı bir hizmettir; onun için öğrenci koçluğu sayfasına bakabilirsiniz.",
+    },
     {
       question: "Denizli tercih danışmanlığı yüz yüze mi yapılıyor?",
       answer:

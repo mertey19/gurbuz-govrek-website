@@ -166,7 +166,7 @@ test("SEO hizmet ve uzmanlık sayfalarını ayrı kanonik adreslerle oluşturur"
     },
     {
       path: "/denizli-tercih-danismanligi",
-      heading: /Denizli Tercih Danışmanlığı: Doğru Üniversite ve Bölüm İçin Kişisel Yol Haritası/i,
+      heading: /Denizli Tercih Danışmanlığı ve Tercih Koçluğu: Doğru Üniversite ve Bölüm İçin Kişisel Yol Haritası/i,
       canonical: "/denizli-tercih-danismanligi",
     },
     {
