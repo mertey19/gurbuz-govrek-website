@@ -1,5 +1,31 @@
 export const blogPosts = [
   {
+    slug: "denizli-yks-ek-tercih-danismanligi",
+    category: "Ek Tercih",
+    title: "Denizli YKS Ek Tercih Danışmanlığı ile Doğru Tercih, Güçlü Gelecek",
+    description:
+      "Ek tercih dönemi kısa ve kritik bir süreçtir. Boş kontenjanların analizi, başarı sırası değerlendirmesi ve dengeli bir ek tercih listesi nasıl hazırlanır?",
+    publishedAt: "2026-07-25",
+    publishedAtLabel: "25 Temmuz 2026",
+    readingTime: "6 dakika",
+    image: "/images/preference-analysis.webp",
+    imageAlt:
+      "Gürbüz Gövrek ek tercih döneminde boş kontenjanları ve başarı sırasını öğrenciyle birlikte değerlendiriyor",
+  },
+  {
+    slug: "denizli-profesyonel-ogrenci-kocu",
+    category: "Öğrenci Koçluğu",
+    title: "Denizli Profesyonel Öğrenci Koçu ile Akademik Başarıya Giden Doğru Yol",
+    description:
+      "Öğrenci koçluğu nedir, hangi konularda destek sağlar, kimler için uygundur ve doğru koç seçerken nelere dikkat edilmelidir?",
+    publishedAt: "2026-07-25",
+    publishedAtLabel: "25 Temmuz 2026",
+    readingTime: "7 dakika",
+    image: "/images/one-to-one-consulting.webp",
+    imageAlt:
+      "Gürbüz Gövrek öğrenciyle bire bir çalışma planı ve hedef takibi üzerine görüşüyor",
+  },
+  {
     slug: "denizlide-yks-tercih-danismani-nasil-secilir",
     category: "Tercih Danışmanlığı",
     title: "Denizli’de YKS Tercih Danışmanı Nasıl Seçilir?",

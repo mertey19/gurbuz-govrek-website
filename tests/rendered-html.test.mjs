@@ -109,7 +109,9 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
   assert.match(html, /Biyolog ve Kimyager/i);
   assert.match(html, /Diyetisyenlik ve Eczacılık/i);
   assert.match(html, /Tercih Sürecinde Doğru Karar İçin Güncel Rehberler/i);
-  assert.match(html, /\/blog\/denizlide-yks-tercih-danismani-nasil-secilir/i);
+  // Ana sayfa blog önizlemesi `blogPosts[0]`'ı gösterir; liste tarihe göre sıralı olduğu
+  // için en yeni yazı öne çıkar.
+  assert.match(html, /\/blog\/denizli-yks-ek-tercih-danismanligi/i);
   assert.match(html, /Matematik Özel Ders ve Akademik Takip/i);
   assert.match(html, /href="\/matematik-ozel-ders"/i);
   assert.match(html, /href="\/denizli-tercih-danismanligi"/i);
@@ -280,12 +282,22 @@ test("sitemap blog adreslerini yalnızca kanonik alan adıyla üretir", async ()
   const xml = await response.text();
   const locations = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
 
-  assert.equal(locations.length, 20);
+  assert.equal(locations.length, 22);
   assert.ok(locations.every((location) => location.startsWith("https://www.xn--grbzgvrek-47a5dc.com.tr/")));
   assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/blog"));
   assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/meslekler"));
   assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/meslekler/sayisal"));
   assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/meslekler/tyt"));
+  assert.ok(
+    locations.includes(
+      "https://www.xn--grbzgvrek-47a5dc.com.tr/blog/denizli-yks-ek-tercih-danismanligi",
+    ),
+  );
+  assert.ok(
+    locations.includes(
+      "https://www.xn--grbzgvrek-47a5dc.com.tr/blog/denizli-profesyonel-ogrenci-kocu",
+    ),
+  );
   assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/matematik-ozel-ders"));
   assert.ok(
     locations.includes(
