@@ -8,11 +8,12 @@
  *   1. python scripts/tercih/extract.py "<xlsx yolu>"
  *   2. DATABASE_URL tanımlıyken: npm run tercih:import
  */
-import { createReadStream } from "node:fs";
+import { createReadStream, readFileSync } from "node:fs";
 import { createInterface } from "node:readline";
 import { neon } from "@neondatabase/serverless";
 
 const INPUT = "tmp/tercih-programs.jsonl";
+const ALIASES = "scripts/tercih/city-aliases.json";
 const BATCH_SIZE = 500;
 
 const databaseUrl = process.env.DATABASE_URL;
@@ -150,6 +151,19 @@ async function main() {
     }
   }
 
+  // ŞEHİR sütunu kaynakta il adı yerine üniversite ya da ilçe adı taşıyabiliyor
+  // (ör. FIRAT, DİCLE, GEBZE). Bu eşleme değerleri resmî il adına indirger; aksi
+  // hâlde "Elazığ" seçen kullanıcı hiç sonuç göremezdi.
+  const aliases = JSON.parse(readFileSync(ALIASES, "utf8"));
+  const normalised = new Map();
+  for (const record of records) {
+    const alias = record.city ? aliases[record.city] : undefined;
+    if (alias) {
+      normalised.set(record.city, (normalised.get(record.city) ?? 0) + 1);
+      record.city = alias;
+    }
+  }
+
   // Yalnızca dosyada bulunan seviyeler değiştirilir. Tabloyu tümüyle boşaltmak,
   // sadece lisans içeren bir dosya geldiğinde önlisans verisini de silerdi.
   for (const level of levels) {
@@ -164,6 +178,21 @@ async function main() {
     process.stdout.write(`\r${total} program yüklendi…`);
   }
 
+  // Yeniden yüklenmeyen seviyeler (ör. bu dosyada olmayan önlisans) veritabanında
+  // eski hâliyle durur; onların şehirleri de aynı eşlemeyle düzeltilir. Aksi hâlde
+  // lisans "ELAZIĞ", önlisans "FIRAT" derdi.
+  let updatedExisting = 0;
+  for (const [from, to] of Object.entries(aliases)) {
+    if (from.startsWith("_")) continue;
+    const rows = await sql`
+      UPDATE tercih_programs SET city = ${to} WHERE city = ${from} RETURNING 1
+    `;
+    updatedExisting += rows.length;
+  }
+  if (updatedExisting > 0) {
+    console.log(`Tablo genelinde ${updatedExisting} kayıt daha il adına göre düzeltildi.`);
+  }
+
   const counts = await sql`
     SELECT level, COUNT(*)::int AS count FROM tercih_programs GROUP BY level ORDER BY level
   `;
@@ -171,6 +200,10 @@ async function main() {
   console.log(`\r${total} program yüklendi (seviye: ${levels.join(", ")}).`);
   if (restored || missing) {
     console.log(`Şehir eşleştirme: ${restored} kayıt kurtarıldı, ${missing} kayıt şehirsiz.`);
+  }
+  if (normalised.size > 0) {
+    const total = [...normalised.values()].reduce((sum, n) => sum + n, 0);
+    console.log(`İl normalizasyonu: ${total} kayıt, ${normalised.size} farklı değer düzeltildi.`);
   }
   for (const row of counts) {
     console.log(`  ${row.level}: ${row.count}`);

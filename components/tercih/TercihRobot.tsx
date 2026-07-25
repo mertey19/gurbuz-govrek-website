@@ -218,8 +218,8 @@ export function TercihRobot({
             </p>
             <p className="mt-3 text-sm leading-7 text-ink/64">
               {formatNumber(state.result.windowFrom)} –{" "}
-              {formatNumber(state.result.windowTo)} sıralama aralığında, geçen yılın
-              yerleşme verilerine göre değerlendirilebilecek program sayısı.
+              {formatNumber(state.result.windowTo)} sıralama aralığında, 2026 tercih
+              dönemi verilerine göre değerlendirilebilecek program sayısı.
             </p>
 
             <div className="mt-7 grid gap-4 sm:grid-cols-3">
@@ -447,7 +447,7 @@ export function TercihRobot({
                 Bu sıralama aralığında program bulunamadı
               </p>
               <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-ink/64">
-                Girdiğiniz sıralama, seçtiğiniz puan türünde geçen yıl yerleşme olan
+                Girdiğiniz sıralama, seçtiğiniz puan türünde 2026 verilerinde yerleşme olan
                 aralığın dışında kalıyor olabilir. Puan türünü kontrol edip tekrar
                 deneyebilir ya da doğrudan görüşme talep edebilirsiniz.
               </p>

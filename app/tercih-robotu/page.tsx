@@ -5,7 +5,7 @@ import { runTercihRobot } from "@/app/tercih-robotu/actions";
 import { TercihRobot } from "@/components/tercih/TercihRobot";
 import { Container } from "@/components/ui/Container";
 import { CANONICAL_SITE_URL } from "@/config/site";
-import { getFilterCities } from "@/lib/tercih/robot-service";
+import { EXTRA_REGIONS, PROVINCES } from "@/data/provinces";
 import { GENERAL_FINDINGS, FORECAST_YEAR } from "@/data/tercihTespitleri";
 
 const title = "Tercih Robotu | Başarı Sıranıza Göre Program Sorgulama";
@@ -33,15 +33,10 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function TercihRobotuPage() {
-  // Şehir açılırı için liste. Veritabanı yapılandırılmamışsa sayfa yine açılır;
-  // filtre boş kalır ve sorgu denendiğinde kullanıcıya anlaşılır mesaj döner.
-  let cities: string[] = [];
-  try {
-    cities = await getFilterCities();
-  } catch {
-    cities = [];
-  }
+export default function TercihRobotuPage() {
+  // Açılır, veritabanındaki ham değerlerden değil 81 ilin sabit listesinden kurulur;
+  // ham değerler üniversite ve ilçe adları içerdiği için doğrudan kullanılamaz.
+  const cities = [...PROVINCES, ...EXTRA_REGIONS];
 
   const schema = {
     "@context": "https://schema.org",
@@ -95,7 +90,7 @@ export default async function TercihRobotuPage() {
             <p className="mt-8 flex items-start gap-3 rounded-sm border border-navy/10 bg-cream/70 px-5 py-4 text-xs leading-6 text-ink/60">
               <Info className="mt-0.5 size-4 shrink-0 text-blue-deep" aria-hidden="true" />
               <span>
-                Sonuçlar geçen yılın yerleşme verilerine dayanır ve yol gösterme amaçlıdır.
+                Sonuçlar 2026 tercih dönemi için hazırlanan verilere dayanır ve yol gösterme amaçlıdır.
                 Kontenjanlar ile taban puanlar her yıl değişir; nihai bilgi için tercih
                 döneminde{" "}
                 <a href="https://osym.gov.tr/" target="_blank" rel="noreferrer" className="font-bold text-blue-deep underline underline-offset-2">

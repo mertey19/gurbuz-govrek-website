@@ -78,21 +78,6 @@ type ProgramRow = {
  * Verilen başarı sırasına yakın programların tamamını döndürür.
  * TYT önlisans, diğer puan türleri lisans programlarını kapsar.
  */
-/**
- * Şehir listesi filtre açılırını doldurur. Veri değişmediği sürece sonuç aynıdır,
- * bu yüzden istek başına yeniden hesaplanması sorun değildir.
- */
-export async function getFilterCities(): Promise<string[]> {
-  const sql = getSql();
-  const rows = (await sql`
-    SELECT DISTINCT city FROM tercih_programs
-    WHERE city IS NOT NULL AND city <> ''
-    ORDER BY city
-  `) as { city: string }[];
-
-  return rows.map((row) => row.city);
-}
-
 export async function queryRobot(
   scoreType: RobotScoreType,
   rank: number,
