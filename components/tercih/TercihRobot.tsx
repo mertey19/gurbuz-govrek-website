@@ -129,7 +129,28 @@ export function TercihRobot({
       ) : null}
 
       {state.status === "success" ? (
-        <div className="grid gap-6" aria-live="polite">
+        /*
+          Kopyalamayı caydırma katmanı (site sahibinin talebi).
+          Kapsam bilinçli olarak yalnızca sonuç alanıdır: form, telefon numarası,
+          blog ve diğer içerikler seçilebilir kalır.
+
+          Sınırı açıkça belirtmek gerekir — bu önlem sayfa kaynağını, geliştirici
+          araçlarını, JavaScript'i kapatmayı, Server Action uç noktasının doğrudan
+          çağrılmasını veya ekran görüntüsünü engellemez. Yalnızca sıradan
+          kullanıcının seçip kopyalamasını zorlaştırır.
+        */
+        <div
+          className="grid gap-6 select-none"
+          // iOS'ta uzun basınca çıkan kopyala/paylaş menüsünü kapatır. Tailwind'in
+          // arbitrary property üretimine güvenmemek için doğrudan inline verilir;
+          // masaüstü tarayıcılar bu özelliği zaten yok sayar.
+          style={{ WebkitTouchCallout: "none" }}
+          aria-live="polite"
+          onContextMenu={(event) => event.preventDefault()}
+          onCopy={(event) => event.preventDefault()}
+          onCut={(event) => event.preventDefault()}
+          onDragStart={(event) => event.preventDefault()}
+        >
           <div className="rounded-sm border border-gold/40 bg-cream p-7 sm:p-9">
             <p className="text-xs font-extrabold tracking-[.16em] text-blue-deep uppercase">
               {SCORE_TYPE_LABELS[state.scoreType] ?? state.scoreType} ·{" "}

@@ -1,5 +1,7 @@
 "use server";
 
+import { createHash } from "node:crypto";
+import { headers } from "next/headers";
 import { queryRobot, TercihRobotUnavailableError } from "@/lib/tercih/robot-service";
 import { isRobotScoreType, type RobotResult } from "@/lib/tercih/types";
 
@@ -9,16 +11,61 @@ export type RobotState =
   | { status: "error"; message: string };
 
 /**
- * Tercih robotu sorgusu.
+ * Toplu veri çekmeye karşı hız sınırı.
  *
- * Hız sınırı bilinçli olarak KALDIRILMIŞTIR (2026-07-25, site sahibinin kararı).
- * Robot artık eşleşen programların tamamını ve tüm sütunları açık biçimde sunar;
- * bu nedenle sorgu sayısını kısıtlamanın koruyucu bir karşılığı kalmamıştır.
+ * Tek bir sorgunun yanıtı ekranda gösterildiği için yakalanabilir; bu engellenemez.
+ * Engellenebilen şey, veri setinin TAMAMINI toplamaktır: 17 binden fazla programa
+ * ulaşmak için farklı puan türü ve sıralamalarla yüzlerce sorgu atmak gerekir.
+ * Bu sınır tam olarak onu pahalı hâle getirir.
+ *
+ * Eşik gerçek kullanıcıya göre seçildi: bir öğrenci genelde 5–10 sorgu yapar.
  */
+const WINDOW_MS = 10 * 60 * 1000;
+const MAX_REQUESTS = 30;
+const buckets = new Map<string, { count: number; resetAt: number }>();
+
+function fingerprint(requestHeaders: Headers): string {
+  const forwarded = requestHeaders.get("x-forwarded-for");
+  const ip =
+    forwarded?.split(",")[0]?.trim() || requestHeaders.get("x-real-ip") || "unknown";
+  const secret = process.env.MENTORFLOW_FINGERPRINT_SECRET || "tercih-robotu";
+  // Ham IP saklanmaz; yalnızca geri döndürülemez özet kullanılır.
+  return createHash("sha256").update(`${secret}|${ip}`, "utf8").digest("hex").slice(0, 32);
+}
+
+function checkLimit(key: string): boolean {
+  const now = Date.now();
+  const bucket = buckets.get(key);
+
+  if (!bucket || bucket.resetAt <= now) {
+    if (buckets.size > 5000) {
+      for (const [entryKey, entry] of buckets) {
+        if (entry.resetAt <= now) buckets.delete(entryKey);
+      }
+    }
+    buckets.set(key, { count: 1, resetAt: now + WINDOW_MS });
+    return true;
+  }
+
+  if (bucket.count >= MAX_REQUESTS) return false;
+  bucket.count += 1;
+  return true;
+}
+
 export async function runTercihRobot(
   _previousState: RobotState,
   formData: FormData,
 ): Promise<RobotState> {
+  const requestHeaders = await headers();
+
+  if (!checkLimit(fingerprint(requestHeaders))) {
+    return {
+      status: "error",
+      message:
+        "Kısa sürede çok fazla sorgulama yapıldı. Birkaç dakika sonra tekrar deneyebilir ya da WhatsApp üzerinden doğrudan görüşme talep edebilirsiniz.",
+    };
+  }
+
   const scoreType = formData.get("scoreType");
   const rawRank = formData.get("rank");
 
