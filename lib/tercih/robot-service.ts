@@ -19,6 +19,15 @@ const RANK_WINDOW_BELOW = 0.85;
 const RANK_WINDOW_ABOVE = 1.25;
 
 /**
+ * Pencerenin taraması gereken en az sıralama genişliği.
+ *
+ * Yüzde tabanlı pencere küçük sıralamalarda neredeyse hiç açılmaz: 1. sıra için
+ * aralık 1–2 çıkar ve en iyi program 38. sırada olduğu için hiçbir sonuç dönmez.
+ * Bu taban, ilk sıralardaki öğrencinin de anlamlı bir liste görmesini sağlar.
+ */
+const MIN_WINDOW_SPAN = 2500;
+
+/**
  * Tek yanıtta dönebilecek en fazla satır. İş kuralı değil, koruma amaçlıdır:
  * en geniş sorgu bile (~7.900 önlisans programı) yanıtı ve tarayıcıyı kilitlemesin.
  */
@@ -73,7 +82,10 @@ export async function queryRobot(
 
   // Öğrencinin sırasının biraz üstü ve altı: hem güvenli hem hedef tercihler.
   const windowFrom = Math.max(1, Math.floor(rank * RANK_WINDOW_BELOW));
-  const windowTo = Math.ceil(rank * RANK_WINDOW_ABOVE);
+  const windowTo = Math.max(
+    Math.ceil(rank * RANK_WINDOW_ABOVE),
+    windowFrom + MIN_WINDOW_SPAN,
+  );
 
   const summaryRows = (await sql`
     SELECT

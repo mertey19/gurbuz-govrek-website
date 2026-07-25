@@ -299,7 +299,18 @@ export function TercihRobot({
                 gösterir. Boş hücreler ilgili veri bulunmadığı anlamına gelir.
               </p>
             </div>
-          ) : null}
+          ) : (
+            <div className="rounded-sm border border-navy/10 bg-cream/70 px-6 py-8 text-center">
+              <p className="font-serif text-xl font-semibold text-navy">
+                Bu sıralama aralığında program bulunamadı
+              </p>
+              <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-ink/64">
+                Girdiğiniz sıralama, seçtiğiniz puan türünde geçen yıl yerleşme olan
+                aralığın dışında kalıyor olabilir. Puan türünü kontrol edip tekrar
+                deneyebilir ya da doğrudan görüşme talep edebilirsiniz.
+              </p>
+            </div>
+          )}
 
           <div className="rounded-sm border border-navy/12 bg-navy p-7 text-white sm:p-9">
             <h3 className="font-serif text-2xl font-semibold sm:text-3xl">
