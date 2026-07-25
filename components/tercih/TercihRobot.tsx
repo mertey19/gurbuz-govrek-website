@@ -221,8 +221,72 @@ export function TercihRobot({
                 </p>
               </div>
 
-              {/* Sütun sayısı fazla; dar ekranda tablo kendi içinde yatay kaydırılır. */}
-              <div className="mt-4 overflow-x-auto rounded-sm border border-navy/10">
+              {/*
+                13 sütun dar ekrana sığmaz. Mobilde her program bir kart olarak
+                basılır; tablo yalnızca geniş ekranda kullanılır. Böylece telefonda
+                yatay kaydırma gerekmez.
+              */}
+              <ul className="mt-4 grid gap-3 lg:hidden">
+                {state.result.programs.slice(0, visibleCount).map((program) => (
+                  <li
+                    key={`${program.programCode ?? program.department}-${program.rank}-m`}
+                    className="rounded-sm border border-navy/10 bg-white p-5"
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <p className="font-serif text-lg leading-tight font-semibold text-navy">
+                        {program.department}
+                      </p>
+                      <span className="shrink-0 rounded-full bg-cream px-3 py-1 text-xs font-bold text-blue-deep">
+                        {formatNumber(program.rank)}.
+                      </span>
+                    </div>
+
+                    <p className="mt-2 text-sm leading-6 text-ink/68">{program.university}</p>
+                    {program.faculty ? (
+                      <p className="mt-0.5 text-xs leading-5 text-ink/48">{program.faculty}</p>
+                    ) : null}
+
+                    <p className="mt-3 flex flex-wrap gap-x-2 gap-y-1 text-xs text-ink/60">
+                      <span>{program.city}</span>
+                      <span aria-hidden="true">·</span>
+                      <span>{program.kind}</span>
+                      {program.duration ? (
+                        <>
+                          <span aria-hidden="true">·</span>
+                          <span>{program.duration} yıl</span>
+                        </>
+                      ) : null}
+                    </p>
+
+                    <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2 border-t border-navy/8 pt-3 text-xs sm:grid-cols-3">
+                      {(
+                        [
+                          ["Kontenjan", orDash(program.quota)],
+                          ["Puan", program.score === null ? "—" : program.score.toFixed(2)],
+                          ["Prof.", orDash(program.prof)],
+                          ["Dr. Öğr.", orDash(program.doctor)],
+                          ["Öğr. Gör.", orDash(program.lecturers)],
+                          ["Akredite", orDash(program.accredited)],
+                          ["TUS", orDash(program.tus)],
+                          ["DUS", orDash(program.dus)],
+                        ] as const
+                      )
+                        // Veri olmayan alanlar mobilde kartı şişirmesin.
+                        .filter(([, value]) => value !== "—")
+                        .map(([label, value]) => (
+                          <div key={label}>
+                            <dt className="font-bold tracking-wide text-blue-deep/70 uppercase">
+                              {label}
+                            </dt>
+                            <dd className="mt-0.5 text-ink/72">{value}</dd>
+                          </div>
+                        ))}
+                    </dl>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-4 hidden overflow-x-auto rounded-sm border border-navy/10 lg:block">
                 <table className="w-full min-w-[62rem] border-collapse bg-white text-sm">
                   <caption className="sr-only">
                     Başarı sıranıza uyan üniversite programları ve akademik veriler
