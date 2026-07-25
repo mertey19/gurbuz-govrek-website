@@ -1,19 +1,18 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import {
   Building2,
   Landmark,
   Lightbulb,
   Loader2,
-  Lock,
   MapPin,
   MessageCircle,
   Search,
 } from "lucide-react";
 import { whatsappUrl } from "@/config/site";
 import { getForecast, FORECAST_YEAR } from "@/data/tercihTespitleri";
-import { isRobotScoreType, SAMPLE_LIMIT, SCORE_TYPES } from "@/lib/tercih/types";
+import { isRobotScoreType, RENDER_BATCH_SIZE, SCORE_TYPES } from "@/lib/tercih/types";
 import type { RobotState } from "@/app/tercih-robotu/actions";
 
 const SCORE_TYPE_LABELS: Record<string, string> = {
@@ -28,6 +27,11 @@ function formatNumber(value: number) {
   return value.toLocaleString("tr-TR");
 }
 
+function orDash(value: string | number | null) {
+  if (value === null || value === "") return "—";
+  return typeof value === "number" ? formatNumber(value) : value;
+}
+
 export function TercihRobot({
   action,
 }: {
@@ -36,6 +40,15 @@ export function TercihRobot({
   const [state, formAction, isPending] = useActionState<RobotState, FormData>(action, {
     status: "idle",
   });
+  const [visibleCount, setVisibleCount] = useState(RENDER_BATCH_SIZE);
+  const [renderedState, setRenderedState] = useState(state);
+
+  // Yeni sorgu geldiğinde liste baştan başlar. Effect yerine render sırasında
+  // ayarlanır; effect içinde setState çağırmak zincirleme render üretirdi.
+  if (renderedState !== state) {
+    setRenderedState(state);
+    setVisibleCount(RENDER_BATCH_SIZE);
+  }
 
   const forecast =
     state.status === "success" && isRobotScoreType(state.scoreType)
@@ -117,7 +130,6 @@ export function TercihRobot({
 
       {state.status === "success" ? (
         <div className="grid gap-6" aria-live="polite">
-          {/* Asıl kanca: eşleşen program sayısı. */}
           <div className="rounded-sm border border-gold/40 bg-cream p-7 sm:p-9">
             <p className="text-xs font-extrabold tracking-[.16em] text-blue-deep uppercase">
               {SCORE_TYPE_LABELS[state.scoreType] ?? state.scoreType} ·{" "}
@@ -164,7 +176,6 @@ export function TercihRobot({
               </div>
             </div>
 
-            {/* Devlet + vakıf toplamı üstteki sayıya eşit değilse aradaki fark açıklanır. */}
             {state.result.otherCount > 0 ? (
               <p className="mt-4 text-xs leading-6 text-ink/55">
                 Kalan {formatNumber(state.result.otherCount)} program KKTC ve yurt dışı
@@ -172,34 +183,6 @@ export function TercihRobot({
               </p>
             ) : null}
           </div>
-
-          {state.result.samples.length > 0 ? (
-            <div>
-              <p className="text-xs font-extrabold tracking-[.16em] text-blue-deep uppercase">
-                Sıralamanıza en yakın {SAMPLE_LIMIT} örnek
-              </p>
-              <ul className="mt-4 grid gap-3">
-                {state.result.samples.map((sample) => (
-                  <li
-                    key={`${sample.university}-${sample.department}-${sample.rank}`}
-                    className="grid gap-1 rounded-sm border border-navy/10 bg-white px-5 py-4 sm:grid-cols-[1fr_auto] sm:items-center"
-                  >
-                    <div>
-                      <p className="font-serif text-lg font-semibold text-navy">
-                        {sample.department}
-                      </p>
-                      <p className="mt-1 text-sm text-ink/60">
-                        {sample.university} · {sample.city} · {sample.kind}
-                      </p>
-                    </div>
-                    <p className="text-sm font-bold text-blue-deep sm:text-right">
-                      {formatNumber(sample.rank)}. sıra
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : null}
 
           {forecast ? (
             <div className="rounded-sm border border-navy/10 bg-white p-6 sm:p-7">
@@ -226,43 +209,116 @@ export function TercihRobot({
             </div>
           ) : null}
 
-          {/* Kilitli kısım: görüşmenin sebebi. */}
+          {state.result.programs.length > 0 ? (
+            <div>
+              <div className="flex flex-wrap items-baseline justify-between gap-3">
+                <p className="text-xs font-extrabold tracking-[.16em] text-blue-deep uppercase">
+                  Eşleşen programların tamamı
+                </p>
+                <p className="text-xs text-ink/55">
+                  {formatNumber(Math.min(visibleCount, state.result.programs.length))} /{" "}
+                  {formatNumber(state.result.programs.length)} gösteriliyor
+                </p>
+              </div>
+
+              {/* Sütun sayısı fazla; dar ekranda tablo kendi içinde yatay kaydırılır. */}
+              <div className="mt-4 overflow-x-auto rounded-sm border border-navy/10">
+                <table className="w-full min-w-[62rem] border-collapse bg-white text-sm">
+                  <caption className="sr-only">
+                    Başarı sıranıza uyan üniversite programları ve akademik veriler
+                  </caption>
+                  <thead>
+                    <tr className="bg-cream text-left text-xs font-bold tracking-wider text-blue-deep uppercase">
+                      <th scope="col" className="px-4 py-3">Sıra</th>
+                      <th scope="col" className="px-4 py-3">Üniversite</th>
+                      <th scope="col" className="px-4 py-3">Bölüm</th>
+                      <th scope="col" className="px-4 py-3">Şehir</th>
+                      <th scope="col" className="px-4 py-3">Tür</th>
+                      <th scope="col" className="px-4 py-3">Kont.</th>
+                      <th scope="col" className="px-4 py-3">Puan</th>
+                      <th scope="col" className="px-4 py-3">Prof.</th>
+                      <th scope="col" className="px-4 py-3">Dr. Öğr.</th>
+                      <th scope="col" className="px-4 py-3">Öğr. Gör.</th>
+                      <th scope="col" className="px-4 py-3">Akredite</th>
+                      <th scope="col" className="px-4 py-3">TUS</th>
+                      <th scope="col" className="px-4 py-3">DUS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {state.result.programs.slice(0, visibleCount).map((program) => (
+                      <tr
+                        key={`${program.programCode ?? program.department}-${program.rank}`}
+                        className="border-t border-navy/8 align-top"
+                      >
+                        <td className="px-4 py-3 font-bold text-blue-deep">
+                          {formatNumber(program.rank)}
+                        </td>
+                        <td className="px-4 py-3 text-navy">{program.university}</td>
+                        <td className="px-4 py-3 font-semibold text-navy">
+                          {program.department}
+                          {program.faculty ? (
+                            <span className="mt-0.5 block text-xs font-normal text-ink/50">
+                              {program.faculty}
+                            </span>
+                          ) : null}
+                        </td>
+                        <td className="px-4 py-3 text-ink/70">{program.city}</td>
+                        <td className="px-4 py-3 text-ink/70">{program.kind}</td>
+                        <td className="px-4 py-3 text-ink/70">{orDash(program.quota)}</td>
+                        <td className="px-4 py-3 text-ink/70">
+                          {program.score === null ? "—" : program.score.toFixed(2)}
+                        </td>
+                        <td className="px-4 py-3 text-ink/70">{orDash(program.prof)}</td>
+                        <td className="px-4 py-3 text-ink/70">{orDash(program.doctor)}</td>
+                        <td className="px-4 py-3 text-ink/70">{orDash(program.lecturers)}</td>
+                        <td className="px-4 py-3 text-ink/70">{orDash(program.accredited)}</td>
+                        <td className="px-4 py-3 text-ink/70">{orDash(program.tus)}</td>
+                        <td className="px-4 py-3 text-ink/70">{orDash(program.dus)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {visibleCount < state.result.programs.length ? (
+                <div className="mt-6 flex justify-center">
+                  <button
+                    type="button"
+                    onClick={() => setVisibleCount((current) => current + RENDER_BATCH_SIZE)}
+                    className="min-h-12 rounded-full border border-navy/15 bg-white px-7 text-sm font-bold text-blue-deep transition hover:border-gold hover:bg-cream focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
+                  >
+                    Daha Fazla Göster (
+                    {formatNumber(state.result.programs.length - visibleCount)} kaldı)
+                  </button>
+                </div>
+              ) : null}
+
+              <p className="mt-5 text-xs leading-6 text-ink/50">
+                Prof., Dr. Öğr. ve Öğr. Gör. sütunları programın akademik kadrosunu; TUS ve
+                DUS sütunları tıp ve diş hekimliği mezunlarının uzmanlık sınavı başarısını
+                gösterir. Boş hücreler ilgili veri bulunmadığı anlamına gelir.
+              </p>
+            </div>
+          ) : null}
+
           <div className="rounded-sm border border-navy/12 bg-navy p-7 text-white sm:p-9">
-            <span className="flex size-11 items-center justify-center rounded-sm bg-white/10 text-gold-light">
-              <Lock className="size-5" aria-hidden="true" />
-            </span>
-            <h3 className="mt-5 font-serif text-2xl font-semibold sm:text-3xl">
-              Tam liste ve kişisel sıralama görüşmede
+            <h3 className="font-serif text-2xl font-semibold sm:text-3xl">
+              Liste elinizde. Sıralamayı birlikte kuralım.
             </h3>
             <p className="mt-4 max-w-2xl text-sm leading-7 text-white/68">
-              Burada gördüğünüz {SAMPLE_LIMIT} örnek, eşleşen{" "}
-              {formatNumber(state.result.totalMatches)} programın küçük bir kısmı. Bire bir
-              görüşmede şunlar da değerlendirilir:
+              Hangi programların sıranıza uyduğunu artık görüyorsunuz. Asıl zor kısım
+              bundan sonrası: bu {formatNumber(state.result.totalMatches)} program arasından
+              hangisinin size uyduğuna karar vermek ve listeyi riskli–güvenli dengesiyle
+              sıraya koymak.
             </p>
-            <ul className="mt-5 grid gap-2 text-sm leading-7 text-white/72 sm:grid-cols-2">
-              {[
-                "Eşleşen programların tamamı",
-                "Öğretim üyesi ve akademik kadro verileri",
-                "Program akreditasyon bilgisi",
-                "Tıp ve diş için TUS/DUS başarı verileri",
-                "Riskli ve güvenli tercih dengesi",
-                "Hedefinize göre sıralanmış nihai liste",
-              ].map((item) => (
-                <li key={item} className="flex gap-2.5">
-                  <span className="mt-2.5 size-1.5 shrink-0 rounded-full bg-gold" aria-hidden="true" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-
             <a
               href={whatsappUrl}
               target="_blank"
               rel="noreferrer"
-              className="mt-8 inline-flex min-h-12 items-center gap-2 rounded-sm bg-[#25D366] px-7 text-sm font-bold text-white transition hover:bg-[#20bd5a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
+              className="mt-7 inline-flex min-h-12 items-center gap-2 rounded-sm bg-[#25D366] px-7 text-sm font-bold text-white transition hover:bg-[#20bd5a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
             >
               <MessageCircle className="size-5" aria-hidden="true" />
-              Tam Listeyi Görüşmede Alın
+              Tercih Listesi İçin Görüşme Talep Et
             </a>
           </div>
         </div>

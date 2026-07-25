@@ -1,28 +1,28 @@
 import "server-only";
 import { neon } from "@neondatabase/serverless";
-import {
-  SAMPLE_LIMIT,
-  type ProgramSample,
-  type RobotResult,
-  type RobotScoreType,
-} from "@/lib/tercih/types";
+import type { Program, RobotResult, RobotScoreType } from "@/lib/tercih/types";
 
 /**
  * Tercih robotu sorgu katmanı.
  *
- * Tasarım kuralı: bu servis ASLA tam listeyi döndürmez. Amaç kullanıcıya değeri
- * kanıtlamak ve görüşmeye yönlendirmektir; veri setinin kendisi Gürbüz Gövrek'in
- * çalışma varlığıdır ve dışa aktarılmamalıdır.
+ * Kapsam kararı (2026-07-25, site sahibinin talebi): robot eşleşen programların
+ * TAMAMINI, akademik kadro / akreditasyon / TUS-DUS sütunları dâhil döndürür.
+ * Daha önceki sürümde yalnızca 5 örnek dönüyor ve bu sütunlar gizleniyordu.
  *
- * Bu yüzden:
- *   - En fazla `SAMPLE_LIMIT` program döner.
- *   - Sayfalama (offset) yoktur; art arda istekle liste toplanamaz.
- *   - Akademik kadro, akreditasyon, TUS/DUS ve koşul sütunları hiç seçilmez.
+ * Bunun bilinen bedeli: uç nokta herkese açık olduğu için veri seti sistematik
+ * sorguyla dışarı çıkarılabilir. Karar, trafik ve erişilebilirlik lehine bilerek
+ * verilmiştir.
  */
 
 /** Sıralamanın etrafında taranan pencere. */
 const RANK_WINDOW_BELOW = 0.85;
 const RANK_WINDOW_ABOVE = 1.25;
+
+/**
+ * Tek yanıtta dönebilecek en fazla satır. İş kuralı değil, koruma amaçlıdır:
+ * en geniş sorgu bile (~7.900 önlisans programı) yanıtı ve tarayıcıyı kilitlemesin.
+ */
+const MAX_ROWS = 8000;
 
 export class TercihRobotUnavailableError extends Error {
   constructor() {
@@ -40,8 +40,28 @@ function getSql() {
   return client;
 }
 
+type ProgramRow = {
+  program_code: string | null;
+  university: string;
+  faculty: string | null;
+  department: string;
+  city: string;
+  kind: string;
+  duration: number | null;
+  rank: number;
+  score: string | number | null;
+  quota: number | null;
+  prof: number | null;
+  doctor: number | null;
+  lecturers: number | null;
+  accredited: string | null;
+  tus: string | null;
+  dus: string | null;
+  conditions: string | null;
+};
+
 /**
- * Verilen başarı sırasına yakın programları özetler.
+ * Verilen başarı sırasına yakın programların tamamını döndürür.
  * TYT önlisans, diğer puan türleri lisans programlarını kapsar.
  */
 export async function queryRobot(
@@ -84,16 +104,38 @@ export async function queryRobot(
     LIMIT 4
   `) as { city: string; count: number }[];
 
-  // Yalnızca vitrin alanları seçilir; kilitli sütunlar sorguya hiç girmez.
-  const sampleRows = (await sql`
-    SELECT university, department, city, kind, rank
+  const programRows = (await sql`
+    SELECT
+      program_code, university, faculty, department, city, kind, duration,
+      rank, score, quota, prof, doctor, lecturers, accredited, tus, dus, conditions
     FROM tercih_programs
     WHERE level = ${level}
       AND score_type = ${scoreType}
       AND rank BETWEEN ${windowFrom} AND ${windowTo}
-    ORDER BY ABS(rank - ${rank}) ASC
-    LIMIT ${SAMPLE_LIMIT}
-  `) as ProgramSample[];
+    ORDER BY rank ASC
+    LIMIT ${MAX_ROWS}
+  `) as ProgramRow[];
+
+  const programs: Program[] = programRows.map((row) => ({
+    programCode: row.program_code,
+    university: row.university,
+    faculty: row.faculty,
+    department: row.department,
+    city: row.city,
+    kind: row.kind,
+    duration: row.duration,
+    rank: row.rank,
+    // NUMERIC sütunu sürücüden metin olarak gelebilir.
+    score: row.score === null ? null : Number(row.score),
+    quota: row.quota,
+    prof: row.prof,
+    doctor: row.doctor,
+    lecturers: row.lecturers,
+    accredited: row.accredited,
+    tus: row.tus,
+    dus: row.dus,
+    conditions: row.conditions,
+  }));
 
   const summary = summaryRows[0];
 
@@ -103,7 +145,7 @@ export async function queryRobot(
     foundationCount: summary?.foundation_count ?? 0,
     otherCount: summary?.other_count ?? 0,
     topCities: cityRows,
-    samples: sampleRows,
+    programs,
     windowFrom,
     windowTo,
   };
