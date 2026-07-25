@@ -10,12 +10,15 @@ import {
   type RobotResult,
 } from "@/lib/tercih/types";
 
+const MAX_TERMS = 20;
+
 export type RobotState =
   | { status: "idle" }
   | {
       status: "success";
       scoreType: string;
-      rank: number;
+      rankFrom: number;
+      rankTo: number | null;
       filters: RobotFilters;
       result: RobotResult;
     }
@@ -78,41 +81,68 @@ export async function runTercihRobot(
   }
 
   const scoreType = formData.get("scoreType");
-  const rawRank = formData.get("rank");
 
   if (!isRobotScoreType(scoreType)) {
     return { status: "error", message: "Lütfen geçerli bir puan türü seçin." };
   }
 
   // "125.000" ve "125000" aynı değeri ifade eder.
-  const rank = Number(String(rawRank ?? "").replace(/[.\s]/g, ""));
+  const toRank = (key: string) => {
+    const raw = String(formData.get(key) ?? "").replace(/[.\s]/g, "");
+    if (raw === "") return null;
+    const value = Number(raw);
+    return Number.isInteger(value) && value >= 1 && value <= 3_000_000 ? value : NaN;
+  };
 
-  if (!Number.isInteger(rank) || rank < 1 || rank > 3_000_000) {
+  const rankFrom = toRank("rankFrom");
+  const rankTo = toRank("rankTo");
+
+  if (rankFrom === null || Number.isNaN(rankFrom)) {
     return {
       status: "error",
-      message: "Başarı sıranızı rakamlarla girin. Örnek: 125000",
+      message: "Başlangıç sıralamasını rakamlarla girin. Örnek: 125000",
     };
   }
 
-  // Boş bırakılan filtreler null olur; sorgu o koşulu tamamen atlar.
-  const text = (key: string, max: number) => {
-    const value = String(formData.get(key) ?? "").trim().slice(0, max);
-    return value === "" ? null : value;
-  };
+  if (Number.isNaN(rankTo)) {
+    return {
+      status: "error",
+      message: "Bitiş sıralamasını rakamlarla girin ya da boş bırakın.",
+    };
+  }
 
-  const requestedKind = text("kind", 16);
+  if (rankTo !== null && rankTo < rankFrom) {
+    return {
+      status: "error",
+      message: "Bitiş sıralaması başlangıçtan küçük olamaz.",
+    };
+  }
+
+  // Çoklu seçim: boş dizi "filtre yok" demektir.
+  const list = (key: string, max: number) =>
+    formData
+      .getAll(key)
+      .map((value) => String(value).trim().slice(0, max))
+      .filter((value) => value !== "")
+      .slice(0, MAX_TERMS);
+
   const filters: RobotFilters = {
-    city: text("city", 80),
-    // Bilinmeyen bir değer gelirse filtre uygulanmaz; hata verilmez.
-    kind: INSTITUTION_KINDS.some((item) => item.value === requestedKind)
-      ? requestedKind
-      : null,
-    department: text("department", 80),
+    cities: list("city", 80),
+    // Bilinmeyen değerler sessizce elenir; hata verilmez.
+    kinds: list("kind", 16).filter((value) =>
+      INSTITUTION_KINDS.some((item) => item.value === value),
+    ),
+    // Bölüm alanına virgülle birden fazla ifade yazılabilir.
+    departments: list("department", 80)
+      .flatMap((value) => value.split(","))
+      .map((term) => term.trim())
+      .filter((term) => term !== "")
+      .slice(0, MAX_TERMS),
   };
 
   try {
-    const result = await queryRobot(scoreType, rank, filters);
-    return { status: "success", scoreType, rank, filters, result };
+    const result = await queryRobot(scoreType, rankFrom, rankTo, filters);
+    return { status: "success", scoreType, rankFrom, rankTo, filters, result };
   } catch (error) {
     if (error instanceof TercihRobotUnavailableError) {
       return {

@@ -1,25 +1,25 @@
 import "server-only";
 import { neon } from "@neondatabase/serverless";
-import type {
-  Program,
-  RobotFilters,
-  RobotResult,
-  RobotScoreType,
+import {
+  EMPTY_FILTERS,
+  QUOTA_YEARS,
+  type Program,
+  type QuotaTrendPoint,
+  type RobotFilters,
+  type RobotResult,
+  type RobotScoreType,
 } from "@/lib/tercih/types";
 
 /**
  * Tercih robotu sorgu katmanı.
  *
- * Kapsam kararı (2026-07-25, site sahibinin talebi): robot eşleşen programların
- * TAMAMINI, akademik kadro / akreditasyon / TUS-DUS sütunları dâhil döndürür.
- * Daha önceki sürümde yalnızca 5 örnek dönüyor ve bu sütunlar gizleniyordu.
- *
- * Bunun bilinen bedeli: uç nokta herkese açık olduğu için veri seti sistematik
- * sorguyla dışarı çıkarılabilir. Karar, trafik ve erişilebilirlik lehine bilerek
- * verilmiştir.
+ * Kapsam kararı (site sahibinin talebi): robot eşleşen programların TAMAMINI,
+ * akademik kadro / akreditasyon / TUS-DUS sütunları dâhil döndürür. Bunun bilinen
+ * bedeli, uç nokta herkese açık olduğu için veri setinin sistematik sorguyla
+ * dışarı çıkarılabilmesidir; karar erişilebilirlik lehine bilerek verilmiştir.
  */
 
-/** Sıralamanın etrafında taranan pencere. */
+/** Kullanıcı üst sınır girmediğinde sıralamanın etrafında taranan pencere. */
 const RANK_WINDOW_BELOW = 0.85;
 const RANK_WINDOW_ABOVE = 1.25;
 
@@ -28,13 +28,12 @@ const RANK_WINDOW_ABOVE = 1.25;
  *
  * Yüzde tabanlı pencere küçük sıralamalarda neredeyse hiç açılmaz: 1. sıra için
  * aralık 1–2 çıkar ve en iyi program 38. sırada olduğu için hiçbir sonuç dönmez.
- * Bu taban, ilk sıralardaki öğrencinin de anlamlı bir liste görmesini sağlar.
  */
 const MIN_WINDOW_SPAN = 2500;
 
 /**
  * Tek yanıtta dönebilecek en fazla satır. İş kuralı değil, koruma amaçlıdır:
- * en geniş sorgu bile (~7.900 önlisans programı) yanıtı ve tarayıcıyı kilitlemesin.
+ * en geniş sorgu bile yanıtı ve tarayıcıyı kilitlemesin.
  */
 const MAX_ROWS = 8000;
 
@@ -63,8 +62,14 @@ type ProgramRow = {
   kind: string;
   duration: number | null;
   rank: number;
+  rank_2024: number | null;
+  rank_2023: number | null;
+  rank_2022: number | null;
   score: string | number | null;
   quota: number | null;
+  quota_2025: number | null;
+  quota_2024: number | null;
+  quota_2023: number | null;
   prof: number | null;
   doctor: number | null;
   lecturers: number | null;
@@ -75,50 +80,73 @@ type ProgramRow = {
 };
 
 /**
- * Verilen başarı sırasına yakın programların tamamını döndürür.
+ * Kullanıcının girdiği aralığı çözer.
+ * Üst sınır boşsa alt sınırın etrafında otomatik pencere açılır.
+ */
+export function resolveWindow(rankFrom: number, rankTo: number | null) {
+  if (rankTo !== null && rankTo >= rankFrom) {
+    return { windowFrom: Math.max(1, rankFrom), windowTo: rankTo };
+  }
+
+  const windowFrom = Math.max(1, Math.floor(rankFrom * RANK_WINDOW_BELOW));
+  const windowTo = Math.max(
+    Math.ceil(rankFrom * RANK_WINDOW_ABOVE),
+    windowFrom + MIN_WINDOW_SPAN,
+  );
+  return { windowFrom, windowTo };
+}
+
+/**
+ * Verilen sıralama aralığındaki programların tamamını döndürür.
  * TYT önlisans, diğer puan türleri lisans programlarını kapsar.
  */
 export async function queryRobot(
   scoreType: RobotScoreType,
-  rank: number,
-  filters: RobotFilters = { city: null, kind: null, department: null },
+  rankFrom: number,
+  rankTo: number | null = null,
+  filters: RobotFilters = EMPTY_FILTERS,
 ): Promise<RobotResult> {
   const sql = getSql();
   const level = scoreType === "TYT" ? "onlisans" : "lisans";
+  const { windowFrom, windowTo } = resolveWindow(rankFrom, rankTo);
 
   /*
-    Filtreler isteğe bağlı olduğu için WHERE koşulları dinamik SQL yerine
-    "parametre null ise koşulu atla" kalıbıyla yazılır. Böylece sorgu metni sabit
-    kalır ve tüm değerler parametre olarak gider (SQL enjeksiyonu mümkün değil).
-  */
-  const { city, kind, department } = filters;
+    Filtreler çoklu seçimdir. Boş dizi "filtre yok" demektir ve koşul tamamen
+    atlanır; dolu dizi `= ANY(...)` ile karşılaştırılır. Sorgu metni sabit kalır,
+    tüm değerler bağlı parametre olarak gider.
 
-  // Öğrencinin sırasının biraz üstü ve altı: hem güvenli hem hedef tercihler.
-  const windowFrom = Math.max(1, Math.floor(rank * RANK_WINDOW_BELOW));
-  const windowTo = Math.max(
-    Math.ceil(rank * RANK_WINDOW_ABOVE),
-    windowFrom + MIN_WINDOW_SPAN,
-  );
+    Bölüm filtresi metin araması olduğu için diziyi `ILIKE ANY` ile kullanır;
+    ifadelerden biri bile eşleşirse program listelenir.
+  */
+  const cities = filters.cities.length > 0 ? filters.cities : null;
+  const kinds = filters.kinds.length > 0 ? filters.kinds : null;
+  const departments =
+    filters.departments.length > 0
+      ? filters.departments.map((term) => `%${term}%`)
+      : null;
 
   const summaryRows = (await sql`
     SELECT
       COUNT(*)::int AS total,
       COUNT(*) FILTER (WHERE kind = 'DEVLET')::int AS state_count,
       COUNT(*) FILTER (WHERE kind = 'VAKIF')::int AS foundation_count,
-      COUNT(*) FILTER (WHERE kind IS DISTINCT FROM 'DEVLET' AND kind IS DISTINCT FROM 'VAKIF')::int AS other_count
+      COUNT(*) FILTER (WHERE kind IS DISTINCT FROM 'DEVLET' AND kind IS DISTINCT FROM 'VAKIF')::int AS other_count,
+      COALESCE(SUM(quota), 0)::int AS quota_2026,
+      COALESCE(SUM(quota_2025), 0)::int AS quota_2025,
+      COALESCE(SUM(quota_2024), 0)::int AS quota_2024,
+      COALESCE(SUM(quota_2023), 0)::int AS quota_2023,
+      COUNT(quota)::int AS has_2026,
+      COUNT(quota_2025)::int AS has_2025,
+      COUNT(quota_2024)::int AS has_2024,
+      COUNT(quota_2023)::int AS has_2023
     FROM tercih_programs
     WHERE level = ${level}
       AND score_type = ${scoreType}
       AND rank BETWEEN ${windowFrom} AND ${windowTo}
-      AND (${city}::text IS NULL OR city = ${city})
-      AND (${kind}::text IS NULL OR kind = ${kind})
-      AND (${department}::text IS NULL OR department ILIKE '%' || ${department} || '%')
-  `) as {
-    total: number;
-    state_count: number;
-    foundation_count: number;
-    other_count: number;
-  }[];
+      AND (${cities}::text[] IS NULL OR city = ANY(${cities}::text[]))
+      AND (${kinds}::text[] IS NULL OR kind = ANY(${kinds}::text[]))
+      AND (${departments}::text[] IS NULL OR department ILIKE ANY(${departments}::text[]))
+  `) as Record<string, number>[];
 
   const cityRows = (await sql`
     SELECT city, COUNT(*)::int AS count
@@ -126,9 +154,9 @@ export async function queryRobot(
     WHERE level = ${level}
       AND score_type = ${scoreType}
       AND rank BETWEEN ${windowFrom} AND ${windowTo}
-      AND (${city}::text IS NULL OR city = ${city})
-      AND (${kind}::text IS NULL OR kind = ${kind})
-      AND (${department}::text IS NULL OR department ILIKE '%' || ${department} || '%')
+      AND (${cities}::text[] IS NULL OR city = ANY(${cities}::text[]))
+      AND (${kinds}::text[] IS NULL OR kind = ANY(${kinds}::text[]))
+      AND (${departments}::text[] IS NULL OR department ILIKE ANY(${departments}::text[]))
       AND city IS NOT NULL
     GROUP BY city
     ORDER BY count DESC
@@ -138,14 +166,16 @@ export async function queryRobot(
   const programRows = (await sql`
     SELECT
       program_code, university, faculty, department, city, kind, duration,
-      rank, score, quota, prof, doctor, lecturers, accredited, tus, dus, conditions
+      rank, rank_2024, rank_2023, rank_2022,
+      score, quota, quota_2025, quota_2024, quota_2023,
+      prof, doctor, lecturers, accredited, tus, dus, conditions
     FROM tercih_programs
     WHERE level = ${level}
       AND score_type = ${scoreType}
       AND rank BETWEEN ${windowFrom} AND ${windowTo}
-      AND (${city}::text IS NULL OR city = ${city})
-      AND (${kind}::text IS NULL OR kind = ${kind})
-      AND (${department}::text IS NULL OR department ILIKE '%' || ${department} || '%')
+      AND (${cities}::text[] IS NULL OR city = ANY(${cities}::text[]))
+      AND (${kinds}::text[] IS NULL OR kind = ANY(${kinds}::text[]))
+      AND (${departments}::text[] IS NULL OR department ILIKE ANY(${departments}::text[]))
     ORDER BY rank ASC
     LIMIT ${MAX_ROWS}
   `) as ProgramRow[];
@@ -159,9 +189,15 @@ export async function queryRobot(
     kind: row.kind,
     duration: row.duration,
     rank: row.rank,
+    rank2024: row.rank_2024,
+    rank2023: row.rank_2023,
+    rank2022: row.rank_2022,
     // NUMERIC sütunu sürücüden metin olarak gelebilir.
     score: row.score === null ? null : Number(row.score),
     quota: row.quota,
+    quota2025: row.quota_2025,
+    quota2024: row.quota_2024,
+    quota2023: row.quota_2023,
     prof: row.prof,
     doctor: row.doctor,
     lecturers: row.lecturers,
@@ -173,6 +209,15 @@ export async function queryRobot(
 
   const summary = summaryRows[0];
 
+  // Kontenjan trendi: her yıl için toplam ve o yıl verisi bulunan program sayısı.
+  // Program sayısı gösterilir çünkü yıllar arası toplam farkı kısmen "o yıl veri
+  // yok" durumundan kaynaklanır; bunu gizlemek yanıltıcı olur.
+  const quotaTrend: QuotaTrendPoint[] = QUOTA_YEARS.map((year) => ({
+    year,
+    total: summary?.[`quota_${year}`] ?? 0,
+    programCount: summary?.[`has_${year}`] ?? 0,
+  }));
+
   return {
     totalMatches: summary?.total ?? 0,
     stateCount: summary?.state_count ?? 0,
@@ -180,6 +225,7 @@ export async function queryRobot(
     otherCount: summary?.other_count ?? 0,
     topCities: cityRows,
     programs,
+    quotaTrend,
     windowFrom,
     windowTo,
   };

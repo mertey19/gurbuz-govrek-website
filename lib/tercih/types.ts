@@ -13,6 +13,18 @@ export type RobotScoreType = (typeof SCORE_TYPES)[number];
  */
 export const RENDER_BATCH_SIZE = 50;
 
+/** Kurum türü seçenekleri. Hiçbiri seçilmezse tümü döner. */
+export const INSTITUTION_KINDS = [
+  { value: "DEVLET", label: "Devlet" },
+  { value: "VAKIF", label: "Vakıf" },
+  { value: "KIBRIS", label: "KKTC" },
+  { value: "Y.DIŞI", label: "Yurt dışı" },
+] as const;
+
+/** Tabloda gösterilen geçmiş yıllar. Veri eksikse hücre boş kalır. */
+export const RANK_YEARS = [2025, 2024, 2023, 2022] as const;
+export const QUOTA_YEARS = [2026, 2025, 2024, 2023] as const;
+
 export type Program = {
   programCode: string | null;
   university: string;
@@ -21,14 +33,19 @@ export type Program = {
   city: string;
   kind: string;
   duration: number | null;
+  /** 2025 yerleşme sırası. */
   rank: number;
+  rank2024: number | null;
+  rank2023: number | null;
+  rank2022: number | null;
   score: number | null;
+  /** 2026 kontenjanı. */
   quota: number | null;
-  /** Profesör sayısı. */
+  quota2025: number | null;
+  quota2024: number | null;
+  quota2023: number | null;
   prof: number | null;
-  /** Doktor öğretim üyesi sayısı. */
   doctor: number | null;
-  /** Toplam öğretim görevlisi sayısı. */
   lecturers: number | null;
   accredited: string | null;
   tus: string | null;
@@ -36,24 +53,18 @@ export type Program = {
   conditions: string | null;
 };
 
-/** Kurum türü filtresi. Boş bırakıldığında tümü döner. */
-export const INSTITUTION_KINDS = [
-  { value: "DEVLET", label: "Devlet üniversitesi" },
-  { value: "VAKIF", label: "Vakıf üniversitesi" },
-  { value: "KIBRIS", label: "KKTC" },
-  { value: "Y.DIŞI", label: "Yurt dışı" },
-] as const;
-
+/** Boş dizi "filtre yok" anlamına gelir. */
 export type RobotFilters = {
-  /** Tam şehir adı. Boşsa tüm şehirler. */
-  city: string | null;
-  /** `INSTITUTION_KINDS` değerlerinden biri. Boşsa tüm kurum türleri. */
-  kind: string | null;
-  /** Bölüm adında geçen ifade. Boşsa tüm bölümler. */
-  department: string | null;
+  cities: string[];
+  kinds: string[];
+  /** Bölüm adında aranan ifadeler; biri bile eşleşirse program listelenir. */
+  departments: string[];
 };
 
-export const EMPTY_FILTERS: RobotFilters = { city: null, kind: null, department: null };
+export const EMPTY_FILTERS: RobotFilters = { cities: [], kinds: [], departments: [] };
+
+/** Seçilen programların yıllara göre toplam kontenjanı. */
+export type QuotaTrendPoint = { year: number; total: number; programCount: number };
 
 export type RobotResult = {
   totalMatches: number;
@@ -63,10 +74,28 @@ export type RobotResult = {
   otherCount: number;
   topCities: { city: string; count: number }[];
   programs: Program[];
+  quotaTrend: QuotaTrendPoint[];
   windowFrom: number;
   windowTo: number;
 };
 
 export function isRobotScoreType(value: unknown): value is RobotScoreType {
   return typeof value === "string" && (SCORE_TYPES as readonly string[]).includes(value);
+}
+
+/** Sıralamayı bir programın ilgili yılına göre okur. */
+export function rankForYear(program: Program, year: number): number | null {
+  if (year === 2025) return program.rank;
+  if (year === 2024) return program.rank2024;
+  if (year === 2023) return program.rank2023;
+  if (year === 2022) return program.rank2022;
+  return null;
+}
+
+export function quotaForYear(program: Program, year: number): number | null {
+  if (year === 2026) return program.quota;
+  if (year === 2025) return program.quota2025;
+  if (year === 2024) return program.quota2024;
+  if (year === 2023) return program.quota2023;
+  return null;
 }

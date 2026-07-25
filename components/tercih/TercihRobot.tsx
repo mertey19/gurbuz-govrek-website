@@ -9,14 +9,20 @@ import {
   MapPin,
   MessageCircle,
   Search,
+  TrendingDown,
+  TrendingUp,
 } from "lucide-react";
 import { whatsappUrl } from "@/config/site";
 import { getForecast, FORECAST_YEAR } from "@/data/tercihTespitleri";
 import {
   INSTITUTION_KINDS,
   isRobotScoreType,
+  QUOTA_YEARS,
+  RANK_YEARS,
   RENDER_BATCH_SIZE,
   SCORE_TYPES,
+  quotaForYear,
+  rankForYear,
 } from "@/lib/tercih/types";
 import type { RobotState } from "@/app/tercih-robotu/actions";
 
@@ -27,6 +33,9 @@ const SCORE_TYPE_LABELS: Record<string, string> = {
   DİL: "Dil",
   TYT: "TYT (2 yıllık)",
 };
+
+const FIELD =
+  "mt-2 w-full rounded-sm border border-navy/15 bg-white px-4 py-3 text-sm text-navy placeholder:text-ink/38 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-gold";
 
 function formatNumber(value: number) {
   return value.toLocaleString("tr-TR");
@@ -42,7 +51,7 @@ export function TercihRobot({
   cities,
 }: {
   action: (state: RobotState, formData: FormData) => Promise<RobotState>;
-  /** Şehir açılırını dolduran liste; veritabanından sunucuda okunur. */
+  /** Şehir çoklu seçimini dolduran 81 il ve ek bölgeler. */
   cities: readonly string[];
 }) {
   const [state, formAction, isPending] = useActionState<RobotState, FormData>(action, {
@@ -63,23 +72,25 @@ export function TercihRobot({
       ? getForecast(state.scoreType)
       : undefined;
 
+  // 2026 kontenjanının 2023'e göre yönü; özet cümlesinde kullanılır.
+  const quotaDelta =
+    state.status === "success"
+      ? (state.result.quotaTrend[0]?.total ?? 0) -
+        (state.result.quotaTrend[state.result.quotaTrend.length - 1]?.total ?? 0)
+      : 0;
+
   return (
     <div className="grid gap-8">
       <form
         action={formAction}
         className="grid gap-5 rounded-sm border border-navy/10 bg-white p-6 shadow-[0_18px_55px_rgba(7,26,51,.08)] sm:p-8"
       >
-        <div className="grid gap-5 sm:grid-cols-[1fr_1fr_auto] sm:items-end">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_auto] lg:items-end">
           <div>
             <label htmlFor="scoreType" className="block text-sm font-bold text-navy">
               Puan türü
             </label>
-            <select
-              id="scoreType"
-              name="scoreType"
-              defaultValue="SAY"
-              className="mt-2 w-full rounded-sm border border-navy/15 bg-white px-4 py-3 text-sm text-navy focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-gold"
-            >
+            <select id="scoreType" name="scoreType" defaultValue="SAY" className={FIELD}>
               {SCORE_TYPES.map((type) => (
                 <option key={type} value={type}>
                   {SCORE_TYPE_LABELS[type] ?? type}
@@ -89,16 +100,31 @@ export function TercihRobot({
           </div>
 
           <div>
-            <label htmlFor="rank" className="block text-sm font-bold text-navy">
-              Başarı sıranız
+            <label htmlFor="rankFrom" className="block text-sm font-bold text-navy">
+              Sıralama — başlangıç
             </label>
             <input
-              id="rank"
-              name="rank"
+              id="rankFrom"
+              name="rankFrom"
               inputMode="numeric"
               autoComplete="off"
-              placeholder="Örnek: 125000"
-              className="mt-2 w-full rounded-sm border border-navy/15 bg-white px-4 py-3 text-sm text-navy placeholder:text-ink/38 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-gold"
+              placeholder="Örnek: 40000"
+              className={FIELD}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="rankTo" className="block text-sm font-bold text-navy">
+              Sıralama — bitiş
+              <span className="ml-1.5 text-xs font-medium text-ink/45">(isteğe bağlı)</span>
+            </label>
+            <input
+              id="rankTo"
+              name="rankTo"
+              inputMode="numeric"
+              autoComplete="off"
+              placeholder="Örnek: 60000"
+              className={FIELD}
             />
           </div>
 
@@ -121,38 +147,49 @@ export function TercihRobot({
           </button>
         </div>
 
-        {/* İsteğe bağlı daraltma. Boş bırakılan alan hiç filtrelenmez. */}
-        <fieldset className="grid gap-5 border-t border-navy/10 pt-5 sm:grid-cols-3">
+        <fieldset className="grid gap-5 border-t border-navy/10 pt-5 lg:grid-cols-3">
           <legend className="px-1 text-xs font-extrabold tracking-[.14em] text-blue-deep uppercase">
-            Daralt (isteğe bağlı)
+            Daralt (isteğe bağlı, birden fazla seçilebilir)
           </legend>
 
           <div>
             <label htmlFor="city" className="block text-sm font-bold text-navy">
               Şehir
             </label>
-            <select id="city" name="city" defaultValue="" className="mt-2 w-full rounded-sm border border-navy/15 bg-white px-4 py-3 text-sm text-navy focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-gold">
-              <option value="">Tüm şehirler</option>
+            {/* Çoklu seçim: Ctrl/Cmd ile birden fazla il işaretlenebilir. */}
+            <select id="city" name="city" multiple size={6} className={`${FIELD} h-auto`}>
               {cities.map((city) => (
                 <option key={city} value={city}>
                   {city}
                 </option>
               ))}
             </select>
+            <p className="mt-1.5 text-xs text-ink/45">
+              Ctrl (Mac&apos;te Cmd) ile birden fazla il seçebilirsiniz.
+            </p>
           </div>
 
           <div>
-            <label htmlFor="kind" className="block text-sm font-bold text-navy">
-              Kurum türü
-            </label>
-            <select id="kind" name="kind" defaultValue="" className="mt-2 w-full rounded-sm border border-navy/15 bg-white px-4 py-3 text-sm text-navy focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-gold">
-              <option value="">Devlet ve vakıf</option>
+            <span className="block text-sm font-bold text-navy">Kurum türü</span>
+            <div className="mt-2 grid gap-2 rounded-sm border border-navy/15 bg-white p-4">
               {INSTITUTION_KINDS.map((item) => (
-                <option key={item.value} value={item.value}>
+                <label
+                  key={item.value}
+                  htmlFor={`kind-${item.value}`}
+                  className="flex items-center gap-2.5 text-sm text-navy"
+                >
+                  <input
+                    id={`kind-${item.value}`}
+                    type="checkbox"
+                    name="kind"
+                    value={item.value}
+                    className="size-4 accent-[color:var(--brand-gold,#d6a84b)]"
+                  />
                   {item.label}
-                </option>
+                </label>
               ))}
-            </select>
+            </div>
+            <p className="mt-1.5 text-xs text-ink/45">Hiçbiri seçilmezse tümü gelir.</p>
           </div>
 
           <div>
@@ -163,16 +200,18 @@ export function TercihRobot({
               id="department"
               name="department"
               autoComplete="off"
-              placeholder="Örnek: hemşirelik"
-              className="mt-2 w-full rounded-sm border border-navy/15 bg-white px-4 py-3 text-sm text-navy focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-gold"
+              placeholder="hemşirelik, fizyoterapi"
+              className={FIELD}
             />
+            <p className="mt-1.5 text-xs text-ink/45">
+              Virgülle ayırarak birden fazla bölüm yazabilirsiniz.
+            </p>
           </div>
         </fieldset>
 
         <p className="text-xs leading-6 text-ink/50">
-          Sıralamanızın bir miktar üstü ve altı birlikte taranır; böylece hem güvenli hem
-          hedef tercihler görünür. Bölüm alanına yazdığınız ifade bölüm adında aranır.
-          Kişisel bilgi istenmez.
+          Bitiş sıralamasını boş bırakırsanız başlangıç sırasının biraz üstü ve altı
+          otomatik taranır. Kişisel bilgi istenmez.
         </p>
       </form>
 
@@ -187,20 +226,12 @@ export function TercihRobot({
 
       {state.status === "success" ? (
         /*
-          Kopyalamayı caydırma katmanı (site sahibinin talebi).
-          Kapsam bilinçli olarak yalnızca sonuç alanıdır: form, telefon numarası,
-          blog ve diğer içerikler seçilebilir kalır.
-
-          Sınırı açıkça belirtmek gerekir — bu önlem sayfa kaynağını, geliştirici
-          araçlarını, JavaScript'i kapatmayı, Server Action uç noktasının doğrudan
-          çağrılmasını veya ekran görüntüsünü engellemez. Yalnızca sıradan
-          kullanıcının seçip kopyalamasını zorlaştırır.
+          Kopyalamayı caydırma katmanı (site sahibinin talebi). Kapsam yalnızca
+          sonuç alanıdır; form ve sitenin geri kalanı seçilebilir kalır. Sayfa
+          kaynağını, geliştirici araçlarını veya ekran görüntüsünü engellemez.
         */
         <div
           className="grid gap-6 select-none"
-          // iOS'ta uzun basınca çıkan kopyala/paylaş menüsünü kapatır. Tailwind'in
-          // arbitrary property üretimine güvenmemek için doğrudan inline verilir;
-          // masaüstü tarayıcılar bu özelliği zaten yok sayar.
           style={{ WebkitTouchCallout: "none" }}
           aria-live="polite"
           onContextMenu={(event) => event.preventDefault()}
@@ -211,7 +242,8 @@ export function TercihRobot({
           <div className="rounded-sm border border-gold/40 bg-cream p-7 sm:p-9">
             <p className="text-xs font-extrabold tracking-[.16em] text-blue-deep uppercase">
               {SCORE_TYPE_LABELS[state.scoreType] ?? state.scoreType} ·{" "}
-              {formatNumber(state.rank)}. sıra
+              {formatNumber(state.rankFrom)}
+              {state.rankTo ? ` – ${formatNumber(state.rankTo)}` : ""}. sıra
             </p>
             <p className="mt-4 font-serif text-4xl font-semibold text-navy sm:text-5xl">
               {formatNumber(state.result.totalMatches)} program
@@ -262,6 +294,45 @@ export function TercihRobot({
             ) : null}
           </div>
 
+          {/* Seçilen programların yıllara göre toplam kontenjanı. */}
+          {state.result.totalMatches > 0 ? (
+            <div className="rounded-sm border border-navy/10 bg-white p-6 sm:p-7">
+              <p className="flex items-center gap-2.5 text-xs font-extrabold tracking-[.16em] text-blue-deep uppercase">
+                {quotaDelta >= 0 ? (
+                  <TrendingUp className="size-4 text-gold" aria-hidden="true" />
+                ) : (
+                  <TrendingDown className="size-4 text-gold" aria-hidden="true" />
+                )}
+                Bu seçimdeki kontenjan değişimi
+              </p>
+
+              <div className="mt-5 grid gap-3 sm:grid-cols-4">
+                {state.result.quotaTrend.map((point) => (
+                  <div
+                    key={point.year}
+                    className="rounded-sm border border-navy/10 bg-cream/60 px-5 py-4"
+                  >
+                    <p className="text-xs font-bold tracking-wider text-blue-deep uppercase">
+                      {point.year}
+                    </p>
+                    <p className="mt-1.5 font-serif text-2xl font-semibold text-navy">
+                      {formatNumber(point.total)}
+                    </p>
+                    <p className="mt-1 text-xs text-ink/50">
+                      {formatNumber(point.programCount)} programda veri
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              <p className="mt-5 text-xs leading-6 text-ink/55">
+                Yıllar arası fark kısmen o yıl verisi bulunmayan programlardan
+                kaynaklanır; her kutuda kaç programın verisi olduğu ayrıca yazılıdır.
+                Sonradan açılan programların geçmiş yıl kaydı yoktur.
+              </p>
+            </div>
+          ) : null}
+
           {forecast ? (
             <div className="rounded-sm border border-navy/10 bg-white p-6 sm:p-7">
               <p className="flex items-center gap-2.5 text-xs font-extrabold tracking-[.16em] text-blue-deep uppercase">
@@ -299,11 +370,7 @@ export function TercihRobot({
                 </p>
               </div>
 
-              {/*
-                13 sütun dar ekrana sığmaz. Mobilde her program bir kart olarak
-                basılır; tablo yalnızca geniş ekranda kullanılır. Böylece telefonda
-                yatay kaydırma gerekmez.
-              */}
+              {/* Mobilde kart, geniş ekranda tablo. */}
               <ul className="mt-4 grid gap-3 lg:hidden">
                 {state.result.programs.slice(0, visibleCount).map((program) => (
                   <li
@@ -336,10 +403,36 @@ export function TercihRobot({
                       ) : null}
                     </p>
 
-                    <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2 border-t border-navy/8 pt-3 text-xs sm:grid-cols-3">
+                    <div className="mt-4 grid gap-3 border-t border-navy/8 pt-3 text-xs">
+                      <div>
+                        <p className="font-bold tracking-wide text-blue-deep/70 uppercase">
+                          Sıralama
+                        </p>
+                        <p className="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-ink/72">
+                          {RANK_YEARS.map((year) => (
+                            <span key={year}>
+                              {year}: {orDash(rankForYear(program, year))}
+                            </span>
+                          ))}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="font-bold tracking-wide text-blue-deep/70 uppercase">
+                          Kontenjan
+                        </p>
+                        <p className="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-ink/72">
+                          {QUOTA_YEARS.map((year) => (
+                            <span key={year}>
+                              {year}: {orDash(quotaForYear(program, year))}
+                            </span>
+                          ))}
+                        </p>
+                      </div>
+                    </div>
+
+                    <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 border-t border-navy/8 pt-3 text-xs sm:grid-cols-3">
                       {(
                         [
-                          ["Kontenjan", orDash(program.quota)],
                           ["Puan", program.score === null ? "—" : program.score.toFixed(2)],
                           ["Prof.", orDash(program.prof)],
                           ["Dr. Öğr.", orDash(program.doctor)],
@@ -349,7 +442,6 @@ export function TercihRobot({
                           ["DUS", orDash(program.dus)],
                         ] as const
                       )
-                        // Veri olmayan alanlar mobilde kartı şişirmesin.
                         .filter(([, value]) => value !== "—")
                         .map(([label, value]) => (
                           <div key={label}>
@@ -365,25 +457,30 @@ export function TercihRobot({
               </ul>
 
               <div className="mt-4 hidden overflow-x-auto rounded-sm border border-navy/10 lg:block">
-                <table className="w-full min-w-[62rem] border-collapse bg-white text-sm">
+                <table className="w-full min-w-[78rem] border-collapse bg-white text-sm">
                   <caption className="sr-only">
-                    Başarı sıranıza uyan üniversite programları ve akademik veriler
+                    Sıralamanıza uyan programlar, yıllara göre sıralama ve kontenjan
+                    değişimi ile akademik veriler
                   </caption>
                   <thead>
                     <tr className="bg-cream text-left text-xs font-bold tracking-wider text-blue-deep uppercase">
-                      <th scope="col" className="px-4 py-3">Sıra</th>
                       <th scope="col" className="px-4 py-3">Üniversite</th>
                       <th scope="col" className="px-4 py-3">Bölüm</th>
                       <th scope="col" className="px-4 py-3">Şehir</th>
                       <th scope="col" className="px-4 py-3">Tür</th>
-                      <th scope="col" className="px-4 py-3">Kont.</th>
-                      <th scope="col" className="px-4 py-3">Puan</th>
-                      <th scope="col" className="px-4 py-3">Prof.</th>
-                      <th scope="col" className="px-4 py-3">Dr. Öğr.</th>
-                      <th scope="col" className="px-4 py-3">Öğr. Gör.</th>
-                      <th scope="col" className="px-4 py-3">Akredite</th>
-                      <th scope="col" className="px-4 py-3">TUS</th>
-                      <th scope="col" className="px-4 py-3">DUS</th>
+                      {RANK_YEARS.map((year) => (
+                        <th key={`r-${year}`} scope="col" className="px-3 py-3 whitespace-nowrap">
+                          {year} sıra
+                        </th>
+                      ))}
+                      {QUOTA_YEARS.map((year) => (
+                        <th key={`q-${year}`} scope="col" className="px-3 py-3 whitespace-nowrap">
+                          {year} kont.
+                        </th>
+                      ))}
+                      <th scope="col" className="px-3 py-3">Prof.</th>
+                      <th scope="col" className="px-3 py-3">Dr. Öğr.</th>
+                      <th scope="col" className="px-3 py-3">Akredite</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -392,9 +489,6 @@ export function TercihRobot({
                         key={`${program.programCode ?? program.department}-${program.rank}`}
                         className="border-t border-navy/8 align-top"
                       >
-                        <td className="px-4 py-3 font-bold text-blue-deep">
-                          {formatNumber(program.rank)}
-                        </td>
                         <td className="px-4 py-3 text-navy">{program.university}</td>
                         <td className="px-4 py-3 font-semibold text-navy">
                           {program.department}
@@ -406,16 +500,29 @@ export function TercihRobot({
                         </td>
                         <td className="px-4 py-3 text-ink/70">{program.city}</td>
                         <td className="px-4 py-3 text-ink/70">{program.kind}</td>
-                        <td className="px-4 py-3 text-ink/70">{orDash(program.quota)}</td>
-                        <td className="px-4 py-3 text-ink/70">
-                          {program.score === null ? "—" : program.score.toFixed(2)}
-                        </td>
-                        <td className="px-4 py-3 text-ink/70">{orDash(program.prof)}</td>
-                        <td className="px-4 py-3 text-ink/70">{orDash(program.doctor)}</td>
-                        <td className="px-4 py-3 text-ink/70">{orDash(program.lecturers)}</td>
-                        <td className="px-4 py-3 text-ink/70">{orDash(program.accredited)}</td>
-                        <td className="px-4 py-3 text-ink/70">{orDash(program.tus)}</td>
-                        <td className="px-4 py-3 text-ink/70">{orDash(program.dus)}</td>
+                        {RANK_YEARS.map((year) => (
+                          <td
+                            key={`r-${year}`}
+                            className={`px-3 py-3 whitespace-nowrap ${
+                              year === 2025 ? "font-bold text-blue-deep" : "text-ink/60"
+                            }`}
+                          >
+                            {orDash(rankForYear(program, year))}
+                          </td>
+                        ))}
+                        {QUOTA_YEARS.map((year) => (
+                          <td
+                            key={`q-${year}`}
+                            className={`px-3 py-3 whitespace-nowrap ${
+                              year === 2026 ? "font-bold text-blue-deep" : "text-ink/60"
+                            }`}
+                          >
+                            {orDash(quotaForYear(program, year))}
+                          </td>
+                        ))}
+                        <td className="px-3 py-3 text-ink/70">{orDash(program.prof)}</td>
+                        <td className="px-3 py-3 text-ink/70">{orDash(program.doctor)}</td>
+                        <td className="px-3 py-3 text-ink/70">{orDash(program.accredited)}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -436,20 +543,19 @@ export function TercihRobot({
               ) : null}
 
               <p className="mt-5 text-xs leading-6 text-ink/50">
-                Prof., Dr. Öğr. ve Öğr. Gör. sütunları programın akademik kadrosunu; TUS ve
-                DUS sütunları tıp ve diş hekimliği mezunlarının uzmanlık sınavı başarısını
-                gösterir. Boş hücreler ilgili veri bulunmadığı anlamına gelir.
+                Kalın yazılan sütunlar tercihte esas alınan değerlerdir: 2025 yerleşme
+                sırası ve 2026 kontenjanı. Boş hücreler o yıla ait veri bulunmadığı
+                anlamına gelir.
               </p>
             </div>
           ) : (
             <div className="rounded-sm border border-navy/10 bg-cream/70 px-6 py-8 text-center">
               <p className="font-serif text-xl font-semibold text-navy">
-                Bu sıralama aralığında program bulunamadı
+                Bu seçimle program bulunamadı
               </p>
               <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-ink/64">
-                Girdiğiniz sıralama, seçtiğiniz puan türünde 2026 verilerinde yerleşme olan
-                aralığın dışında kalıyor olabilir. Puan türünü kontrol edip tekrar
-                deneyebilir ya da doğrudan görüşme talep edebilirsiniz.
+                Sıralama aralığını genişletebilir ya da şehir, kurum türü ve bölüm
+                filtrelerinden bazılarını kaldırabilirsiniz.
               </p>
             </div>
           )}
