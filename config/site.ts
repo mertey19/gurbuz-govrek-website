@@ -53,6 +53,7 @@ export const siteNavigationGroups = [
       { label: "Denizli Tercih Danışmanı", href: "/denizli-tercih-danismani", description: "Tercih danışmanı seçerken dikkat edilecek ölçütler" },
       { label: "YKS Tercih Danışmanlığı", href: "/denizli-yks-tercih-danismanligi", description: "Kişiye özel tercih yol haritası" },
       { label: "Üniversite ve Bölüm Analizi", href: "/universite-bolum-analizi", description: "Programları verilerle karşılaştırma" },
+      { label: "Pamukkale Üniversitesi Rehberi", href: "/pamukkale-universitesi", description: "Denizli'de üniversite okumak ve PAÜ tercihi" },
       { label: "Öğrenci Koçluğu", href: "/denizli-ogrenci-koclugu", description: "Hedef, planlama ve akademik takip" },
       { label: "Meslek Seçimi Danışmanlığı", href: "/meslekler", description: "Meslekleri ve çalışma alanlarını tanıma" },
     ],

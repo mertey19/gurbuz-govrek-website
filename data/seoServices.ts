@@ -42,18 +42,20 @@ export type SeoServicePage = {
 export const yksPreferenceService: SeoServicePage = {
   path: "/denizli-yks-tercih-danismanligi",
   serviceName: "Denizli YKS Tercih Danışmanlığı",
-  title: "Denizli Tercih Danışmanlığı | YKS Tercih Danışmanı",
+  // Bu sayfa yalnızca "YKS" niyetine kilitlidir. Genel "tercih danışmanlığı" ve
+  // "tercih danışmanı" aramaları diğer iki sayfaya bırakılır; aksi hâlde üç sayfa
+  // aynı sorguda birbiriyle yarışır ve sinyal bölünür.
+  title: "Denizli YKS Tercih Danışmanlığı | Başarı Sırasına Göre Tercih Listesi",
   description:
-    "Denizli tercih danışmanlığı ve YKS tercih danışmanı desteği. Başarı sırası, kontenjan, bölüm olanakları ve öğrenci hedefleriyle kişisel tercih listesi.",
+    "Denizli YKS tercih danışmanlığı: başarı sırası, kontenjan değişimi ve bölüm olanakları birlikte değerlendirilerek YKS tercih listenizi kuruyoruz. Yüz yüze ve online.",
   keywords: [
-    "Denizli tercih danışmanlığı",
-    "Denizli tercih danışmanı",
     "Denizli YKS tercih danışmanlığı",
-    "YKS tercih danışmanı",
-    "üniversite tercih danışmanlığı Denizli",
+    "Denizli YKS danışmanlığı",
+    "YKS tercih danışmanı Denizli",
+    "YKS başarı sırası tercih listesi",
   ],
-  eyebrow: "Denizli Tercih Danışmanlığı · Yüz Yüze ve Online",
-  heading: "Denizli Tercih Danışmanlığı ile YKS Tercihlerinizi Veriye Dayandırın",
+  eyebrow: "Denizli YKS Tercih Danışmanlığı · Yüz Yüze ve Online",
+  heading: "Denizli YKS Tercih Danışmanlığı: Tercihlerinizi Başarı Sıranıza Dayandırın",
   lead:
     "Denizli’de tercih danışmanı arayan öğrenciler için tercih listesi yalnızca puanların sıralandığı bir tablo değildir. Öğrencinin hedefi, ilgi alanı, şehir ve kampüs beklentisi ile güncel program verileri birlikte değerlendirilerek açıklanabilir bir karar planına dönüştürülür.",
   image: "/images/one-to-one-consulting.webp",
@@ -167,12 +169,14 @@ export const denizliPreferenceConsultingService: SeoServicePage = {
   title: "Denizli Tercih Danışmanlığı | Üniversite Tercih Danışmanı",
   description:
     "Denizli tercih danışmanlığı hizmetiyle üniversite, bölüm ve şehir seçeneklerini veriye dayalı değerlendirin. YKS tercih döneminde yüz yüze ve online destek.",
+  // Genel "tercih danışmanlığı" niyetinin ana sayfası. YKS'ye özel sorgular
+  // /denizli-yks-tercih-danismanligi sayfasına, "danışman arıyorum" niyeti ise
+  // /denizli-tercih-danismani sayfasına bırakılır.
   keywords: [
     "Denizli tercih danışmanlığı",
     "tercih danışmanlığı Denizli",
-    "üniversite tercih danışmanlığı",
-    "YKS tercih danışmanlığı",
-    "Denizli üniversite tercih danışmanı",
+    "üniversite tercih danışmanlığı Denizli",
+    "bölüm seçimi danışmanlığı Denizli",
   ],
   eyebrow: "Denizli · Üniversite Tercih Süreci",
   heading: "Denizli Tercih Danışmanlığı: Doğru Üniversite ve Bölüm İçin Kişisel Yol Haritası",
@@ -289,12 +293,12 @@ export const denizliPreferenceConsultantService: SeoServicePage = {
   title: "Denizli Tercih Danışmanı | Gürbüz Gövrek",
   description:
     "Denizli tercih danışmanı Gürbüz Gövrek ile YKS tercih listesi, üniversite-bölüm analizi, başarı sırası ve öğrenci hedefleri birlikte değerlendirilir.",
+  // "Danışman arıyorum" niyeti: kişi odaklı sorgular bu sayfaya aittir.
   keywords: [
     "Denizli tercih danışmanı",
     "tercih danışmanı Denizli",
-    "YKS tercih danışmanı Denizli",
-    "üniversite tercih danışmanı",
     "Gürbüz Gövrek tercih danışmanı",
+    "Denizli tercih danışmanı tavsiye",
   ],
   eyebrow: "Tercih Danışmanı · Denizli",
   heading: "Denizli Tercih Danışmanı Arayan Öğrenciler İçin Veriye Dayalı Rehberlik",
@@ -407,14 +411,17 @@ export const denizliPreferenceConsultantService: SeoServicePage = {
 
 export const studentCoachingService: SeoServicePage = {
   path: "/denizli-ogrenci-koclugu",
-  serviceName: "Öğrenci Koçluğu",
-  title: "Denizli Öğrenci Koçluğu ve Akademik Takip | Gürbüz Gövrek",
+  // Hedef aramalar: "denizli öğrenci koçluğu" ve "denizli yks koçluğu".
+  // `serviceName` başlık, breadcrumb, H2 ve Service şemasında kullanıldığı için
+  // şehir adı burada da yer alır.
+  serviceName: "Denizli Öğrenci Koçluğu",
+  title: "Denizli Öğrenci Koçluğu ve YKS Koçluğu | Gürbüz Gövrek",
   description:
-    "Denizli’de yüz yüze ve online öğrenci koçluğu. Gerçekçi hedef, kişisel çalışma planı, düzenli takip ve öğrenci-veli geri bildirimi.",
-  eyebrow: "Öğrenci Koçluğu · Akademik Takip",
-  heading: "Hedefi Günlük Çalışma Düzenine Dönüştüren Kişisel Takip",
+    "Denizli’de yüz yüze ve online öğrenci koçluğu ile YKS koçluğu. Gerçekçi hedef, kişisel çalışma planı, düzenli takip ve öğrenci-veli geri bildirimi.",
+  eyebrow: "Denizli Öğrenci Koçluğu · YKS Koçluğu",
+  heading: "Denizli Öğrenci Koçluğu: Hedefi Günlük Çalışma Düzenine Dönüştüren Kişisel Takip",
   lead:
-    "Öğrenci koçluğu hazır bir program vermekten ibaret değildir. Öğrencinin mevcut düzeni, okul ve sınav takvimi, güçlü yönleri ve zorlandığı noktalar birlikte değerlendirilerek sürdürülebilir bir çalışma sistemi kurulur.",
+    "Öğrenci koçluğu hazır bir program vermekten ibaret değildir. Öğrencinin mevcut düzeni, okul ve sınav takvimi, güçlü yönleri ve zorlandığı noktalar birlikte değerlendirilerek sürdürülebilir bir çalışma sistemi kurulur. YKS koçluğunda bu sistem sınav takvimine göre kurulur.",
   image: "/images/student-success.webp",
   imageAlt:
     "Gürbüz Gövrek öğrenci ve ailesiyle Denizli’de öğrenci koçluğu görüşmesinde",
@@ -423,9 +430,9 @@ export const studentCoachingService: SeoServicePage = {
     { value: "Düzenli", label: "Akademik takip" },
     { value: "Açık", label: "Öğrenci-veli iletişimi" },
   ],
-  audienceTitle: "Öğrenci Koçluğu Hangi İhtiyaçlara Yanıt Verir?",
+  audienceTitle: "Denizli Öğrenci Koçluğu ve YKS Koçluğu Hangi İhtiyaçlara Yanıt Verir?",
   audienceIntro:
-    "Çalışma isteği olduğu hâlde planını sürdüremeyen veya hedefini günlük adımlara çevirmekte zorlanan öğrenciler için yapılandırılır.",
+    "Çalışma isteği olduğu hâlde planını sürdüremeyen veya hedefini günlük adımlara çevirmekte zorlanan öğrenciler için yapılandırılır. YKS koçluğunda aynı sistem sınav takvimi, deneme analizi ve net gelişimi üzerine kurulur.",
   audience: [
     {
       title: "Nereden başlayacağını bilemeyen öğrenciler",
@@ -480,6 +487,16 @@ export const studentCoachingService: SeoServicePage = {
     "Gerektiğinde öğrenci ve veliyle açık geri bildirim görüşmesi yapılması",
   ],
   faqs: [
+    {
+      question: "Denizli’de öğrenci koçluğu ile YKS koçluğu arasında ne fark var?",
+      answer:
+        "İkisi de aynı yöntemi kullanır: mevcut düzeni anlamak, ölçülebilir hedef koymak ve düzenli takip etmek. Fark odaktadır. Öğrenci koçluğu okul başarısı ve çalışma alışkanlığı üzerine kuruludur; YKS koçluğunda ise plan sınav takvimine, deneme analizine ve net gelişimine göre şekillenir. Öğrencinin sınıfına ve hedefine göre hangisinin uygun olduğu ilk görüşmede belirlenir.",
+    },
+    {
+      question: "YKS koçluğuna ne zaman başlanmalı?",
+      answer:
+        "Erken başlamak avantaj sağlar; çünkü çalışma alışkanlığının yerleşmesi zaman alır. Ancak sınav yılı içinde başlayan öğrenciler için de plan, kalan süreye göre yeniden kurulur. Belirleyici olan başlangıç tarihi değil, düzenin sürdürülebilir olmasıdır.",
+    },
     {
       question: "Öğrenci koçluğu özel ders yerine geçer mi?",
       answer:

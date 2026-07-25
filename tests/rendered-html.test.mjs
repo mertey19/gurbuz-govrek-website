@@ -160,7 +160,8 @@ test("SEO hizmet ve uzmanlık sayfalarını ayrı kanonik adreslerle oluşturur"
   const pages = [
     {
       path: "/denizli-yks-tercih-danismanligi",
-      heading: /Denizli Tercih Danışmanlığı ile YKS Tercihlerinizi Veriye Dayandırın/i,
+      // H1 hedef anahtar kelimeyle başlar; üç tercih sayfası farklı niyetlere kilitlidir.
+      heading: /Denizli YKS Tercih Danışmanlığı: Tercihlerinizi Başarı Sıranıza Dayandırın/i,
       canonical: "/denizli-yks-tercih-danismanligi",
     },
     {
@@ -282,12 +283,13 @@ test("sitemap blog adreslerini yalnızca kanonik alan adıyla üretir", async ()
   const xml = await response.text();
   const locations = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
 
-  assert.equal(locations.length, 22);
+  assert.equal(locations.length, 23);
   assert.ok(locations.every((location) => location.startsWith("https://www.xn--grbzgvrek-47a5dc.com.tr/")));
   assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/blog"));
   assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/meslekler"));
   assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/meslekler/sayisal"));
   assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/meslekler/tyt"));
+  assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/pamukkale-universitesi"));
   assert.ok(
     locations.includes(
       "https://www.xn--grbzgvrek-47a5dc.com.tr/blog/denizli-yks-ek-tercih-danismanligi",

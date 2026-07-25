@@ -65,6 +65,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.85,
     },
+    {
+      url: `${CANONICAL_SITE_URL}/pamukkale-universitesi`,
+      lastModified: new Date("2026-07-25"),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
   ];
 
   return [
