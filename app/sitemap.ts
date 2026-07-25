@@ -66,6 +66,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85,
     },
     {
+      url: `${CANONICAL_SITE_URL}/tercih-robotu`,
+      lastModified: new Date("2026-07-25"),
+      changeFrequency: "weekly",
+      priority: 0.95,
+    },
+    {
       url: `${CANONICAL_SITE_URL}/pamukkale-universitesi`,
       lastModified: new Date("2026-07-25"),
       changeFrequency: "monthly",

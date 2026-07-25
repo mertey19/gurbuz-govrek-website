@@ -38,6 +38,11 @@ yarn-error.log*
 # claude code — kişisel izin ayarları paylaşılmaz, launch.json paylaşılır
 .claude/settings.local.json
 
+# Tercih robotu ara çıktıları. Repo herkese açık olduğu için program verisi
+# HİÇBİR koşulda commit'lenmez; yalnızca veritabanında tutulur.
+/tmp/
+*.xlsx
+
 # typescript
 next-env.d.ts
 /dist/

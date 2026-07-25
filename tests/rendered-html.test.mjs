@@ -283,13 +283,14 @@ test("sitemap blog adreslerini yalnızca kanonik alan adıyla üretir", async ()
   const xml = await response.text();
   const locations = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
 
-  assert.equal(locations.length, 23);
+  assert.equal(locations.length, 24);
   assert.ok(locations.every((location) => location.startsWith("https://www.xn--grbzgvrek-47a5dc.com.tr/")));
   assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/blog"));
   assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/meslekler"));
   assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/meslekler/sayisal"));
   assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/meslekler/tyt"));
   assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/pamukkale-universitesi"));
+  assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/tercih-robotu"));
   assert.ok(
     locations.includes(
       "https://www.xn--grbzgvrek-47a5dc.com.tr/blog/denizli-yks-ek-tercih-danismanligi",
