@@ -3,11 +3,22 @@
 import { createHash } from "node:crypto";
 import { headers } from "next/headers";
 import { queryRobot, TercihRobotUnavailableError } from "@/lib/tercih/robot-service";
-import { isRobotScoreType, type RobotResult } from "@/lib/tercih/types";
+import {
+  INSTITUTION_KINDS,
+  isRobotScoreType,
+  type RobotFilters,
+  type RobotResult,
+} from "@/lib/tercih/types";
 
 export type RobotState =
   | { status: "idle" }
-  | { status: "success"; scoreType: string; rank: number; result: RobotResult }
+  | {
+      status: "success";
+      scoreType: string;
+      rank: number;
+      filters: RobotFilters;
+      result: RobotResult;
+    }
   | { status: "error"; message: string };
 
 /**
@@ -83,9 +94,25 @@ export async function runTercihRobot(
     };
   }
 
+  // Boş bırakılan filtreler null olur; sorgu o koşulu tamamen atlar.
+  const text = (key: string, max: number) => {
+    const value = String(formData.get(key) ?? "").trim().slice(0, max);
+    return value === "" ? null : value;
+  };
+
+  const requestedKind = text("kind", 16);
+  const filters: RobotFilters = {
+    city: text("city", 80),
+    // Bilinmeyen bir değer gelirse filtre uygulanmaz; hata verilmez.
+    kind: INSTITUTION_KINDS.some((item) => item.value === requestedKind)
+      ? requestedKind
+      : null,
+    department: text("department", 80),
+  };
+
   try {
-    const result = await queryRobot(scoreType, rank);
-    return { status: "success", scoreType, rank, result };
+    const result = await queryRobot(scoreType, rank, filters);
+    return { status: "success", scoreType, rank, filters, result };
   } catch (error) {
     if (error instanceof TercihRobotUnavailableError) {
       return {

@@ -12,7 +12,12 @@ import {
 } from "lucide-react";
 import { whatsappUrl } from "@/config/site";
 import { getForecast, FORECAST_YEAR } from "@/data/tercihTespitleri";
-import { isRobotScoreType, RENDER_BATCH_SIZE, SCORE_TYPES } from "@/lib/tercih/types";
+import {
+  INSTITUTION_KINDS,
+  isRobotScoreType,
+  RENDER_BATCH_SIZE,
+  SCORE_TYPES,
+} from "@/lib/tercih/types";
 import type { RobotState } from "@/app/tercih-robotu/actions";
 
 const SCORE_TYPE_LABELS: Record<string, string> = {
@@ -34,8 +39,11 @@ function orDash(value: string | number | null) {
 
 export function TercihRobot({
   action,
+  cities,
 }: {
   action: (state: RobotState, formData: FormData) => Promise<RobotState>;
+  /** Şehir açılırını dolduran liste; veritabanından sunucuda okunur. */
+  cities: readonly string[];
 }) {
   const [state, formAction, isPending] = useActionState<RobotState, FormData>(action, {
     status: "idle",
@@ -113,9 +121,58 @@ export function TercihRobot({
           </button>
         </div>
 
+        {/* İsteğe bağlı daraltma. Boş bırakılan alan hiç filtrelenmez. */}
+        <fieldset className="grid gap-5 border-t border-navy/10 pt-5 sm:grid-cols-3">
+          <legend className="px-1 text-xs font-extrabold tracking-[.14em] text-blue-deep uppercase">
+            Daralt (isteğe bağlı)
+          </legend>
+
+          <div>
+            <label htmlFor="city" className="block text-sm font-bold text-navy">
+              Şehir
+            </label>
+            <select id="city" name="city" defaultValue="" className="mt-2 w-full rounded-sm border border-navy/15 bg-white px-4 py-3 text-sm text-navy focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-gold">
+              <option value="">Tüm şehirler</option>
+              {cities.map((city) => (
+                <option key={city} value={city}>
+                  {city}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label htmlFor="kind" className="block text-sm font-bold text-navy">
+              Kurum türü
+            </label>
+            <select id="kind" name="kind" defaultValue="" className="mt-2 w-full rounded-sm border border-navy/15 bg-white px-4 py-3 text-sm text-navy focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-gold">
+              <option value="">Devlet ve vakıf</option>
+              {INSTITUTION_KINDS.map((item) => (
+                <option key={item.value} value={item.value}>
+                  {item.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label htmlFor="department" className="block text-sm font-bold text-navy">
+              Bölüm / meslek
+            </label>
+            <input
+              id="department"
+              name="department"
+              autoComplete="off"
+              placeholder="Örnek: hemşirelik"
+              className="mt-2 w-full rounded-sm border border-navy/15 bg-white px-4 py-3 text-sm text-navy focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-gold"
+            />
+          </div>
+        </fieldset>
+
         <p className="text-xs leading-6 text-ink/50">
           Sıralamanızın bir miktar üstü ve altı birlikte taranır; böylece hem güvenli hem
-          hedef tercihler görünür. Kişisel bilgi istenmez.
+          hedef tercihler görünür. Bölüm alanına yazdığınız ifade bölüm adında aranır.
+          Kişisel bilgi istenmez.
         </p>
       </form>
 

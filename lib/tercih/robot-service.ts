@@ -1,6 +1,11 @@
 import "server-only";
 import { neon } from "@neondatabase/serverless";
-import type { Program, RobotResult, RobotScoreType } from "@/lib/tercih/types";
+import type {
+  Program,
+  RobotFilters,
+  RobotResult,
+  RobotScoreType,
+} from "@/lib/tercih/types";
 
 /**
  * Tercih robotu sorgu katmanı.
@@ -73,12 +78,35 @@ type ProgramRow = {
  * Verilen başarı sırasına yakın programların tamamını döndürür.
  * TYT önlisans, diğer puan türleri lisans programlarını kapsar.
  */
+/**
+ * Şehir listesi filtre açılırını doldurur. Veri değişmediği sürece sonuç aynıdır,
+ * bu yüzden istek başına yeniden hesaplanması sorun değildir.
+ */
+export async function getFilterCities(): Promise<string[]> {
+  const sql = getSql();
+  const rows = (await sql`
+    SELECT DISTINCT city FROM tercih_programs
+    WHERE city IS NOT NULL AND city <> ''
+    ORDER BY city
+  `) as { city: string }[];
+
+  return rows.map((row) => row.city);
+}
+
 export async function queryRobot(
   scoreType: RobotScoreType,
   rank: number,
+  filters: RobotFilters = { city: null, kind: null, department: null },
 ): Promise<RobotResult> {
   const sql = getSql();
   const level = scoreType === "TYT" ? "onlisans" : "lisans";
+
+  /*
+    Filtreler isteğe bağlı olduğu için WHERE koşulları dinamik SQL yerine
+    "parametre null ise koşulu atla" kalıbıyla yazılır. Böylece sorgu metni sabit
+    kalır ve tüm değerler parametre olarak gider (SQL enjeksiyonu mümkün değil).
+  */
+  const { city, kind, department } = filters;
 
   // Öğrencinin sırasının biraz üstü ve altı: hem güvenli hem hedef tercihler.
   const windowFrom = Math.max(1, Math.floor(rank * RANK_WINDOW_BELOW));
@@ -97,6 +125,9 @@ export async function queryRobot(
     WHERE level = ${level}
       AND score_type = ${scoreType}
       AND rank BETWEEN ${windowFrom} AND ${windowTo}
+      AND (${city}::text IS NULL OR city = ${city})
+      AND (${kind}::text IS NULL OR kind = ${kind})
+      AND (${department}::text IS NULL OR department ILIKE '%' || ${department} || '%')
   `) as {
     total: number;
     state_count: number;
@@ -110,6 +141,9 @@ export async function queryRobot(
     WHERE level = ${level}
       AND score_type = ${scoreType}
       AND rank BETWEEN ${windowFrom} AND ${windowTo}
+      AND (${city}::text IS NULL OR city = ${city})
+      AND (${kind}::text IS NULL OR kind = ${kind})
+      AND (${department}::text IS NULL OR department ILIKE '%' || ${department} || '%')
       AND city IS NOT NULL
     GROUP BY city
     ORDER BY count DESC
@@ -124,6 +158,9 @@ export async function queryRobot(
     WHERE level = ${level}
       AND score_type = ${scoreType}
       AND rank BETWEEN ${windowFrom} AND ${windowTo}
+      AND (${city}::text IS NULL OR city = ${city})
+      AND (${kind}::text IS NULL OR kind = ${kind})
+      AND (${department}::text IS NULL OR department ILIKE '%' || ${department} || '%')
     ORDER BY rank ASC
     LIMIT ${MAX_ROWS}
   `) as ProgramRow[];

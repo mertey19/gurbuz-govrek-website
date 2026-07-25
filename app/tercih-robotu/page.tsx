@@ -5,6 +5,7 @@ import { runTercihRobot } from "@/app/tercih-robotu/actions";
 import { TercihRobot } from "@/components/tercih/TercihRobot";
 import { Container } from "@/components/ui/Container";
 import { CANONICAL_SITE_URL } from "@/config/site";
+import { getFilterCities } from "@/lib/tercih/robot-service";
 import { GENERAL_FINDINGS, FORECAST_YEAR } from "@/data/tercihTespitleri";
 
 const title = "Tercih Robotu | Başarı Sıranıza Göre Program Sorgulama";
@@ -32,7 +33,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default function TercihRobotuPage() {
+export default async function TercihRobotuPage() {
+  // Şehir açılırı için liste. Veritabanı yapılandırılmamışsa sayfa yine açılır;
+  // filtre boş kalır ve sorgu denendiğinde kullanıcıya anlaşılır mesaj döner.
+  let cities: string[] = [];
+  try {
+    cities = await getFilterCities();
+  } catch {
+    cities = [];
+  }
+
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
@@ -80,7 +90,7 @@ export default function TercihRobotuPage() {
 
         <section className="py-12 sm:py-16">
           <Container className="max-w-4xl">
-            <TercihRobot action={runTercihRobot} />
+            <TercihRobot action={runTercihRobot} cities={cities} />
 
             <p className="mt-8 flex items-start gap-3 rounded-sm border border-navy/10 bg-cream/70 px-5 py-4 text-xs leading-6 text-ink/60">
               <Info className="mt-0.5 size-4 shrink-0 text-blue-deep" aria-hidden="true" />

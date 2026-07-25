@@ -36,6 +36,25 @@ export type Program = {
   conditions: string | null;
 };
 
+/** Kurum türü filtresi. Boş bırakıldığında tümü döner. */
+export const INSTITUTION_KINDS = [
+  { value: "DEVLET", label: "Devlet üniversitesi" },
+  { value: "VAKIF", label: "Vakıf üniversitesi" },
+  { value: "KIBRIS", label: "KKTC" },
+  { value: "Y.DIŞI", label: "Yurt dışı" },
+] as const;
+
+export type RobotFilters = {
+  /** Tam şehir adı. Boşsa tüm şehirler. */
+  city: string | null;
+  /** `INSTITUTION_KINDS` değerlerinden biri. Boşsa tüm kurum türleri. */
+  kind: string | null;
+  /** Bölüm adında geçen ifade. Boşsa tüm bölümler. */
+  department: string | null;
+};
+
+export const EMPTY_FILTERS: RobotFilters = { city: null, kind: null, department: null };
+
 export type RobotResult = {
   totalMatches: number;
   stateCount: number;
