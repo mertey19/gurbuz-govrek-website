@@ -11,9 +11,13 @@ export const metadata: Metadata = {
   robots: { index: false, follow: true },
 };
 
+type SuggestedLink = { label: string; href: string; description: string };
+
 // Yalnızca kendi sayfası olan bağlantılar önerilir; ana sayfa çapaları (#...) atlanır.
-const suggestedLinks = siteNavigationGroups
-  .flatMap((group) => ("items" in group ? group.items : []))
+// `siteNavigationGroups` bir literal tuple birleşimi olduğu için geri dönüş tipi açıkça
+// belirtilir; aksi hâlde flatMap ilk grubun şeklini tüm gruplara dayatıp tip hatası verir.
+const suggestedLinks: SuggestedLink[] = siteNavigationGroups
+  .flatMap((group): SuggestedLink[] => ("items" in group ? [...group.items] : []))
   .filter((item) => !item.href.includes("#"))
   .slice(0, 8);
 
