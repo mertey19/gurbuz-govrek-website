@@ -42,6 +42,9 @@ yarn-error.log*
 # HİÇBİR koşulda commit'lenmez; yalnızca veritabanında tutulur.
 /tmp/
 *.xlsx
+# İndirilebilir sürüm bilinçli olarak yayımlanır (site sahibinin kararı).
+# Bu dosya herkese açık depoya girer ve geçmişten silinmesi zordur.
+!public/*.xlsx
 
 # typescript
 next-env.d.ts
