@@ -100,37 +100,81 @@ async function insertBatch(rows) {
   `;
 }
 
-async function main() {
-  await ensureSchema();
-
-  // Yükleme tam değişimdir: eski yılın verisi kalmamalı.
-  await sql`TRUNCATE TABLE tercih_programs`;
-
+/** Dosyanın tamamını okur; hangi seviyelerin geldiğini önceden bilmek gerekir. */
+async function readRecords() {
   const reader = createInterface({
     input: createReadStream(INPUT, { encoding: "utf8" }),
     crlfDelay: Infinity,
   });
 
-  let batch = [];
-  let total = 0;
-
+  const records = [];
   for await (const line of reader) {
-    if (!line.trim()) continue;
-    batch.push(JSON.parse(line));
+    if (line.trim()) records.push(JSON.parse(line));
+  }
+  return records;
+}
 
-    if (batch.length >= BATCH_SIZE) {
-      await insertBatch(batch);
-      total += batch.length;
-      process.stdout.write(`\r${total} program yüklendi…`);
-      batch = [];
+async function main() {
+  await ensureSchema();
+
+  const records = await readRecords();
+
+  if (records.length === 0) {
+    console.error("Dosyada kayıt yok. Yükleme iptal edildi; tablo değiştirilmedi.");
+    process.exitCode = 1;
+    return;
+  }
+
+  const levels = [...new Set(records.map((record) => record.level))];
+
+  // Şehir sütunu güncellenmiş kaynak dosyada bulunmuyor. Mevcut kayıtlardaki
+  // program kodu → şehir eşlemesi çıkarılıp yeni satırlara geri yazılır.
+  const existingCityRows = await sql`
+    SELECT program_code, city FROM tercih_programs
+    WHERE program_code IS NOT NULL AND city IS NOT NULL
+  `;
+  const cityByCode = new Map(
+    existingCityRows.map((row) => [row.program_code, row.city]),
+  );
+
+  let restored = 0;
+  let missing = 0;
+  for (const record of records) {
+    if (record.city) continue;
+    const city = cityByCode.get(record.program_code);
+    if (city) {
+      record.city = city;
+      restored += 1;
+    } else {
+      missing += 1;
     }
   }
 
-  await insertBatch(batch);
-  total += batch.length;
+  // Yalnızca dosyada bulunan seviyeler değiştirilir. Tabloyu tümüyle boşaltmak,
+  // sadece lisans içeren bir dosya geldiğinde önlisans verisini de silerdi.
+  for (const level of levels) {
+    await sql`DELETE FROM tercih_programs WHERE level = ${level}`;
+  }
 
-  const [{ count }] = await sql`SELECT COUNT(*)::int AS count FROM tercih_programs`;
-  console.log(`\r${total} program yüklendi. Tablodaki kayıt sayısı: ${count}`);
+  let total = 0;
+  for (let index = 0; index < records.length; index += BATCH_SIZE) {
+    const batch = records.slice(index, index + BATCH_SIZE);
+    await insertBatch(batch);
+    total += batch.length;
+    process.stdout.write(`\r${total} program yüklendi…`);
+  }
+
+  const counts = await sql`
+    SELECT level, COUNT(*)::int AS count FROM tercih_programs GROUP BY level ORDER BY level
+  `;
+
+  console.log(`\r${total} program yüklendi (seviye: ${levels.join(", ")}).`);
+  if (restored || missing) {
+    console.log(`Şehir eşleştirme: ${restored} kayıt kurtarıldı, ${missing} kayıt şehirsiz.`);
+  }
+  for (const row of counts) {
+    console.log(`  ${row.level}: ${row.count}`);
+  }
 }
 
 main().catch((error) => {

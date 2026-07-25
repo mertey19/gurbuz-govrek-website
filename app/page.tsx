@@ -9,6 +9,7 @@ import { ContactCTA } from "@/components/sections/ContactCTA";
 import { Counseling } from "@/components/sections/Counseling";
 import { Events } from "@/components/sections/Events";
 import { FAQ } from "@/components/sections/FAQ";
+import { FlashAnnouncement } from "@/components/sections/FlashAnnouncement";
 import { Gallery } from "@/components/sections/Gallery";
 import { Hero } from "@/components/sections/Hero";
 import { Mathematics } from "@/components/sections/Mathematics";
@@ -136,6 +137,7 @@ export default function Home() {
     <>
       <main id="main-content">
         <Hero />
+        <FlashAnnouncement />
         <Stats />
         <About />
         <PresentationCorner />

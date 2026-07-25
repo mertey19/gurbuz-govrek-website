@@ -20,10 +20,24 @@ OUTPUT = os.path.join("tmp", "tercih-programs.jsonl")
 
 # (sayfa adı, seviye, sütun indeksleri) — iki sayfanın sütun düzeni farklı.
 SHEETS = {
+    # 2026 dosyasının ilk sürümündeki düzen.
     "LİSANS": {
         "level": "lisans",
         "cols": {
             "program_code": 0, "kind": 1, "city": 2, "university": 3,
+            "faculty": 4, "department": 5, "duration": 6, "score_type": 7,
+            "rank": 8, "score": 9, "quota": 10, "school_first": 11,
+            "conditions": 15, "prof": 16, "doctor": 17, "lecturers": 18,
+            "accredited": 19, "tus": 20, "dus": 21,
+        },
+    },
+    # Güncellenmiş dosyada sayfa "TABLO 4" olarak adlandırılmış, başa bir SR
+    # (sıra no) sütunu eklenmiş ve ŞEHİR sütunu kaldırılmıştır. Şehir bilgisi
+    # yükleme sırasında program kodu üzerinden eşleştirilerek korunur.
+    "TABLO 4": {
+        "level": "lisans",
+        "cols": {
+            "program_code": 1, "kind": 2, "university": 3,
             "faculty": 4, "department": 5, "duration": 6, "score_type": 7,
             "rank": 8, "score": 9, "quota": 10, "school_first": 11,
             "conditions": 15, "prof": 16, "doctor": 17, "lecturers": 18,
