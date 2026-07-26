@@ -4,8 +4,11 @@ import type { RobotScoreType } from "@/lib/tercih/types";
  * Gürbüz Gövrek'in 2026 tercih dönemine ilişkin öngörüleri.
  *
  * ÖNEMLİ: Bunlar veri değil, kişisel değerlendirmedir. Arayüzde her zaman
- * "öngörüdür, kesin değildir" uyarısıyla birlikte gösterilir. Kaynak, Gürbüz
- * Gövrek'in kendi tercih çalışma dosyasındaki "TESPİTLER" notlarıdır.
+ * "öngörüdür, kesin değildir" uyarısıyla birlikte gösterilir.
+ *
+ * Kaynak: çalışma dosyasının "TESPİTLER" sayfası. Bu metinler dosya her
+ * güncellendiğinde YENİDEN OKUNMALIDIR — sayfa aynı adı taşısa da içeriği
+ * değişir ve eski tahminler bir sonraki sürümde geçersiz kalır.
  */
 export const FORECAST_YEAR = 2026;
 
@@ -18,57 +21,55 @@ export type ScoreTypeForecast = {
 export const SCORE_TYPE_FORECASTS: readonly ScoreTypeForecast[] = [
   {
     scoreType: "SAY",
-    headline: "Sayısalda kontenjan azaldı, sıralamalar öne gidebilir",
+    headline: "Sağlıkta ilerleme devam edecek gözüküyor",
     notes: [
-      "Sayısalda toplamda 12.500 civarı kontenjan azalması var. En büyük azalmalar sağlık bölümlerinde ve elektrik-elektronik mühendisliğinde.",
-      "Tıp kontenjanı artarken diş hekimliği kontenjanı belirgin biçimde azaldı.",
-      "İlk 20 binlerde sıralamalarda büyük değişiklik beklemiyorum.",
-      "20-50 bin aralığında diş kontenjanlarındaki azalma nedeniyle sıralamaların öne doğru ilerleyeceğini düşünüyorum.",
+      "Sayısal puanda genel kontenjan 9 bin civarı azaldı.",
+      "Tıp fakültesi kontenjanı 85 kişi azaldı. Diş hekimliği kontenjanı 761 azaldı; bu, hem ön hem arka sıraları etkiler. Hemşirelik dışındaki sağlık bölümlerinin kontenjanları da azaltıldı.",
+      "Dokuz Eylül Tıp (İngilizce), Bitlis ve Burdur'da yeni tıp fakülteleri açıldı. Bitlis'in burs imkânı caydırıcı; Dokuz Eylül ilk 5.000'de kendine yer bulur.",
+      "Sağlık bölümleri önceki beş yıl düşüş trendindeydi, geçen sene gerçek anlamda ilerledi. Bu sene de ilerlemenin devam edeceği gözüküyor.",
+      "Diş kontenjanlarındaki azalma ilk 50 binde sıralamaları etkiler; sıralamaların öne doğru ilerleyeceğini düşünüyorum.",
+      "Mühendisliklerde bazıları yükselir, bazıları düşmeye devam edebilir. Endüstri dışındaki eski popüler mühendisliklerin kontenjanı azaldı, yeni popüler mühendisliklerin kontenjanı artırıldı.",
+      "Bütün eğitim fakülteleri geçen sene atama sayısı nedeniyle çok düşmüştü; kontenjanlar azalmasına rağmen bu sene de düşme devam edebilir.",
     ],
   },
   {
     scoreType: "EA",
-    headline: "Eşit ağırlıkta tercih aralığını geniş tutun",
+    headline: "Genelde ilerleme bekliyorum, yine de temkinli olun",
     notes: [
-      "Eşit ağırlıkta toplamda 25 bin civarı kontenjan azalması oldu; en büyük azalma hukuk, işletme ve iktisat bölümlerinde.",
-      "Kontenjan azalması fazla olduğu için sıralamalarda değişiklik büyük olabilir; tercih aralığını geniş tutmak gerekir.",
-      "Eşit ağırlık bölümlerinin genel olarak ilerleme durumunda olacağını tahmin ediyorum.",
+      "Eşit ağırlıkta genel kontenjan 12 bin civarı azaldı.",
+      "Kontenjan azalması geçen seneye göre daha az; bu sene sıralamalardaki değişiklik geçen seneki gibi olmaz. Yine de temkinli olmak gerekir.",
+      "Eşit ağırlık ve sözel bölümlerde kontenjan nedeniyle genelde ilerleme olacaktır.",
+      "Devlet hukuk fakültesi 30-35 binler seviyesine ilerleyebilir.",
+      "Bütün eğitim fakülteleri geçen sene atama sayısı nedeniyle çok düşmüştü; bu sene de düşme devam edebilir.",
     ],
   },
   {
     scoreType: "SÖZ",
-    headline: "Sözelde kontenjan azalması sıralamaları ileri taşıyabilir",
+    headline: "Kontenjan azalması sıralamaları ileri taşıyacak",
     notes: [
-      "Sözelde toplamda 7.500 civarı kontenjan azalması oldu.",
-      "180 puanı geçen öğrenci sayısı sözelde 200 bin civarı azaldı.",
-      "Kontenjan azalmasının sıralamaları ileri götüreceğini düşünüyorum.",
+      "Sözel puanda genel kontenjan 16 bin civarı azaldı; dört puan türü içinde en büyük azalma burada.",
+      "Eşit ağırlık ve sözel bölümlerde kontenjan nedeniyle genelde ilerleme olacaktır.",
+      "Bütün eğitim fakülteleri geçen sene atama sayısı nedeniyle çok düşmüştü; bu sene de düşme devam edebilir.",
     ],
   },
   {
     scoreType: "DİL",
-    headline: "Dil alanında tercih aralığını dengeli kurun",
+    headline: "Kontenjan azalması sınırlı, listeyi dengeli kurun",
     notes: [
-      "Dil alanında program sayısı sınırlı olduğu için tercih listesi kurarken güvenli ve hedef tercihlerin dengesi daha da önemli hâle gelir.",
-      "Genel kontenjan azalmasının bu alanı da etkilemesi beklenebilir.",
-    ],
-  },
-  {
-    scoreType: "TYT",
-    headline: "İki yıllık programlarda listeyi çok geniş tutun",
-    notes: [
-      "İki yıllık ön lisans kontenjanları 130 bin civarı azaltıldı.",
-      "Bu nedenle iki yıllık sıralamaların çok ileri gideceğini düşünüyorum; tercih listesi geniş tutulmalı.",
+      "Dil puanında genel kontenjan 3 bin civarı azaldı; azalma diğer puan türlerine göre daha sınırlı.",
+      "Program sayısı az olduğu için güvenli ve hedef tercihlerin dengesi bu alanda daha da önemlidir.",
     ],
   },
 ];
 
 /** Sınav geneline dair, gerçekleşmiş tespitler. */
 export const GENERAL_FINDINGS: readonly string[] = [
-  "TYT matematik soruları 2021 sonrasının en düşük ortalamasını verecek kadar zordu.",
-  "AYT matematikte ortalama beklenenden biraz yüksek çıktı; AYT fen branşlarında ortalamalar yükseldi.",
-  "Sınava giren öğrenci sayısı TYT'de 500 bin, AYT'de 200 bin civarı azaldı.",
-  "Öğrenci sayısı azalmasına rağmen 180 puanı geçen öğrenci sayısı çok değişmedi.",
-  "180 puanı geçen öğrenci sayısı sayısalda 90 bin arttı; eşit ağırlıkta 100 bin, sözelde 200 bin azaldı.",
+  "TYT matematik soruları genelde zaman alıcıydı; ortalama beklentinin altında kaldı ve 2025 TYT'ye yakın çıktı.",
+  "AYT matematikte çok zorlayıcı, eleyici nitelikte orijinal soru yoktu. Bir tane vardı, o da iptal edildi; buna rağmen ortalama yükseldi.",
+  "Soru iptal olmasaydı matematikte son yılların en yüksek ortalaması tutturulabilirdi. Bu sonuca da yansıdı: sıralamalar 2023'ten bile kötü geldi. Bunu ben de tahmin edememiştim.",
+  "AYT fende bütün branşlarda ortalamalar yükseldi. Edebiyat ortalaması yükseldi; tarih ve coğrafya ortalamaları düştü.",
+  "Sınava giren öğrenci sayısındaki azalma oranında, 180 puanı geçen öğrenci sayısı da azaldı.",
+  "Kontenjan değişimini yapay zekâya sordurarak öğrenmeye çalışmayın; ben de denedim, tutarsız ve yanlış sayılar verdi. Bölüm bazlı kontenjan değişimi ayrı listede incelenmelidir.",
 ];
 
 export function getForecast(scoreType: RobotScoreType): ScoreTypeForecast | undefined {
