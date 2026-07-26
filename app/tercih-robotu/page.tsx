@@ -4,6 +4,7 @@ import { Info } from "lucide-react";
 import { runTercihRobot } from "@/app/tercih-robotu/actions";
 import { TercihRobot } from "@/components/tercih/TercihRobot";
 import { TercihRobotDownload } from "@/components/tercih/TercihRobotDownload";
+import { DOWNLOAD_SLUGS, getDownloadCount } from "@/lib/downloads/service";
 import { Container } from "@/components/ui/Container";
 import { CANONICAL_SITE_URL } from "@/config/site";
 import { EXTRA_REGIONS, PROVINCES } from "@/data/provinces";
@@ -33,7 +34,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function TercihRobotuPage() {
+export default async function TercihRobotuPage() {
+  const downloadCount = await getDownloadCount(DOWNLOAD_SLUGS.tercihRobotuExcel);
+
   // Açılır, veritabanındaki ham değerlerden değil 81 ilin sabit listesinden kurulur;
   // ham değerler üniversite ve ilçe adları içerdiği için doğrudan kullanılamaz.
   const cities = [...PROVINCES, ...EXTRA_REGIONS];
@@ -91,7 +94,7 @@ export default function TercihRobotuPage() {
             {/* Sayfanın en üstünde: dosyayı doğrudan indirmek isteyenler robotu
                 kullanmak zorunda kalmasın. */}
             <div data-print-hide>
-              <TercihRobotDownload />
+              <TercihRobotDownload downloadCount={downloadCount} />
             </div>
 
             <div className="mt-10">
