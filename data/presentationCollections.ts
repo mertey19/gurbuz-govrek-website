@@ -18,7 +18,9 @@ export type PresentationCategory =
   | "bitki-koruma-tarla-bitkileri"
   | "biyolog-kimyager"
   | "diyetisyen-eczaci"
-  | "pratisyen-hekim";
+  | "pratisyen-hekim"
+  | "bilgisayar-muhendisligi-kariyer"
+  | "elektrik-elektronik-muhendisligi";
 
 export interface PresentationSlide {
   src: string;
@@ -339,6 +341,52 @@ export const presentationCollections: readonly PresentationCollection[] = [
         "Bir Hekimin Anatomisi: Gereken Özellikler",
       ],
       "Pratisyen hekimlik kariyer rehberi sunumu",
+    ),
+  },
+  {
+    id: "bilgisayar-muhendisligi-kariyer",
+    label: "Bilgisayar Mühendisliği Kariyer Haritası",
+    shortLabel: "Bilgisayar Müh.",
+    description:
+      "Bilgisayar mühendisliğini mesleğin çalışma mantığından eğitim koşullarına, çalışma ortamından yazılım, donanım ve veri güvenliği uzmanlıklarına kadar izleyen seri.",
+    slides: createNamedSlides(
+      "bilgisayar-muhendisligi-kariyer",
+      [
+        "Bilgisayar Mühendisliği: Geleceği Kodlayanların Kariyer Haritası",
+        "Mesleğin DNA’sı: Sorundan Çözüme Sistem Mimarisi",
+        "Bir Mühendisin Anatomisi",
+        "Çalışma Ortamı ve Ekosistem",
+        "Eğitim Boru Hattı: Giriş Koşulları",
+        "Akademik Mimari: 4 Yıllık Teknoloji Yığını",
+        "Kariyer Yolları Matrisi",
+        "Uzmanlık 1: Yazılım ve Sistem Dönüşümü",
+        "Uzmanlık 2: Donanım Mimarisi ve Fiziksel Üretim",
+        "Uzmanlık 3: Veri Güvenliği ve Altyapı",
+      ],
+      "Bilgisayar mühendisliği kariyer haritası sunumu",
+    ),
+  },
+  {
+    id: "elektrik-elektronik-muhendisligi",
+    label: "Elektrik-Elektronik Mühendisliği",
+    shortLabel: "Elektrik-Elektronik",
+    description:
+      "Enerji santrallerinden mikroişlemcilere uzanan elektrik-elektronik mühendisliğini; disiplinin iki ana odağı, eğitim süreci, çalışma alanları ve sektör yörüngesi üzerinden anlatan seri.",
+    slides: createNamedSlides(
+      "elektrik-elektronik-muhendisligi",
+      [
+        "Elektrik-Elektronik Mühendisliği: 10 Slaytta Kariyer Yolculuğu",
+        "Sistemin Kapsamı: Makrodan Mikroya",
+        "Bir Mühendisin Anatomisi",
+        "Mühendisin Donanım Çantası",
+        "İki Ana Odak, Tek Disiplin",
+        "Çalışma Ortamı Koordinatları",
+        "Sisteme Giriş: Eğitim Algoritması",
+        "Çekirdek Müfredat Mimarisi",
+        "Kariyer Yörüngesi ve Sektörler",
+        "Geleceği Tasarlayan Sistem",
+      ],
+      "Elektrik-elektronik mühendisliği kariyer rehberi sunumu",
     ),
   },
 ];

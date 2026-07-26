@@ -64,6 +64,10 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
     "../public/images/sunum-kosesi/diyetisyen-eczaci/10.webp",
     "../public/images/sunum-kosesi/pratisyen-hekim/01.webp",
     "../public/images/sunum-kosesi/pratisyen-hekim/10.webp",
+    "../public/images/sunum-kosesi/bilgisayar-muhendisligi-kariyer/01.webp",
+    "../public/images/sunum-kosesi/bilgisayar-muhendisligi-kariyer/10.webp",
+    "../public/images/sunum-kosesi/elektrik-elektronik-muhendisligi/01.webp",
+    "../public/images/sunum-kosesi/elektrik-elektronik-muhendisligi/10.webp",
   ].map((path) => access(new URL(path, import.meta.url))));
 
   const response = await render();
@@ -96,8 +100,8 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
   assert.match(html, /115 meslek dosyası/i);
   assert.match(html, /5 kategori/i);
   assert.match(html, /Sunum ve Seminer Köşesi/i);
-  assert.match(html, /190(?:<!-- -->)? özgün görsel/i);
-  assert.match(html, /20(?:<!-- -->)? ayrı içerik serisi/i);
+  assert.match(html, /210(?:<!-- -->)? özgün görsel/i);
+  assert.match(html, /22(?:<!-- -->)? ayrı içerik serisi/i);
   assert.match(html, /YKS Kontenjan Değişimi/i);
   assert.match(html, /YKS İstatistikleri/i);
   assert.match(html, /Seminer Slaytları/i);
@@ -111,6 +115,8 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
   assert.match(html, /Biyolog ve Kimyager/i);
   assert.match(html, /Diyetisyenlik ve Eczacılık/i);
   assert.match(html, /Pratisyen Hekimlik \(Tıp Doktorluğu\)/i);
+  assert.match(html, /Bilgisayar Mühendisliği Kariyer Haritası/i);
+  assert.match(html, /Elektrik-Elektronik Mühendisliği/i);
   assert.match(html, /Tercih Sürecinde Doğru Karar İçin Güncel Rehberler/i);
   // Ana sayfa blog önizlemesi `blogPosts[0]`'ı gösterir; liste tarihe göre sıralı olduğu
   // için en yeni yazı öne çıkar.
