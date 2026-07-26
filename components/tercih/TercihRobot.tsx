@@ -1,8 +1,10 @@
 "use client";
 
 import { useActionState, useState } from "react";
+import { flushSync } from "react-dom";
 import {
   Building2,
+  FileDown,
   Landmark,
   Lightbulb,
   Loader2,
@@ -18,6 +20,7 @@ import { getForecast, FORECAST_YEAR } from "@/data/tercihTespitleri";
 import {
   INSTITUTION_KINDS,
   isRobotScoreType,
+  PDF_ROW_LIMIT,
   QUOTA_YEARS,
   RANK_YEARS,
   RENDER_BATCH_SIZE,
@@ -80,10 +83,30 @@ export function TercihRobot({
         (state.result.quotaTrend[state.result.quotaTrend.length - 1]?.total ?? 0)
       : 0;
 
+  const matchedCount = state.status === "success" ? state.result.programs.length : 0;
+  const printableCount = Math.min(matchedCount, PDF_ROW_LIMIT);
+
+  /**
+   * PDF çıktısı tarayıcının kendi yazdırma motoruyla alınır: Türkçe karakterler
+   * sorunsuz çıkar, ek bir kitaplık yüklenmez ve masaüstünde de mobilde de
+   * "PDF olarak kaydet" seçeneği mevcuttur.
+   *
+   * Tablo yalnızca ekranda görünen satırları basar; bu yüzden yazdırmadan önce
+   * satır sayısı `flushSync` ile eşzamanlı olarak genişletilir, aksi hâlde
+   * `print()` eski DOM üzerinde çalışırdı.
+   */
+  function handlePrint() {
+    flushSync(() => {
+      setVisibleCount((current) => Math.max(current, printableCount));
+    });
+    window.print();
+  }
+
   return (
     <div className="grid gap-8">
       <form
         action={formAction}
+        data-print-hide
         className="grid gap-5 rounded-sm border border-navy/10 bg-white p-6 shadow-[0_18px_55px_rgba(7,26,51,.08)] sm:p-8"
       >
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_auto] lg:items-end">
@@ -225,7 +248,10 @@ export function TercihRobot({
           onCut={(event) => event.preventDefault()}
           onDragStart={(event) => event.preventDefault()}
         >
-          <div className="rounded-sm border border-gold/40 bg-cream p-7 sm:p-9">
+          <div
+            data-print-hide
+            className="rounded-sm border border-gold/40 bg-cream p-7 sm:p-9"
+          >
             <p className="text-xs font-extrabold tracking-[.16em] text-blue-deep uppercase">
               {SCORE_TYPE_LABELS[state.scoreType] ?? state.scoreType} ·{" "}
               {formatNumber(state.rankFrom)}
@@ -282,7 +308,10 @@ export function TercihRobot({
 
           {/* Seçilen programların yıllara göre toplam kontenjanı. */}
           {state.result.totalMatches > 0 ? (
-            <div className="rounded-sm border border-navy/10 bg-white p-6 sm:p-7">
+            <div
+              data-print-hide
+              className="rounded-sm border border-navy/10 bg-white p-6 sm:p-7"
+            >
               <p className="flex items-center gap-2.5 text-xs font-extrabold tracking-[.16em] text-blue-deep uppercase">
                 {quotaDelta >= 0 ? (
                   <TrendingUp className="size-4 text-gold" aria-hidden="true" />
@@ -320,7 +349,10 @@ export function TercihRobot({
           ) : null}
 
           {forecast ? (
-            <div className="rounded-sm border border-navy/10 bg-white p-6 sm:p-7">
+            <div
+              data-print-hide
+              className="rounded-sm border border-navy/10 bg-white p-6 sm:p-7"
+            >
               <p className="flex items-center gap-2.5 text-xs font-extrabold tracking-[.16em] text-blue-deep uppercase">
                 <Lightbulb className="size-4 text-gold" aria-hidden="true" />
                 Gürbüz Gövrek&apos;in {FORECAST_YEAR} öngörüsü
@@ -346,18 +378,61 @@ export function TercihRobot({
 
           {state.result.programs.length > 0 ? (
             <div>
-              <div className="flex flex-wrap items-baseline justify-between gap-3">
+              <div className="flex flex-wrap items-center justify-between gap-3 print:hidden">
                 <p className="text-xs font-extrabold tracking-[.16em] text-blue-deep uppercase">
                   Eşleşen programların tamamı
                 </p>
-                <p className="text-xs text-ink/55">
-                  {formatNumber(Math.min(visibleCount, state.result.programs.length))} /{" "}
-                  {formatNumber(state.result.programs.length)} gösteriliyor
+
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                  <p className="text-xs text-ink/55">
+                    {formatNumber(Math.min(visibleCount, state.result.programs.length))} /{" "}
+                    {formatNumber(state.result.programs.length)} gösteriliyor
+                  </p>
+
+                  <button
+                    type="button"
+                    onClick={handlePrint}
+                    className="inline-flex min-h-11 items-center gap-2 rounded-sm border border-navy/20 bg-white px-4 text-xs font-bold text-navy transition hover:border-navy hover:bg-cream focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy"
+                  >
+                    <FileDown className="size-4" aria-hidden="true" />
+                    PDF olarak indir
+                    <span className="sr-only">
+                      — {formatNumber(printableCount)} program yazdırma penceresinde
+                      açılır, hedef olarak “PDF olarak kaydet” seçin
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              {matchedCount > PDF_ROW_LIMIT ? (
+                <p className="mt-2 text-xs leading-6 text-ink/55 print:hidden">
+                  PDF çıktısına ilk {formatNumber(PDF_ROW_LIMIT)} program alınır.
+                  Listenin tamamı için sayfanın üstündeki Excel dosyasını indirin.
+                </p>
+              ) : null}
+
+              {/* Yalnızca çıktıda görünen künye; ekranda aynı bilgi üst kartta duruyor. */}
+              <div className="hidden print:mb-4 print:block">
+                <p className="font-serif text-2xl font-semibold text-navy">
+                  Tercih Robotu · Sıralamanıza Uyan Programlar
+                </p>
+                <p className="mt-1 text-sm text-navy">
+                  {SCORE_TYPE_LABELS[state.scoreType] ?? state.scoreType} ·{" "}
+                  {formatNumber(state.rankFrom)}
+                  {state.rankTo ? ` – ${formatNumber(state.rankTo)}` : ""}. sıra ·
+                  Toplam {formatNumber(state.result.totalMatches)} program
+                  {matchedCount > PDF_ROW_LIMIT
+                    ? ` (bu listede ilk ${formatNumber(PDF_ROW_LIMIT)} program)`
+                    : ""}
+                </p>
+                <p className="mt-1 text-xs text-ink/70">
+                  Gürbüz Gövrek · Tercih Uzmanı ve Matematik Öğretmeni ·
+                  gürbüzgövrek.com.tr
                 </p>
               </div>
 
               {/* Mobilde kart, geniş ekranda tablo. */}
-              <ul className="mt-4 grid gap-3 lg:hidden">
+              <ul className="mt-4 grid gap-3 lg:hidden print:hidden">
                 {state.result.programs.slice(0, visibleCount).map((program) => (
                   <li
                     key={`${program.programCode ?? program.department}-${program.rank}-m`}
@@ -442,8 +517,8 @@ export function TercihRobot({
                 ))}
               </ul>
 
-              <div className="mt-4 hidden overflow-x-auto rounded-sm border border-navy/10 lg:block">
-                <table className="w-full min-w-[78rem] border-collapse bg-white text-sm">
+              <div className="mt-4 hidden overflow-x-auto rounded-sm border border-navy/10 lg:block print:mt-0 print:block print:overflow-visible print:border-0">
+                <table className="w-full min-w-[78rem] border-collapse bg-white text-sm print:min-w-0 print:text-[9px]">
                   <caption className="sr-only">
                     Sıralamanıza uyan programlar, yıllara göre sıralama ve kontenjan
                     değişimi ile akademik veriler
@@ -516,7 +591,7 @@ export function TercihRobot({
               </div>
 
               {visibleCount < state.result.programs.length ? (
-                <div className="mt-6 flex justify-center">
+                <div data-print-hide className="mt-6 flex justify-center">
                   <button
                     type="button"
                     onClick={() => setVisibleCount((current) => current + RENDER_BATCH_SIZE)}
@@ -528,10 +603,17 @@ export function TercihRobot({
                 </div>
               ) : null}
 
-              <p className="mt-5 text-xs leading-6 text-ink/50">
+              <p className="mt-5 text-xs leading-6 text-ink/50 print:mt-3 print:text-[8px]">
                 Kalın yazılan sütunlar tercihte esas alınan değerlerdir: 2025 yerleşme
                 sırası ve 2026 kontenjanı. Boş hücreler o yıla ait veri bulunmadığı
                 anlamına gelir.
+              </p>
+
+              {/* Çıktının altına düşen sorumluluk notu; ekranda sayfanın sonunda duruyor. */}
+              <p className="hidden text-[8px] leading-5 text-ink/70 print:mt-2 print:block">
+                Kontenjan ve sıralamalar 2026 tercih dönemi boyunca değişebilir. Nihai
+                bilgi için ÖSYM ve YÖK Atlas kaynaklarını esas alın. Bu liste
+                gürbüzgövrek.com.tr adresindeki tercih robotundan alınmıştır.
               </p>
             </div>
           ) : (
@@ -546,7 +628,10 @@ export function TercihRobot({
             </div>
           )}
 
-          <div className="rounded-sm border border-navy/12 bg-navy p-7 text-white sm:p-9">
+          <div
+            data-print-hide
+            className="rounded-sm border border-navy/12 bg-navy p-7 text-white sm:p-9"
+          >
             <h3 className="font-serif text-2xl font-semibold sm:text-3xl">
               Liste elinizde. Sıralamayı birlikte kuralım.
             </h3>

@@ -99,3 +99,12 @@ export function quotaForYear(program: Program, year: number): number | null {
   if (year === 2023) return program.quota2023;
   return null;
 }
+
+/**
+ * PDF (yazdırma) çıktısına alınacak en fazla program sayısı.
+ *
+ * Sorgu 8.000 programa kadar sonuç döndürebilir; hepsini yazdırmak yüzlerce
+ * sayfalık bir belge üretir ve mobil tarayıcıyı kilitler. Sınır arayüzde ve
+ * çıktının üstünde açıkça belirtilir, sessizce kırpılmaz.
+ */
+export const PDF_ROW_LIMIT = 250;

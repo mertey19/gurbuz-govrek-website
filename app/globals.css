@@ -580,3 +580,59 @@ select {
     transition-duration: 0.01ms !important;
   }
 }
+
+/*
+  Tercih robotu PDF çıktısı.
+
+  Çıktı tarayıcının yazdırma motoruyla üretilir; ayrı bir PDF kitaplığı
+  yüklenmez. Burada yalnızca sayfa çerçevesi (menü, altbilgi, form, çağrı
+  butonları) gizlenir ve tablo kâğıda sığacak şekilde daraltılır.
+*/
+@media print {
+  .skip-link,
+  body > header,
+  body > footer,
+  [data-print-hide] {
+    display: none !important;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+  }
+
+  main {
+    padding-top: 0 !important;
+  }
+
+  /* Ekran gölgeleri ve yuvarlatmalar kâğıtta gri leke bırakır. */
+  * {
+    box-shadow: none !important;
+  }
+
+  table {
+    width: 100% !important;
+    table-layout: fixed;
+  }
+
+  th,
+  td {
+    padding: 2px 4px !important;
+    border: 1px solid #c9c9c9 !important;
+    overflow-wrap: anywhere;
+  }
+
+  thead {
+    display: table-header-group; /* Başlık satırı her sayfada tekrar eder. */
+  }
+
+  tr,
+  img {
+    break-inside: avoid;
+  }
+
+  @page {
+    size: A4 landscape;
+    margin: 12mm 10mm;
+  }
+}

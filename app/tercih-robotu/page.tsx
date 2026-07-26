@@ -54,7 +54,10 @@ export default function TercihRobotuPage() {
   return (
     <>
       <main id="main-content" className="min-h-screen bg-white pt-20">
-        <header className="relative overflow-hidden bg-navy text-white">
+        <header
+          data-print-hide
+          className="relative overflow-hidden bg-navy text-white"
+        >
           <div className="absolute inset-0 opacity-[0.07]" aria-hidden="true">
             <div className="absolute -top-28 -right-20 size-[30rem] rounded-full border border-gold" />
           </div>
@@ -87,7 +90,9 @@ export default function TercihRobotuPage() {
           <Container className="max-w-4xl">
             {/* Sayfanın en üstünde: dosyayı doğrudan indirmek isteyenler robotu
                 kullanmak zorunda kalmasın. */}
-            <TercihRobotDownload />
+            <div data-print-hide>
+              <TercihRobotDownload />
+            </div>
 
             <div className="mt-10">
               <TercihRobot action={runTercihRobot} cities={cities} />
