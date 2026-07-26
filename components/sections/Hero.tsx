@@ -27,7 +27,10 @@ export function Hero() {
       <div className="pointer-events-none absolute top-32 left-[8%] h-px w-24 bg-gold/70" />
 
       <Container className="hero-container relative z-10 py-16 sm:py-24">
-        <div className="hero-content max-w-2xl rounded-sm border border-white/15 bg-navy/82 p-6 shadow-[0_28px_80px_rgba(2,10,20,.32)] backdrop-blur-[3px] sm:p-8 lg:p-10">
+        {/* Geniş ekranda kart daraltılır: 2xl genişlikte sağ kenarı görseldeki
+            kişinin yüzüne giriyordu. Mobil genişlik globals.css'teki
+            `.hero-content` kuralıyla ayrıca yönetilir. */}
+        <div className="hero-content max-w-2xl rounded-sm border border-white/15 bg-navy/82 p-6 shadow-[0_28px_80px_rgba(2,10,20,.32)] backdrop-blur-[3px] sm:p-8 lg:max-w-[33rem] lg:p-10 xl:max-w-[36rem]">
           <Reveal>
             <p className="hero-eyebrow eyebrow text-gold-light">Matematik Öğretmeni · Tercih Uzmanı</p>
           </Reveal>
