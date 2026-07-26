@@ -25,7 +25,8 @@ export type PresentationCategory =
   | "kimya-muhendisligi"
   | "gemi-insaati-gemi-makineleri"
   | "hukuk"
-  | "eczacilik";
+  | "eczacilik"
+  | "universite-siralamalari";
 
 export interface PresentationSlide {
   src: string;
@@ -507,6 +508,32 @@ export const presentationCollections: readonly PresentationCollection[] = [
         "Meslekte İlerleme ve Gelecek",
       ],
       "Eczacılık meslek rehberi sunumu",
+    ),
+  },
+  {
+    id: "universite-siralamalari",
+    label: "Üniversite Sıralamaları ve Kalite Göstergeleri",
+    shortLabel: "Üniversite Sıralamaları",
+    description:
+      "Türkiye üniversitelerini QS, THE ve ARWU dünya sıralamaları, akredite program sayısı, AR-GE ve proje üretimi, TÜBİTAK-TEKNOFEST başarıları ve öğrenci memnuniyeti üzerinden karşılaştıran tablo serisi.",
+    slides: createNamedSlides(
+      "universite-siralamalari",
+      [
+        "QS Dünya Sıralamasında En İyi Üniversitelerimiz",
+        "THE Dünya Sıralamasında En İyi Üniversitelerimiz",
+        "ARWU Dünya Sıralamasında En İyi Üniversitelerimiz",
+        "QS Mühendislik Dünya Sıralamasında En İyi Üniversitelerimiz",
+        "QS Sağlık Alanı Dünya Sıralamasında En İyi Üniversitelerimiz",
+        "QS Sosyal Bilimler Dünya Sıralamasında En İyi Üniversitelerimiz",
+        "Akredite Program Sayısında En İyi Üniversitelerimiz",
+        "AR-GE Çalışmalarında En İyi Üniversitelerimiz",
+        "Sektörel Proje Sayısında En İyi Üniversitelerimiz",
+        "TÜBİTAK Bursunda En İyi Üniversitelerimiz",
+        "TEKNOFEST ve TÜBİTAK Ödül Sayısında En İyi Üniversitelerimiz",
+        "Genel Memnuniyet Yüzdesinde En İyi Üniversitelerimiz",
+        "Öğretim Üyelerinden Memnuniyet Yüzdesinde En İyi Üniversitelerimiz",
+      ],
+      "Üniversite sıralamaları ve kalite göstergeleri tablosu",
     ),
   },
 ];
