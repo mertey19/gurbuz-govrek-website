@@ -1,5 +1,31 @@
 export const blogPosts = [
   {
+    slug: "denizli-egitim-koclugu",
+    category: "Eğitim Koçluğu",
+    title: "Denizli Eğitim Koçluğu ile Akademik Başarıya Güçlü Bir Adım",
+    description:
+      "Eğitim koçluğu nedir, öğrenci koçluğundan farkı nedir, süreçte hangi çalışmalar yapılır ve doğru eğitim koçu seçerken nelere dikkat edilmelidir?",
+    publishedAt: "2026-07-26",
+    publishedAtLabel: "26 Temmuz 2026",
+    readingTime: "6 dakika",
+    image: "/images/guidance-introduction.webp",
+    imageAlt:
+      "Gürbüz Gövrek öğrenciyle haftalık çalışma planı ve hedef takibi üzerine eğitim koçluğu görüşmesi yapıyor",
+  },
+  {
+    slug: "denizli-matematik-ozel-ders",
+    category: "Matematik Özel Ders",
+    title: "Denizli Matematik Özel Ders ile Başarıya Giden Doğru Adım",
+    description:
+      "Birebir matematik dersi konu eksiklerini nasıl kapatır, hangi seviyelere uygundur ve doğru matematik öğretmenini seçerken nelere dikkat edilmelidir?",
+    publishedAt: "2026-07-26",
+    publishedAtLabel: "26 Temmuz 2026",
+    readingTime: "7 dakika",
+    image: "/images/mathematics-education.webp",
+    imageAlt:
+      "Gürbüz Gövrek öğrenciyle birebir matematik dersinde soru çözüm tekniklerini çalışıyor",
+  },
+  {
     slug: "denizli-yks-ek-tercih-danismanligi",
     category: "Ek Tercih",
     title: "Denizli YKS Ek Tercih Danışmanlığı ile Doğru Tercih, Güçlü Gelecek",
