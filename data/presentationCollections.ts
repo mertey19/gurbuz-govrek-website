@@ -17,7 +17,8 @@ export type PresentationCategory =
   | "bilisim-sistemleri-ybs"
   | "bitki-koruma-tarla-bitkileri"
   | "biyolog-kimyager"
-  | "diyetisyen-eczaci";
+  | "diyetisyen-eczaci"
+  | "pratisyen-hekim";
 
 export interface PresentationSlide {
   src: string;
@@ -315,6 +316,29 @@ export const presentationCollections: readonly PresentationCollection[] = [
       "diyetisyen-eczaci",
       "Diyetisyenlik ve Eczacılık",
       "Diyetisyenlik ve Eczacılık karşılaştırmalı kariyer sunumu",
+    ),
+  },
+  {
+    id: "pratisyen-hekim",
+    label: "Pratisyen Hekimlik (Tıp Doktorluğu)",
+    shortLabel: "Pratisyen Hekim",
+    description:
+      "Tıp fakültesine girişten pratisyen hekimliğe, oradan TUS ve uzmanlık yollarına uzanan kariyer haritası; günlük sorumluluklar, çalışma koşulları ve kazanç dinamikleriyle birlikte.",
+    slides: createNamedSlides(
+      "pratisyen-hekim",
+      [
+        "Pratisyen Hekim (Tıp Doktoru): Kariyer Haritası",
+        "Tıp Dünyasına Giriş Kapısı",
+        "6 Yıllık Metamorfoz: Eğitim Süreci",
+        "Sağlık Sisteminin Temel Taşı",
+        "Kimlik Döngüsü: Günlük Sorumluluklar",
+        "Çalışma Gerçekliği: Ortam ve Koşullar",
+        "Büyük Eşik: Tıpta Uzmanlık Sınavı (TUS)",
+        "Hangi Uzmanlık Yolu Size Uygun?",
+        "Kariyer Pazarı ve Kazanç Dinamikleri",
+        "Bir Hekimin Anatomisi: Gereken Özellikler",
+      ],
+      "Pratisyen hekimlik kariyer rehberi sunumu",
     ),
   },
 ];
