@@ -62,16 +62,6 @@ export const SCORE_TYPE_FORECASTS: readonly ScoreTypeForecast[] = [
   },
 ];
 
-/** Sınav geneline dair, gerçekleşmiş tespitler. */
-export const GENERAL_FINDINGS: readonly string[] = [
-  "TYT matematik soruları genelde zaman alıcıydı; ortalama beklentinin altında kaldı ve 2025 TYT'ye yakın çıktı.",
-  "AYT matematikte çok zorlayıcı, eleyici nitelikte orijinal soru yoktu. Bir tane vardı, o da iptal edildi; buna rağmen ortalama yükseldi.",
-  "Soru iptal olmasaydı matematikte son yılların en yüksek ortalaması tutturulabilirdi. Bu sonuca da yansıdı: sıralamalar 2023'ten bile kötü geldi. Bunu ben de tahmin edememiştim.",
-  "AYT fende bütün branşlarda ortalamalar yükseldi. Edebiyat ortalaması yükseldi; tarih ve coğrafya ortalamaları düştü.",
-  "Sınava giren öğrenci sayısındaki azalma oranında, 180 puanı geçen öğrenci sayısı da azaldı.",
-  "Kontenjan değişimini yapay zekâya sordurarak öğrenmeye çalışmayın; ben de denedim, tutarsız ve yanlış sayılar verdi. Bölüm bazlı kontenjan değişimi ayrı listede incelenmelidir.",
-];
-
 export function getForecast(scoreType: RobotScoreType): ScoreTypeForecast | undefined {
   return SCORE_TYPE_FORECASTS.find((item) => item.scoreType === scoreType);
 }

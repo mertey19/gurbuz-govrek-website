@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Info, ShieldCheck } from "lucide-react";
+import { Info } from "lucide-react";
 import { runTercihRobot } from "@/app/tercih-robotu/actions";
 import { TercihRobot } from "@/components/tercih/TercihRobot";
 import { TercihRobotDownload } from "@/components/tercih/TercihRobotDownload";
 import { Container } from "@/components/ui/Container";
 import { CANONICAL_SITE_URL } from "@/config/site";
 import { EXTRA_REGIONS, PROVINCES } from "@/data/provinces";
-import { GENERAL_FINDINGS, FORECAST_YEAR } from "@/data/tercihTespitleri";
 
 const title = "Tercih Robotu | Başarı Sıranıza Göre Program Sorgulama";
 const description =
@@ -113,29 +112,6 @@ export default function TercihRobotuPage() {
           </Container>
         </section>
 
-        <section className="section-space bg-cream">
-          <Container className="max-w-4xl">
-            <p className="eyebrow">{FORECAST_YEAR} Sınavına Dair Tespitler</p>
-            <h2 className="mt-5 font-serif text-3xl font-semibold leading-tight text-navy sm:text-4xl">
-              Bu yıl sınavda ne oldu?
-            </h2>
-            <p className="mt-6 text-base leading-8 text-ink/65">
-              Tercih listesini kurmadan önce sınavın genel tablosunu bilmek gerekir.
-              Aşağıdakiler gerçekleşmiş tespitlerdir.
-            </p>
-            <ul className="mt-7 grid gap-3">
-              {GENERAL_FINDINGS.map((finding) => (
-                <li
-                  key={finding.slice(0, 30)}
-                  className="flex gap-3 rounded-sm border border-navy/10 bg-white px-5 py-4 text-sm leading-7 text-ink/70"
-                >
-                  <ShieldCheck className="mt-1 size-4 shrink-0 text-gold" aria-hidden="true" />
-                  {finding}
-                </li>
-              ))}
-            </ul>
-          </Container>
-        </section>
       </main>
       <script
         type="application/ld+json"
