@@ -68,6 +68,16 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
     "../public/images/sunum-kosesi/bilgisayar-muhendisligi-kariyer/10.webp",
     "../public/images/sunum-kosesi/elektrik-elektronik-muhendisligi/01.webp",
     "../public/images/sunum-kosesi/elektrik-elektronik-muhendisligi/10.webp",
+    "../public/images/sunum-kosesi/endustri-muhendisligi/01.webp",
+    "../public/images/sunum-kosesi/endustri-muhendisligi/10.webp",
+    "../public/images/sunum-kosesi/kimya-muhendisligi/01.webp",
+    "../public/images/sunum-kosesi/kimya-muhendisligi/10.webp",
+    "../public/images/sunum-kosesi/gemi-insaati-gemi-makineleri/01.webp",
+    "../public/images/sunum-kosesi/gemi-insaati-gemi-makineleri/10.webp",
+    "../public/images/sunum-kosesi/hukuk/01.webp",
+    "../public/images/sunum-kosesi/hukuk/10.webp",
+    "../public/images/sunum-kosesi/eczacilik/01.webp",
+    "../public/images/sunum-kosesi/eczacilik/10.webp",
   ].map((path) => access(new URL(path, import.meta.url))));
 
   const response = await render();
@@ -100,8 +110,8 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
   assert.match(html, /115 meslek dosyası/i);
   assert.match(html, /5 kategori/i);
   assert.match(html, /Sunum ve Seminer Köşesi/i);
-  assert.match(html, /210(?:<!-- -->)? özgün görsel/i);
-  assert.match(html, /22(?:<!-- -->)? ayrı içerik serisi/i);
+  assert.match(html, /260(?:<!-- -->)? özgün görsel/i);
+  assert.match(html, /27(?:<!-- -->)? ayrı içerik serisi/i);
   assert.match(html, /YKS Kontenjan Değişimi/i);
   assert.match(html, /YKS İstatistikleri/i);
   assert.match(html, /Seminer Slaytları/i);
@@ -117,6 +127,11 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
   assert.match(html, /Pratisyen Hekimlik \(Tıp Doktorluğu\)/i);
   assert.match(html, /Bilgisayar Mühendisliği Kariyer Haritası/i);
   assert.match(html, /Elektrik-Elektronik Mühendisliği/i);
+  assert.match(html, /Endüstri Mühendisliği Kariyer Rehberi/i);
+  assert.match(html, /Kimya Mühendisliği/i);
+  assert.match(html, /Gemi İnşaatı ve Gemi Makineleri Mühendisliği/i);
+  assert.match(html, /Hukuk Fakültesi ve Hukukçuluk/i);
+  assert.match(html, /Eczacılık Meslek Rehberi/i);
   assert.match(html, /Tercih Sürecinde Doğru Karar İçin Güncel Rehberler/i);
   // Ana sayfa blog önizlemesi `blogPosts[0]`'ı gösterir; liste tarihe göre sıralı olduğu
   // için en yeni yazı öne çıkar.

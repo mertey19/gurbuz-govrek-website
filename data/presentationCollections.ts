@@ -20,7 +20,12 @@ export type PresentationCategory =
   | "diyetisyen-eczaci"
   | "pratisyen-hekim"
   | "bilgisayar-muhendisligi-kariyer"
-  | "elektrik-elektronik-muhendisligi";
+  | "elektrik-elektronik-muhendisligi"
+  | "endustri-muhendisligi"
+  | "kimya-muhendisligi"
+  | "gemi-insaati-gemi-makineleri"
+  | "hukuk"
+  | "eczacilik";
 
 export interface PresentationSlide {
   src: string;
@@ -387,6 +392,121 @@ export const presentationCollections: readonly PresentationCollection[] = [
         "Geleceği Tasarlayan Sistem",
       ],
       "Elektrik-elektronik mühendisliği kariyer rehberi sunumu",
+    ),
+  },
+  {
+    id: "endustri-muhendisligi",
+    label: "Endüstri Mühendisliği Kariyer Rehberi",
+    shortLabel: "Endüstri Müh.",
+    description:
+      "Verimlilik, sistem tasarımı ve problem çözme odaklı endüstri mühendisliğini; temel yetkinlikler, müfredat, sektörler ve ilerleme olanakları üzerinden anlatan seri.",
+    slides: createNamedSlides(
+      "endustri-muhendisligi",
+      [
+        "Endüstri Mühendisliği: Verimlilik, Sistem Tasarımı ve Problem Çözme",
+        "Endüstri Mühendisi Ne Yapar?",
+        "Temel Yetkinlikler",
+        "Çalışma Ortamı",
+        "Eğitim Yolculuğu",
+        "Bölümde Hangi Dersler Var?",
+        "Hangi Sektörlerde Çalışılır?",
+        "Neden Geleceği Güçlü?",
+        "Kariyer ve İlerleme Olanakları",
+        "Bu Bölüm Sana Uygun mu?",
+      ],
+      "Endüstri mühendisliği kariyer rehberi sunumu",
+    ),
+  },
+  {
+    id: "kimya-muhendisligi",
+    label: "Kimya Mühendisliği",
+    shortLabel: "Kimya Müh.",
+    description:
+      "Laboratuvardaki bilgiyi fabrikadaki üretime dönüştüren kimya mühendisliğini; mühendisin dört ana rolü, çalışma alanları, piyasa gerçekliği ve mezuniyet sonrası rotalarla ele alan seri.",
+    slides: createNamedSlides(
+      "kimya-muhendisligi",
+      [
+        "Kimya Mühendisliği: Bilimi Endüstriye Dönüştüren Güç",
+        "Mikrodan Makroya: Kimya Mühendisliği Ne Yapar?",
+        "Kimya Mühendisinin 4 Ana Rolü",
+        "Kimya Mühendisliği Kimler İçin Uygun?",
+        "Nerede Çalışırlar?",
+        "Akademik Rota",
+        "Etki Alanının Sınırları Yoktur",
+        "Piyasa Gerçekliği",
+        "Mezuniyet Sonrası Rotalar",
+        "Kazanç, Alternatifler ve Sonuç",
+      ],
+      "Kimya mühendisliği kariyer rehberi sunumu",
+    ),
+  },
+  {
+    id: "gemi-insaati-gemi-makineleri",
+    label: "Gemi İnşaatı ve Gemi Makineleri Mühendisliği",
+    shortLabel: "Gemi İnşaatı",
+    description:
+      "Uluslararası sularda yüzen devasa sistemlerin tasarımını, inşasını ve işletmesini kapsayan mühendislik alanını; iki disiplinin buluşması, müfredat ve tersane ekosistemi üzerinden tanıtan seri.",
+    slides: createNamedSlides(
+      "gemi-insaati-gemi-makineleri",
+      [
+        "Denizlerin Mimarları: Gemi İnşaatı ve Gemi Makineleri Mühendisliği",
+        "Temel Görev Tanımı: Sistemi İnşa Etmek",
+        "İki Disiplin, Tek Mühendislik",
+        "İdeal Adayın Bilişsel Profili",
+        "Mühendisin Takım Çantası",
+        "Akademik Temel: Eğitim Süreci",
+        "Kuramdan Pratiğe: Müfredatın Evrimi",
+        "Operasyonel Döngü: Planla, İnşa Et, İşlet",
+        "Çalışma Ortamları ve Koşulları",
+        "Sektörün Omurgası: Ekosistem Merkezi",
+      ],
+      "Gemi inşaatı ve gemi makineleri mühendisliği sunumu",
+    ),
+  },
+  {
+    id: "hukuk",
+    label: "Hukuk Fakültesi ve Hukukçuluk",
+    shortLabel: "Hukuk",
+    description:
+      "Hukukun ne olduğundan başlayıp eğitim süreci, gerekli yetenekler, çalışma alanları, uzmanlık dalları ve mesleğin zorluklarına uzanan on slaytlık meslek rehberi.",
+    slides: createNamedSlides(
+      "hukuk",
+      [
+        "Hukuk Nedir?",
+        "Temel Görev: Adaleti Sağlamak",
+        "Hukuk Eğitimi Nasıldır?",
+        "Gerekli Yetenekler",
+        "Çalışma Alanları",
+        "Uzmanlık Alanları",
+        "Kariyer Yolu",
+        "Neden Hukuk?",
+        "Zorluklar",
+        "Geleceğin Hukukçusu Sen Ol!",
+      ],
+      "Hukuk fakültesi ve hukukçuluk meslek rehberi sunumu",
+    ),
+  },
+  {
+    id: "eczacilik",
+    label: "Eczacılık Meslek Rehberi",
+    shortLabel: "Eczacılık",
+    description:
+      "İlacın keşfinden hastaya ulaşmasına kadar geçen süreci yöneten eczacılığı; temel görevler, araştırma ve denetim rolleri, beş yıllık eğitim ve sektörel kazanç dinamikleriyle anlatan seri.",
+    slides: createNamedSlides(
+      "eczacilik",
+      [
+        "Eczacı: Meslek Rehberi",
+        "Bilim ve Sağlık Arasındaki Köprü",
+        "Kimler Eczacı Olmalı?",
+        "Reçeteden Tedaviye: Temel Görevler",
+        "Vitrinin Arkası: Araştırma ve Denetim",
+        "Çalışma Ortamı ve Koşulları",
+        "5 Yıllık Akademik Yolculuk",
+        "Kariyer Yolları ve Sektör Karşılaştırması",
+        "Sektörel Gerçekler ve Kazanç",
+        "Meslekte İlerleme ve Gelecek",
+      ],
+      "Eczacılık meslek rehberi sunumu",
     ),
   },
 ];
