@@ -108,6 +108,10 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
   assert.match(html, /Yorumu Gönder/i);
   assert.match(html, /Randevu ile/i);
   assert.match(html, /WhatsApp Üzerinden İletişime Geçin/i);
+  assert.match(html, /Yurt Dışında Eğitim Düşünenler İçin/i);
+  // Tanıtım bağlantısı reklam olarak işaretli olmalı; işaretsiz dış bağlantı SEO'ya zarar verir.
+  assert.match(html, /rel="sponsored noopener noreferrer"[^>]*>|href="https:\/\/www\.drkavas\.com"/i);
+  assert.match(html, /drkavas\.com tarafından/i);
   assert.match(html, /Meslek Tanıtım Köşesi/i);
   assert.match(html, /115 meslek dosyası/i);
   assert.match(html, /5 kategori/i);
