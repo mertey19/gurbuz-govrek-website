@@ -1,5 +1,18 @@
 export const blogPosts = [
   {
+    slug: "yks-tercihleri-nasil-yapilir",
+    category: "Tercih Rehberi",
+    title: "YKS Tercihleri Nasıl Yapılır? Doğru Tercih Listesi Hazırlamanın En Etkili Yolları",
+    description:
+      "Tercih süreci nereden başlar, başarı sıralaması neden puandan önemlidir, dengeli bir liste nasıl kurulur ve en sık yapılan tercih hataları nelerdir?",
+    publishedAt: "2026-07-27",
+    publishedAtLabel: "27 Temmuz 2026",
+    readingTime: "7 dakika",
+    image: "/images/preference-analysis.webp",
+    imageAlt:
+      "Gürbüz Gövrek öğrenciyle başarı sıralamasına göre YKS tercih listesini adım adım oluşturuyor",
+  },
+  {
     slug: "denizli-egitim-koclugu",
     category: "Eğitim Koçluğu",
     title: "Denizli Eğitim Koçluğu ile Akademik Başarıya Güçlü Bir Adım",
