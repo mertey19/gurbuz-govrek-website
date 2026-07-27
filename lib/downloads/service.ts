@@ -71,3 +71,31 @@ export async function getDownloadCount(slug: DownloadSlug): Promise<number | nul
     return null;
   }
 }
+
+/**
+ * Toplam indirme ve son indirme zamanı.
+ *
+ * `getDownloadCount` gibi, veritabanına ulaşılamazsa `null` döner; istatistik
+ * sayfası bu durumda sayı yerine açıklama gösterir.
+ */
+export async function getDownloadDetail(
+  slug: DownloadSlug,
+): Promise<{ total: number; updatedAt: Date | null } | null> {
+  try {
+    const sql = getClient();
+
+    const rows = (await sql`
+      SELECT total, updated_at FROM download_counts WHERE slug = ${slug}
+    `) as { total: string | number; updated_at: string | Date }[];
+
+    if (rows.length === 0) return { total: 0, updatedAt: null };
+
+    return {
+      total: Number(rows[0].total),
+      updatedAt: new Date(rows[0].updated_at),
+    };
+  } catch (error) {
+    console.error("İndirme ayrıntısı okunamadı:", error);
+    return null;
+  }
+}
