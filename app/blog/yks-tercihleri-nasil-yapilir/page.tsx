@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import {
   BlogArticleLayout,
   BlogChecklist,
@@ -202,6 +203,74 @@ export default function YksTercihleriNasilYapilirPage() {
         bir tercih listesi, üniversite hayatına güvenle başlamanın en güçlü anahtarlarından
         biridir.
       </p>
+
+      {/*
+        Buradan aşağısı kaynak metne sonradan eklenmiştir. Yukarıdaki bölümler genel
+        tercih ilkelerini anlatıyor; bu kısım aynı ilkeleri 2026 dönemine ait somut
+        verilerle bağlar. Rakamlar Gürbüz Gövrek'in kendi tespitlerinden alınmıştır ve
+        öngörü oldukları açıkça belirtilir.
+      */}
+      <section aria-labelledby="yil-2026">
+        <h2 id="yil-2026">2026 Tercih Döneminde Durum Ne?</h2>
+        <p>
+          Yukarıdaki ilkeler her yıl geçerlidir. Ancak listeyi kurarken o yılın kendi
+          koşullarını bilmek gerekir; çünkü sıralamaları belirleyen asıl etken kontenjan
+          değişimidir.
+        </p>
+        <p>
+          Gürbüz Gövrek’in 2026 için tespitlerine göre genel kontenjanda dikkat çekici bir
+          daralma var: sayısal puan türünde yaklaşık 9 bin, eşit ağırlıkta 12 bin, sözelde
+          16 bin ve dilde 3 bin civarında kontenjan azalması söz konusu. Bölüm bazında ise
+          tıp fakültesi kontenjanı 85, diş hekimliği kontenjanı 761 azalmış durumda.
+        </p>
+        <p>
+          Kontenjan azalması, aynı sırayla geçen yıl girilebilen bir programa bu yıl
+          girilememesi anlamına gelebilir. Bu yüzden geçen yılın taban sırasını olduğu gibi
+          kabul etmek risklidir; listeyi kurarken bir miktar pay bırakmak gerekir.
+        </p>
+        <p>
+          Bu değerlendirmeler kesin sonuç değil, bir uzmanın veriye dayalı öngörüsüdür.
+          Nihai kontenjan ve yerleşme sonuçları tercih dönemi sonunda ÖSYM tarafından
+          açıklanır.
+        </p>
+      </section>
+
+      <section aria-labelledby="listeyi-kurmak">
+        <h2 id="listeyi-kurmak">Listeyi Somut Olarak Nasıl Kurarsınız?</h2>
+        <p>
+          Yazının başında anlatılan dengeli liste mantığını uygulamak için elinizde iki şey
+          olmalı: sıralamanıza uyan programların gerçek listesi ve o programların yıllara
+          göre nasıl hareket ettiği.
+        </p>
+        <p>
+          <Link href="/tercih-robotu">Tercih robotu</Link> her ikisini de veriyor. Puan
+          türünüzü ve başarı sıranızı girdiğinizde 17 binden fazla program arasından size
+          uyanları listeler; şehir, kurum türü ve bölüm filtreleriyle daraltabilir, her
+          program için 2022’den 2025’e sıralama ve 2023’ten 2026’ya kontenjan değişimini yan
+          yana görebilirsiniz. Sonucu PDF olarak da alabilirsiniz.
+        </p>
+        <p>
+          Kararı derinleştirmek için{" "}
+          <Link href="/raporlar">raporlar bölümündeki</Link> belgeler işe yarar: URAP
+          üniversiteleri akademik üretimle, TÜMA ise öğrenci memnuniyetiyle sıralar. İkisi
+          farklı şeyleri ölçtüğü için birlikte okunduğunda daha dengeli bir tablo verir.
+        </p>
+      </section>
+
+      <section aria-labelledby="sik-hata-2026">
+        <h2 id="sik-hata-2026">Bu Yıl Özellikle Dikkat Edilmesi Gerekenler</h2>
+        <p>
+          Kontenjanın daraldığı bir yılda en sık yapılan hata, listeyi geçen yılın
+          sıralamalarına göre kurup güvenli bölgeyi dar tutmaktır. Sıralama ilerlediğinde
+          liste boşa düşer.
+        </p>
+        <p>
+          İkinci hata, kontenjan artışını otomatik olarak “girmesi kolaylaştı” diye okumaktır.
+          Kontenjan artan bir bölüme talep de artmışsa sıralama gerilemeyebilir. Bu yüzden
+          kontenjan değişimini tek başına değil, o alandaki genel eğilimle birlikte
+          değerlendirmek gerekir.
+        </p>
+      </section>
     </BlogArticleLayout>
   );
 }
