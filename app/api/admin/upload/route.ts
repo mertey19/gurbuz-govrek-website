@@ -104,6 +104,15 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error("Görsel yüklenemedi:", error);
-    return NextResponse.json({ error: "Görsel yüklenemedi." }, { status: 500 });
+    /*
+      Uç yalnızca yöneticiye açık olduğu için hatanın kendisi döndürülür.
+      Depolama sorunlarını ("token geçersiz", "store bulunamadı") panelde
+      görmek, sunucu günlüğüne erişmeden teşhis edebilmeyi sağlıyor.
+    */
+    const detail = error instanceof Error ? error.message : String(error);
+    return NextResponse.json(
+      { error: `Görsel yüklenemedi: ${detail}` },
+      { status: 500 },
+    );
   }
 }
