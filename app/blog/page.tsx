@@ -5,6 +5,7 @@ import { Container } from "@/components/ui/Container";
 import { SiteImage as Image } from "@/components/ui/SiteImage";
 import { CANONICAL_SITE_URL } from "@/config/site";
 import { blogPosts } from "@/data/blogPosts";
+import { listManagedPosts } from "@/lib/posts/service";
 
 const title = "YKS Tercih Rehberi ve Eğitim Blogu | Gürbüz Gövrek";
 const description =
@@ -30,7 +31,48 @@ export const metadata: Metadata = {
   },
 };
 
-export default function BlogPage() {
+/**
+ * Liste iki kaynaktan beslenir: koddaki yazılar ve panelden yayımlananlar.
+ * Kart işaretlemesi ortak olsun diye ikisi de aynı şekle dönüştürülür.
+ */
+type ListedPost = {
+  slug: string;
+  title: string;
+  description: string;
+  category: string;
+  image: string;
+  imageAlt: string;
+  readingTime: string;
+  publishedAt: string;
+  publishedAtLabel: string;
+};
+
+const DATE_LABEL = new Intl.DateTimeFormat("tr-TR", {
+  dateStyle: "long",
+  timeZone: "Europe/Istanbul",
+});
+
+// Panel yazıları da her istekte okunur; yayımlanan yazı beklemeden listeye düşer.
+export const dynamic = "force-dynamic";
+
+export default async function BlogPage() {
+  const managed = await listManagedPosts();
+
+  const posts: ListedPost[] = [
+    ...blogPosts.map((post) => ({ ...post }) as ListedPost),
+    ...managed.map((post) => ({
+      slug: post.slug,
+      title: post.title,
+      description: post.description,
+      category: post.category,
+      image: post.image,
+      imageAlt: post.imageAlt,
+      readingTime: post.readingTime,
+      publishedAt: post.publishedAt.toISOString(),
+      publishedAtLabel: DATE_LABEL.format(post.publishedAt),
+    })),
+  ].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+
   return (
     <main id="main-content" className="min-h-screen bg-cream pt-20">
       <section className="border-b border-white/10 bg-navy py-20 text-white sm:py-24">
@@ -56,7 +98,7 @@ export default function BlogPage() {
           </div>
 
           <div className="grid gap-8 lg:grid-cols-2">
-            {blogPosts.map((post) => (
+            {posts.map((post) => (
               <article
                 key={post.slug}
                 className="overflow-hidden rounded-sm border border-navy/10 bg-white shadow-[0_18px_55px_rgba(7,26,51,.09)]"

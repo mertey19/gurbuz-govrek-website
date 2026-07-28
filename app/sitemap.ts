@@ -1,9 +1,12 @@
 import type { MetadataRoute } from "next";
 import { CANONICAL_SITE_URL } from "@/config/site";
 import { blogPosts } from "@/data/blogPosts";
+import { listManagedPosts } from "@/lib/posts/service";
 import { careerCategories } from "@/data/careerCategories";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const managedPosts = await listManagedPosts();
+
   const staticRoutes: MetadataRoute.Sitemap = [
     {
       url: `${CANONICAL_SITE_URL}/`,
@@ -150,6 +153,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...blogPosts.map((post) => ({
       url: `${CANONICAL_SITE_URL}/blog/${post.slug}`,
       lastModified: new Date(post.publishedAt),
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    })),
+    // Panelden yayımlananlar da haritaya girer; aksi hâlde Google bulamaz.
+    ...managedPosts.map((post) => ({
+      url: `${CANONICAL_SITE_URL}/blog/${post.slug}`,
+      lastModified: post.publishedAt,
       changeFrequency: "monthly" as const,
       priority: 0.9,
     })),
