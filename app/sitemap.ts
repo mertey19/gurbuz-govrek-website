@@ -72,6 +72,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.95,
     },
     {
+      url: `${CANONICAL_SITE_URL}/tip-fakultesi-tercihi`,
+      lastModified: new Date("2026-07-28"),
+      changeFrequency: "weekly",
+      priority: 0.85,
+    },
+    {
       url: `${CANONICAL_SITE_URL}/2026-kontenjan-degisimi`,
       lastModified: new Date("2026-07-28"),
       changeFrequency: "weekly",
