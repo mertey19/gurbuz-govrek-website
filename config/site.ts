@@ -80,7 +80,8 @@ export const siteNavigationGroups = [
     items: [
       { label: "YKS Tercih Blogu", href: "/blog", description: "Güncel rehberler ve uzman yazıları" },
       { label: "Meslek Tanıtım Köşesi", href: "/meslekler", description: "115 meslek tanıtım dosyası" },
-      { label: "Sunum ve Seminer Köşesi", href: "/#sunum-kosesi", description: "180 özgün eğitim görseli" },
+      { label: "Raporlar ve Kılavuzlar", href: "/raporlar", description: "Tercih kılavuzu, üniversite ve tıp raporları" },
+      { label: "Sunum ve Seminer Köşesi", href: "/#sunum-kosesi", description: "273 özgün eğitim görseli" },
       { label: "Etkinlikler", href: "/#etkinlikler", description: "Seminer ve öğrenci buluşmaları" },
       { label: "Sık Sorulan Sorular", href: "/#sss", description: "Merak edilen konuların yanıtları" },
     ],
