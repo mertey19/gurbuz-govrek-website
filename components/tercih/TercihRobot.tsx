@@ -192,7 +192,7 @@ export function TercihRobot({
                     type="checkbox"
                     name="kind"
                     value={item.value}
-                    className="size-4 accent-[color:var(--brand-gold,#d6a84b)]"
+                    className="size-4 accent-[color:var(--color-gold)]"
                   />
                   {item.label}
                 </label>

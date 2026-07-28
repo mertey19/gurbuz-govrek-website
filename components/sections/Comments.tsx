@@ -233,7 +233,7 @@ export function Comments() {
                       consent: event.target.checked,
                     }))
                   }
-                  className="mt-1 size-4 shrink-0 accent-[#0b2c54]"
+                  className="mt-1 size-4 shrink-0 accent-[color:var(--color-blue-deep)]"
                 />
                 <span>
                   Adımın ve yorumumun incelenmek üzere kaydedilmesini ve

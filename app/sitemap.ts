@@ -72,6 +72,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.95,
     },
     {
+      url: `${CANONICAL_SITE_URL}/raporlar`,
+      lastModified: new Date("2026-07-27"),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: `${CANONICAL_SITE_URL}/pamukkale-universitesi`,
       lastModified: new Date("2026-07-25"),
       changeFrequency: "monthly",

@@ -8,12 +8,19 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-navy: #071a33;
-  --color-blue-deep: #0b2c54;
-  --color-gold: #d6a84b;
-  --color-gold-light: #e8c978;
+  /*
+    Marka paleti. Değerler tek kaynaktır; bileşenlerde sabit renk kodu
+    yazılmaz. `muted`, daha önce `text-ink/64` gibi saydamlıkla üretilen
+    ikincil metin rengini gerçek bir jetona bağlar.
+  */
+  --color-navy: #0b1f3a;
+  --color-blue-deep: #1e4d8c;
+  --color-gold: #c7a44a;
+  --color-gold-light: #ddbe79;
   --color-cream: #f7f5f0;
   --color-ink: #172033;
+  /* Krem zeminde AA icin 4.5 esigini gecmesi gerekiyor; #64748b 4.37 veriyordu. */
+  --color-muted: #5b6b7f;
   --font-sans: var(--font-manrope);
   --font-serif: var(--font-playfair);
 }
@@ -79,8 +86,8 @@ select {
 }
 
 ::selection {
-  background: #d6a84b;
-  color: #071a33;
+  background: var(--color-gold);
+  color: var(--color-navy);
 }
 
 .section-space {
@@ -92,7 +99,7 @@ select {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  color: #d6a84b;
+  color: var(--color-gold);
   font-size: 0.7rem;
   font-weight: 800;
   letter-spacing: 0.2em;
@@ -115,14 +122,14 @@ select {
   border-radius: 0.125rem;
   background: #ffffff;
   padding: 0.75rem 1rem;
-  color: #071a33;
+  color: var(--color-navy);
   font-weight: 700;
   transition: transform 160ms ease;
 }
 
 .skip-link:focus {
   transform: translateY(0);
-  outline: 2px solid #d6a84b;
+  outline: 2px solid var(--color-gold);
   outline-offset: 2px;
 }
 
@@ -143,7 +150,7 @@ select {
 }
 
 .blog-article h2 {
-  color: #071a33;
+  color: var(--color-navy);
   font-family: var(--font-playfair), ui-serif, Georgia, serif;
   font-size: clamp(1.75rem, 4vw, 2.35rem);
   font-weight: 600;
@@ -155,7 +162,7 @@ select {
 }
 
 .blog-lead {
-  border-left: 3px solid #d6a84b;
+  border-left: 3px solid var(--color-gold);
   padding-left: 1.35rem;
   color: #172033;
   font-family: var(--font-playfair), ui-serif, Georgia, serif;
@@ -212,8 +219,8 @@ select {
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  background: #071a33;
-  color: #e8c978;
+  background: var(--color-navy);
+  color: var(--color-gold-light);
   font-size: 0.8rem;
   font-weight: 800;
 }
@@ -229,7 +236,7 @@ select {
   gap: 1rem;
   margin-top: 1.75rem;
   border-radius: 0.125rem;
-  background: #071a33;
+  background: var(--color-navy);
   padding: 1.5rem;
   color: white;
 }
@@ -257,7 +264,7 @@ select {
 }
 
 .blog-sources a {
-  color: #0b2c54;
+  color: var(--color-blue-deep);
   font-weight: 700;
   text-decoration: underline;
   text-decoration-color: rgba(214, 168, 75, 0.65);
@@ -266,8 +273,8 @@ select {
 }
 
 .blog-sources a:hover {
-  color: #071a33;
-  text-decoration-color: #d6a84b;
+  color: var(--color-navy);
+  text-decoration-color: var(--color-gold);
 }
 
 @media (max-width: 640px) {
@@ -286,7 +293,7 @@ select {
     top: 5rem !important;
     bottom: auto !important;
     height: 19rem !important;
-    background: #071a33;
+    background: var(--color-navy);
     object-fit: contain;
     object-position: center center;
   }
@@ -295,7 +302,7 @@ select {
     top: 5rem;
     bottom: auto;
     height: 19rem;
-    background: linear-gradient(0deg, #071a33 0%, rgba(7, 26, 51, 0.18) 42%, rgba(7, 26, 51, 0.02) 76%);
+    background: linear-gradient(0deg, var(--color-navy) 0%, rgba(7, 26, 51, 0.18) 42%, rgba(7, 26, 51, 0.02) 76%);
   }
 
   .site-hero-bottom-fade {

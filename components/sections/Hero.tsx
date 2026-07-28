@@ -23,7 +23,7 @@ export function Hero() {
         className="object-cover object-[58%_center] brightness-[1.08] saturate-[1.04]"
       />
       <div className="site-hero-overlay absolute inset-0 bg-[linear-gradient(90deg,rgba(7,26,51,.58)_0%,rgba(7,26,51,.42)_40%,rgba(7,26,51,.18)_72%,rgba(7,26,51,.06)_100%)]" />
-      <div className="site-hero-bottom-fade absolute inset-x-0 bottom-0 h-40 bg-[linear-gradient(0deg,#071A33,transparent)]" />
+      <div className="site-hero-bottom-fade absolute inset-x-0 bottom-0 h-40 bg-[linear-gradient(0deg,#0B1F3A,transparent)]" />
       <div className="pointer-events-none absolute top-32 left-[8%] h-px w-24 bg-gold/70" />
 
       <Container className="hero-container relative z-10 py-16 sm:py-24">

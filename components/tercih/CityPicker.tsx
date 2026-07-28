@@ -107,7 +107,7 @@ export function CityPicker({
                     type="checkbox"
                     checked={checked}
                     onChange={() => toggle(city)}
-                    className="size-4 accent-[color:var(--brand-gold,#d6a84b)]"
+                    className="size-4 accent-[color:var(--color-gold)]"
                   />
                   {city}
                 </label>
