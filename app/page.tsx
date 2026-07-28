@@ -11,6 +11,8 @@ import { Events } from "@/components/sections/Events";
 import { FAQ } from "@/components/sections/FAQ";
 import { FlashAnnouncement } from "@/components/sections/FlashAnnouncement";
 import { StudyAbroad } from "@/components/sections/StudyAbroad";
+import type { PresentationCollection } from "@/data/presentationCollections";
+import { listManagedCollections } from "@/lib/slides/service";
 import { Gallery } from "@/components/sections/Gallery";
 import { Hero } from "@/components/sections/Hero";
 import { Mathematics } from "@/components/sections/Mathematics";
@@ -32,7 +34,30 @@ function toAbsoluteUrl(href: string): string {
   return `${siteConfig.url}${href}`;
 }
 
-export default function Home() {
+/*
+  Panel serileri sunucuda okunup sunum köşesine geçirilir; bileşen istemci
+  tarafında olduğu için veritabanına kendisi erişemiyor. Sayfa bu yüzden her
+  istekte çizilir — yayımlanan seri beklemeden görünsün.
+*/
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const managedCollections: PresentationCollection[] = (
+    await listManagedCollections()
+  ).map((collection) => ({
+    id: collection.slug,
+    label: collection.label,
+    shortLabel: collection.shortLabel,
+    description: collection.description,
+    slides: collection.slides.map((slide) => ({
+      src: slide.url,
+      // Panel görsellerinde ayrı küçük resim üretilmiyor; ızgara da aynı dosyayı kullanır.
+      thumb: slide.url,
+      alt: slide.alt,
+      title: slide.title,
+    })),
+  }));
+
   const schemas = [
     {
       "@context": "https://schema.org",
@@ -142,7 +167,7 @@ export default function Home() {
         <StudyAbroad />
         <Stats />
         <About />
-        <PresentationCorner />
+        <PresentationCorner extraCollections={managedCollections} />
         <Biography />
         <Services />
         <Process />

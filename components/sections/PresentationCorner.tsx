@@ -9,17 +9,31 @@ import { SectionTitle } from "@/components/ui/SectionTitle";
 import {
   presentationCollections,
   presentationSlideCount,
-  type PresentationCategory,
+  type PresentationCollection,
 } from "@/data/presentationCollections";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
 
-export function PresentationCorner() {
-  const [category, setCategory] = useState<PresentationCategory>("kontenjan");
+/**
+ * Seriler iki kaynaktan gelir: koddakiler ve panelden yayımlananlar. Panel
+ * serileri sunucuda okunup buraya geçirilir; bileşen istemci tarafında olduğu
+ * için veritabanına kendisi erişemez.
+ */
+export function PresentationCorner({
+  extraCollections = [],
+}: {
+  extraCollections?: readonly PresentationCollection[];
+}) {
+  const collections = [...presentationCollections, ...extraCollections];
+  const slideCount =
+    presentationSlideCount +
+    extraCollections.reduce((total, item) => total + item.slides.length, 0);
+
+  // Kimlikler artık sabit birlik değil; panel serileri serbest slug taşıyor.
+  const [category, setCategory] = useState<string>("kontenjan");
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const activeCollection =
-    presentationCollections.find((collection) => collection.id === category) ??
-    presentationCollections[0];
+    collections.find((collection) => collection.id === category) ?? collections[0];
   const close = useCallback(() => setActiveIndex(null), []);
   const previous = useCallback(
     () =>
@@ -60,7 +74,7 @@ export function PresentationCorner() {
     };
   }, [activeIndex, next, previous]);
 
-  const selectCategory = (nextCategory: PresentationCategory) => {
+  const selectCategory = (nextCategory: string) => {
     setCategory(nextCategory);
     setActiveIndex(null);
   };
@@ -85,8 +99,8 @@ export function PresentationCorner() {
                   <Images className="size-5" aria-hidden="true" />
                 </span>
                 <div>
-                  <p className="font-serif text-2xl font-semibold">{presentationSlideCount} özgün görsel</p>
-                  <p className="mt-0.5 text-xs text-white/52">{presentationCollections.length} ayrı içerik serisi</p>
+                  <p className="font-serif text-2xl font-semibold">{slideCount} özgün görsel</p>
+                  <p className="mt-0.5 text-xs text-white/52">{collections.length} ayrı içerik serisi</p>
                 </div>
               </div>
             </div>
@@ -99,10 +113,10 @@ export function PresentationCorner() {
             <select
               id="sunum-serisi"
               value={category}
-              onChange={(event) => selectCategory(event.target.value as PresentationCategory)}
+              onChange={(event) => selectCategory(event.target.value)}
               className="h-14 w-full rounded-sm border border-white/15 bg-white px-4 text-sm font-bold text-navy outline-none focus:border-gold focus:ring-2 focus:ring-gold/25"
             >
-              {presentationCollections.map((collection) => (
+              {collections.map((collection) => (
                 <option key={collection.id} value={collection.id}>
                   {collection.label} · {collection.slides.length} görsel
                 </option>
@@ -114,7 +128,7 @@ export function PresentationCorner() {
             role="tablist"
             aria-label="Sunum kategorileri"
           >
-            {presentationCollections.map((collection) => {
+            {collections.map((collection) => {
               const active = collection.id === category;
               return (
                 <button

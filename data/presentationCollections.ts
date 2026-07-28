@@ -41,7 +41,12 @@ export interface PresentationSlide {
 }
 
 export interface PresentationCollection {
-  id: PresentationCategory;
+  /*
+    Koddaki seriler sabit kimlik kullanır; panelden eklenenler serbest slug
+    taşır. `(string & {})` bilinen değerlerin önerilmeye devam etmesini
+    sağlarken serbest metne de izin verir.
+  */
+  id: PresentationCategory | (string & {});
   label: string;
   shortLabel: string;
   description: string;
