@@ -21,6 +21,9 @@
   --color-ink: #172033;
   /* Krem zeminde AA icin 4.5 esigini gecmesi gerekiyor; #64748b 4.37 veriyordu. */
   --color-muted: #5b6b7f;
+  /* WhatsApp marka yeşili. Yalnızca WhatsApp eylemlerinde kullanılır. */
+  --color-whatsapp: #25d366;
+  --color-whatsapp-dark: #1da851;
   --font-sans: var(--font-manrope);
   --font-serif: var(--font-playfair);
 }

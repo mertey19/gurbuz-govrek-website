@@ -212,7 +212,7 @@ export default function YksIstatistikleriPage() {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-6 inline-flex min-h-12 items-center justify-center rounded-sm bg-gold px-7 text-sm font-bold text-navy transition hover:bg-gold-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-light"
+                className="mt-6 inline-flex min-h-12 items-center justify-center rounded-sm bg-whatsapp px-7 text-sm font-bold text-navy transition hover:bg-whatsapp-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
               >
                 WhatsApp’tan İletişime Geçin
               </a>
