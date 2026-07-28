@@ -72,6 +72,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.95,
     },
     {
+      url: `${CANONICAL_SITE_URL}/2026-yks-istatistikleri`,
+      lastModified: new Date("2026-07-28"),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
       url: `${CANONICAL_SITE_URL}/tip-fakultesi-tercihi`,
       lastModified: new Date("2026-07-28"),
       changeFrequency: "weekly",
