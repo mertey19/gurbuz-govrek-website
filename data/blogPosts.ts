@@ -1,5 +1,18 @@
 export const blogPosts = [
   {
+    slug: "denizlide-mi-sehir-disinda-mi-okumali",
+    category: "Şehir Seçimi",
+    title: "Denizli’de mi Okumalı, Şehir Dışında mı? Karar Verirken 7 Ölçüt",
+    description:
+      "Aynı bölümü Denizli’de veya başka bir şehirde okumak arasında kalanlar için: maliyet, barınma, staj olanakları, aile yakınlığı ve mezuniyet sonrası ağın karar üzerindeki etkisi.",
+    publishedAt: "2026-07-28",
+    publishedAtLabel: "28 Temmuz 2026",
+    readingTime: "8 dakika",
+    image: "/images/campus-visits.webp",
+    imageAlt:
+      "Gürbüz Gövrek öğrencilerle kampüs ziyaretinde üniversite ve şehir seçimini değerlendiriyor",
+  },
+  {
     slug: "denizli-egitim-danismanligi",
     category: "Eğitim Danışmanlığı",
     title: "Denizli Eğitim Danışmanlığı ile Doğru Eğitim Planlaması Nasıl Yapılır?",
