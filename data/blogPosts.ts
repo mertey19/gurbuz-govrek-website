@@ -1,5 +1,18 @@
 export const blogPosts = [
   {
+    slug: "denizli-egitim-danismanligi",
+    category: "Eğitim Danışmanlığı",
+    title: "Denizli Eğitim Danışmanlığı ile Doğru Eğitim Planlaması Nasıl Yapılır?",
+    description:
+      "Eğitim danışmanlığı hangi konuları kapsar, doğru danışmanı seçerken nelere dikkat edilmeli ve öğrenciye sağladığı avantajlar nelerdir?",
+    publishedAt: "2026-07-28",
+    publishedAtLabel: "28 Temmuz 2026",
+    readingTime: "6 dakika",
+    image: "/images/guidance-introduction.webp",
+    imageAlt:
+      "Gürbüz Gövrek öğrenci ve velisiyle akademik yol haritası ve hedef planlaması üzerine görüşüyor",
+  },
+  {
     slug: "yks-tercihleri-nasil-yapilir",
     category: "Tercih Rehberi",
     title: "YKS Tercihleri Nasıl Yapılır? Doğru Tercih Listesi Hazırlamanın En Etkili Yolları",
