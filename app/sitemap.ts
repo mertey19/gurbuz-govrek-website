@@ -90,6 +90,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85,
     },
     {
+      url: `${CANONICAL_SITE_URL}/tercih-videolari`,
+      lastModified: new Date("2026-07-28"),
+      changeFrequency: "weekly",
+      priority: 0.75,
+    },
+    {
       url: `${CANONICAL_SITE_URL}/raporlar`,
       lastModified: new Date("2026-07-27"),
       changeFrequency: "monthly",

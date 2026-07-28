@@ -317,7 +317,7 @@ test("sitemap blog adreslerini yalnızca kanonik alan adıyla üretir", async ()
   const xml = await response.text();
   const locations = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
 
-  assert.equal(locations.length, 38);
+  assert.equal(locations.length, 39);
   assert.ok(locations.every((location) => location.startsWith("https://www.xn--grbzgvrek-47a5dc.com.tr/")));
   assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/blog"));
     assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/blog/yks-tercihleri-nasil-yapilir"));
