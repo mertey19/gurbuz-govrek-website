@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Download, FileText } from "lucide-react";
+import { BookOpen, Download, FileText } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { CANONICAL_SITE_URL } from "@/config/site";
 import { reports } from "@/data/reports";
@@ -32,8 +32,9 @@ export default function RaporlarPage() {
             {title}
           </h1>
           <p className="mt-4 max-w-2xl text-sm leading-7 text-muted">
-            Tercih döneminde işinize yarayacak kapsamlı belgeler. Hepsi ücretsiz, kayıt
-            gerekmez.
+            Tercih kararını veriye dayandırmak isteyenler için hazırlanmış kapsamlı
+            belgeler. Hepsi tarayıcınızda doğrudan okunur; indirmek zorunda değilsiniz.
+            Kayıt ya da üyelik istenmez.
           </p>
         </Container>
       </header>
@@ -67,26 +68,40 @@ export default function RaporlarPage() {
                         {report.description}
                       </p>
                       <p className="mt-3 text-xs text-muted">
-                        {report.pages} sayfa · {report.sizeLabel} ·{" "}
+                        {report.pages} sayfa ·{" "}
                         {report.ownWork ? "Hazırlayan" : "Kaynak"}: {report.publisher}
                       </p>
                     </div>
                   </div>
 
-                  <a
-                    href={report.file}
-                    download
-                    className="group inline-flex min-h-12 shrink-0 items-center justify-center gap-2.5 rounded-sm bg-navy px-6 text-sm font-bold text-white transition hover:bg-blue-deep focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-navy"
-                  >
-                    <Download
-                      className="size-4 transition-transform group-hover:translate-y-0.5"
-                      aria-hidden="true"
-                    />
-                    İndir
-                    <span className="sr-only">
-                      — {report.title}, PDF, {report.sizeLabel}
-                    </span>
-                  </a>
+                  {/*
+                    Birincil eylem okumaktır: bağlantıda `download` yoktur, bu yüzden
+                    tarayıcı belgeyi kendi görüntüleyicisinde açar. İndirme ikincil
+                    kalır; belgeyi tanıtmak dosyayı dağıtmaktan önce gelir.
+                  */}
+                  <div className="flex shrink-0 flex-col items-stretch gap-2 sm:items-end">
+                    <a
+                      href={report.file}
+                      target="_blank"
+                      rel="noopener"
+                      className="group inline-flex min-h-12 items-center justify-center gap-2.5 rounded-sm bg-navy px-6 text-sm font-bold text-white transition hover:bg-blue-deep focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-navy"
+                    >
+                      <BookOpen className="size-4" aria-hidden="true" />
+                      Belgeyi Oku
+                      <span className="sr-only">
+                        — {report.title}, yeni sekmede açılır
+                      </span>
+                    </a>
+
+                    <a
+                      href={report.file}
+                      download
+                      className="inline-flex min-h-11 items-center justify-center gap-2 rounded-sm px-3 text-xs font-bold text-blue-deep underline underline-offset-4 transition hover:text-navy focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy"
+                    >
+                      <Download className="size-3.5" aria-hidden="true" />
+                      Cihazıma indir ({report.sizeLabel})
+                    </a>
+                  </div>
                 </div>
               </li>
             ))}
