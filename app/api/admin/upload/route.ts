@@ -18,6 +18,18 @@ export const dynamic = "force-dynamic";
 
 const MAX_BYTES = 4 * 1024 * 1024;
 
+/**
+ * Yazma token'ı.
+ *
+ * SDK yalnızca `BLOB_READ_WRITE_TOKEN` adına bakar. Vercel'in depo bağlama
+ * sihirbazı ise değişkenleri özel bir önekle oluşturabiliyor (bu projede
+ * `BLOBA_`), ve o token bağlı depoya ait olduğu için geçerli olan odur.
+ * İkisini de kabul edip token'ı `put`'a açıkça geçiyoruz.
+ */
+function getBlobToken() {
+  return process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOBA_READ_WRITE_TOKEN || null;
+}
+
 type Signature = { ext: string; contentType: string; matches: (bytes: Uint8Array) => boolean };
 
 function startsWith(bytes: Uint8Array, prefix: number[], offset = 0) {
@@ -54,14 +66,16 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Yetkisiz." }, { status: 401 });
   }
 
-  if (!process.env.BLOB_READ_WRITE_TOKEN) {
+  const token = getBlobToken();
+
+  if (!token) {
     /*
       Hangi Blob değişkenlerinin geldiğini de bildiriyoruz — yalnızca adları,
       değerleri değil. Depo bağlantısı bazen store id ve webhook anahtarını
       ekleyip yazma token'ını atlıyor; bunu görmek teşhisi tek adıma indiriyor.
     */
     const present = Object.keys(process.env)
-      .filter((name) => name.startsWith("BLOB_"))
+      .filter((name) => name.startsWith("BLOB"))
       .sort();
 
     return NextResponse.json(
@@ -111,6 +125,7 @@ export async function POST(request: NextRequest) {
       access: "public",
       contentType: signature.contentType,
       addRandomSuffix: true,
+      token,
     });
 
     return NextResponse.json({
