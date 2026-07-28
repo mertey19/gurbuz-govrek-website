@@ -1,0 +1,39 @@
+name: Doğrulama
+
+# Koruma kuralı "PR açılsın" diyor ama içeriğin sağlam olduğunu söylemiyor.
+# Bu iş akışı her PR'da tür denetimi, lint, derleme ve testleri koşar; geçmezse
+# birleştirme kilitlenir.
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+# Aynı dala arka arkaya push gelirse önceki koşu iptal edilir; sıra beklemez.
+concurrency:
+  group: dogrulama-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Tür denetimi, lint, derleme ve testler
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # Yerel geliştirmede kullanılan sürüm ailesi.
+          node-version: 24
+          cache: npm
+
+      # npm ci, package-lock.json'a birebir uyar; sürüm kayması olmaz.
+      - run: npm ci
+
+      # package.json'daki test betiği: typecheck + build + node --test.
+      # Veritabanı gerektirmez; sayfalar veri okunamazsa boş listeyle çizilir.
+      - run: npm test
+
+      - run: npm run lint
