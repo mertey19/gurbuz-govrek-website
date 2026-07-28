@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { CANONICAL_SITE_URL, whatsappUrl } from "@/config/site";
+import {
+  FIELD_QUOTA_CHANGES,
+  SCORE_TYPE_QUOTA_CHANGES,
+} from "@/data/tercihTespitleri";
 
 /**
  * "2026 kontenjan değişimi" araması için özel sayfa.
@@ -22,34 +26,6 @@ export const metadata: Metadata = {
   openGraph: { type: "article", locale: "tr_TR", url: pageUrl, title, description },
   twitter: { card: "summary_large_image", title, description },
 };
-
-const scoreChanges = [
-  { type: "Sayısal (SAY)", change: "≈ 9.000 azalma" },
-  { type: "Eşit Ağırlık (EA)", change: "≈ 12.000 azalma" },
-  { type: "Sözel (SÖZ)", change: "≈ 16.000 azalma" },
-  { type: "Dil (DİL)", change: "≈ 3.000 azalma" },
-];
-
-const fieldChanges = [
-  {
-    field: "Tıp",
-    detail:
-      "85 kontenjan azalması. Dokuz Eylül (İngilizce), Bitlis ve Burdur’da yeni fakülte açıldı.",
-  },
-  {
-    field: "Diş hekimliği",
-    detail: "761 kontenjan azalması. Bu ölçekte bir düşüş ilk 50 bindeki sıralamaları etkiler.",
-  },
-  {
-    field: "Sağlık bölümleri",
-    detail: "Hemşirelik dışındaki sağlık bölümlerinin kontenjanları azaltıldı.",
-  },
-  {
-    field: "Mühendislikler",
-    detail:
-      "Endüstri dışındaki eski popüler mühendisliklerin kontenjanı azaldı; yeni popüler mühendisliklerin kontenjanı artırıldı.",
-  },
-];
 
 export default function KontenjanDegisimiPage() {
   return (
@@ -96,12 +72,12 @@ export default function KontenjanDegisimiPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {scoreChanges.map((row) => (
-                    <tr key={row.type} className="border-t border-navy/8">
+                  {SCORE_TYPE_QUOTA_CHANGES.map((row) => (
+                    <tr key={row.label} className="border-t border-navy/8">
                       <th scope="row" className="px-5 py-3 text-left font-semibold text-navy">
-                        {row.type}
+                        {row.label}
                       </th>
-                      <td className="px-5 py-3 text-ink">{row.change}</td>
+                      <td className="px-5 py-3 text-ink">{row.display}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -118,7 +94,7 @@ export default function KontenjanDegisimiPage() {
               Alan bazında öne çıkanlar
             </h2>
             <dl className="mt-6 grid gap-5">
-              {fieldChanges.map((item) => (
+              {FIELD_QUOTA_CHANGES.map((item) => (
                 <div key={item.field} className="border-l-2 border-gold pl-4">
                   <dt className="text-sm font-bold text-navy">{item.field}</dt>
                   <dd className="mt-1 text-sm leading-6 text-muted">{item.detail}</dd>

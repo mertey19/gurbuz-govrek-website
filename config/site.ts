@@ -80,6 +80,9 @@ export const siteNavigationGroups = [
     items: [
       { label: "YKS Tercih Blogu", href: "/blog", description: "Güncel rehberler ve uzman yazıları" },
       { label: "Meslek Tanıtım Köşesi", href: "/meslekler", description: "115 meslek tanıtım dosyası" },
+      { label: "2026 Kontenjan Değişimi", href: "/2026-kontenjan-degisimi", description: "Puan türü ve alan bazında kontenjan azalması" },
+      { label: "2026 YKS İstatistikleri", href: "/2026-yks-istatistikleri", description: "Test ortalamaları ve sıralamalara etkisi" },
+      { label: "Tıp Fakültesi Tercihi", href: "/tip-fakultesi-tercihi", description: "Kontenjan, sıralama ve karar ölçütleri" },
       { label: "Raporlar ve Kılavuzlar", href: "/raporlar", description: "Tercih kılavuzu, üniversite ve tıp raporları" },
       { label: "Sunum ve Seminer Köşesi", href: "/#sunum-kosesi", description: "273 özgün eğitim görseli" },
       { label: "Etkinlikler", href: "/#etkinlikler", description: "Seminer ve öğrenci buluşmaları" },

@@ -65,3 +65,61 @@ export const SCORE_TYPE_FORECASTS: readonly ScoreTypeForecast[] = [
 export function getForecast(scoreType: RobotScoreType): ScoreTypeForecast | undefined {
   return SCORE_TYPE_FORECASTS.find((item) => item.scoreType === scoreType);
 }
+
+/**
+ * Kontenjan değişimi rakamları — TEK KAYNAK.
+ *
+ * Aynı sayılar birden fazla sayfada gösteriliyor. Sayfalara elle yazılırsa
+ * çalışma dosyası güncellendiğinde bir kısmı eski kalır; bu yüzden hepsi
+ * buradan okunur. Dosya yenilendiğinde yalnızca bu blok güncellenir.
+ */
+export type QuotaChange = {
+  label: string;
+  /** Yaklaşık değişim; negatif sayı azalmayı gösterir. */
+  change: number;
+  /** Rakam yerine gösterilecek metin (yuvarlanmış değerler için). */
+  display: string;
+};
+
+export const SCORE_TYPE_QUOTA_CHANGES: readonly QuotaChange[] = [
+  { label: "Sayısal (SAY)", change: -9000, display: "≈ 9.000 azalma" },
+  { label: "Eşit Ağırlık (EA)", change: -12000, display: "≈ 12.000 azalma" },
+  { label: "Sözel (SÖZ)", change: -16000, display: "≈ 16.000 azalma" },
+  { label: "Dil (DİL)", change: -3000, display: "≈ 3.000 azalma" },
+];
+
+export type FieldQuotaChange = {
+  field: string;
+  change: number | null;
+  detail: string;
+};
+
+export const FIELD_QUOTA_CHANGES: readonly FieldQuotaChange[] = [
+  {
+    field: "Tıp",
+    change: -85,
+    detail:
+      "85 kontenjan azalması. Dokuz Eylül (İngilizce), Bitlis ve Burdur’da yeni fakülte açıldı.",
+  },
+  {
+    field: "Diş hekimliği",
+    change: -761,
+    detail: "761 kontenjan azalması. Bu ölçekte bir düşüş ilk 50 bindeki sıralamaları etkiler.",
+  },
+  {
+    field: "Sağlık bölümleri",
+    change: null,
+    detail: "Hemşirelik dışındaki sağlık bölümlerinin kontenjanları azaltıldı.",
+  },
+  {
+    field: "Mühendislikler",
+    change: null,
+    detail:
+      "Endüstri dışındaki eski popüler mühendisliklerin kontenjanı azaldı; yeni popüler mühendisliklerin kontenjanı artırıldı.",
+  },
+];
+
+/** Bir alanın kontenjan değişimini döndürür; sayfalarda rakam elle yazılmaz. */
+export function getFieldQuotaChange(field: string): FieldQuotaChange | undefined {
+  return FIELD_QUOTA_CHANGES.find((item) => item.field === field);
+}

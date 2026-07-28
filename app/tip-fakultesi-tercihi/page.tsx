@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { CANONICAL_SITE_URL, whatsappUrl } from "@/config/site";
+import { getFieldQuotaChange } from "@/data/tercihTespitleri";
 
 /**
  * "Tıp fakültesi tercihi" araması için özel sayfa.
@@ -47,6 +48,10 @@ const criteria = [
   },
 ];
 
+// Rakamlar tek kaynaktan okunur; çalışma dosyası güncellendiğinde bu sayfa da güncellenir.
+const tip = getFieldQuotaChange("Tıp");
+const dis = getFieldQuotaChange("Diş hekimliği");
+
 export default function TipFakultesiTercihiPage() {
   return (
     <main id="main-content" className="min-h-screen bg-white pt-20">
@@ -76,8 +81,9 @@ export default function TipFakultesiTercihiPage() {
               2026’da kontenjan ne oldu?
             </h2>
             <p className="mt-4 text-sm leading-7 text-ink">
-              Gürbüz Gövrek’in tespitlerine göre tıp fakültesi kontenjanı 85 kişi azaldı. Diş
-              hekimliğindeki düşüş çok daha sert: 761 kontenjan. Hemşirelik dışındaki sağlık
+              Gürbüz Gövrek’in tespitlerine göre tıp fakültesi kontenjanı{" "}
+              {Math.abs(tip?.change ?? 0)} kişi azaldı. Diş hekimliğindeki düşüş çok daha
+              sert: {Math.abs(dis?.change ?? 0)} kontenjan. Hemşirelik dışındaki sağlık
               bölümlerinin kontenjanları da azaltıldı.
             </p>
             <p className="mt-4 text-sm leading-7 text-ink">
@@ -99,7 +105,7 @@ export default function TipFakultesiTercihiPage() {
               </p>
             </div>
             <p className="mt-5 text-sm leading-7 text-ink">
-              Diş hekimliğindeki 761’lik düşüş özellikle önemli: bu ölçekte bir azalma ilk 50
+              Diş hekimliğindeki {Math.abs(dis?.change ?? 0)}’lik düşüş özellikle önemli: bu ölçekte bir azalma ilk 50
               bindeki sıralamaları etkiler ve sıralamaların öne doğru ilerlemesi beklenir.
               Tıpla diş arasında kararsız olanların bunu hesaba katması gerekir.
             </p>
