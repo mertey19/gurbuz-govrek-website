@@ -17,7 +17,15 @@ export interface SiteReport {
   ownWork: boolean;
   pages: number;
   sizeLabel: string;
-  file: string;
+  /** Site üzerinde barındırılan dosya. Yeniden yayımı yasak belgelerde boştur. */
+  file?: string;
+  /**
+   * Belge sitede barındırılamıyorsa yayıncının kendi adresi. YÖK raporu gibi
+   * yeniden yayımı açıkça yasaklanmış kaynaklar burada tanıtılır, kopyalanmaz.
+   */
+  externalUrl?: string;
+  /** Barındırmama gerekçesi; kartta ziyaretçiye gösterilir. */
+  externalNote?: string;
 }
 
 export const reports: readonly SiteReport[] = [
@@ -40,8 +48,10 @@ export const reports: readonly SiteReport[] = [
     publisher: "YÖK — Üniversite İzleme ve Değerlendirme Komisyonu",
     ownWork: false,
     pages: 251,
-    sizeLabel: "21,0 MB",
-    file: "/resources/raporlar/universite-raporu-2025-2026.pdf",
+    sizeLabel: "",
+    externalUrl: "https://www.yok.gov.tr/",
+    externalNote:
+      "Raporun künyesi, YÖK’ten izin alınmadan yeniden yayımlanmasını yasaklamaktadır. Bu nedenle burada barındırılmıyor; belgeye YÖK’ün kendi sitesinden ulaşabilirsiniz.",
   },
   {
     slug: "tip-fakulteleri",

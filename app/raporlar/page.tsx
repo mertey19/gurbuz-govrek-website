@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BookOpen, Download, FileText } from "lucide-react";
+import { BookOpen, Download, ExternalLink, FileText } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { CANONICAL_SITE_URL } from "@/config/site";
 import { reports } from "@/data/reports";
@@ -71,6 +71,12 @@ export default function RaporlarPage() {
                         {report.pages} sayfa ·{" "}
                         {report.ownWork ? "Hazırlayan" : "Kaynak"}: {report.publisher}
                       </p>
+
+                      {report.externalNote ? (
+                        <p className="mt-3 border-l-2 border-gold pl-3 text-xs leading-6 text-muted">
+                          {report.externalNote}
+                        </p>
+                      ) : null}
                     </div>
                   </div>
 
@@ -80,27 +86,44 @@ export default function RaporlarPage() {
                     kalır; belgeyi tanıtmak dosyayı dağıtmaktan önce gelir.
                   */}
                   <div className="flex shrink-0 flex-col items-stretch gap-2 sm:items-end">
-                    <a
-                      href={report.file}
-                      target="_blank"
-                      rel="noopener"
-                      className="group inline-flex min-h-12 items-center justify-center gap-2.5 rounded-sm bg-navy px-6 text-sm font-bold text-white transition hover:bg-blue-deep focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-navy"
-                    >
-                      <BookOpen className="size-4" aria-hidden="true" />
-                      Belgeyi Oku
-                      <span className="sr-only">
-                        — {report.title}, yeni sekmede açılır
-                      </span>
-                    </a>
+                    {report.file ? (
+                      <>
+                        <a
+                          href={report.file}
+                          target="_blank"
+                          rel="noopener"
+                          className="group inline-flex min-h-12 items-center justify-center gap-2.5 rounded-sm bg-navy px-6 text-sm font-bold text-white transition hover:bg-blue-deep focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-navy"
+                        >
+                          <BookOpen className="size-4" aria-hidden="true" />
+                          Belgeyi Oku
+                          <span className="sr-only">
+                            — {report.title}, yeni sekmede açılır
+                          </span>
+                        </a>
 
-                    <a
-                      href={report.file}
-                      download
-                      className="inline-flex min-h-11 items-center justify-center gap-2 rounded-sm px-3 text-xs font-bold text-blue-deep underline underline-offset-4 transition hover:text-navy focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy"
-                    >
-                      <Download className="size-3.5" aria-hidden="true" />
-                      Cihazıma indir ({report.sizeLabel})
-                    </a>
+                        <a
+                          href={report.file}
+                          download
+                          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-sm px-3 text-xs font-bold text-blue-deep underline underline-offset-4 transition hover:text-navy focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy"
+                        >
+                          <Download className="size-3.5" aria-hidden="true" />
+                          Cihazıma indir ({report.sizeLabel})
+                        </a>
+                      </>
+                    ) : (
+                      <a
+                        href={report.externalUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex min-h-12 items-center justify-center gap-2.5 rounded-sm border border-navy/25 px-6 text-sm font-bold text-navy transition hover:border-navy hover:bg-cream focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-navy"
+                      >
+                        <ExternalLink className="size-4" aria-hidden="true" />
+                        Yayıncının Sitesinde
+                        <span className="sr-only">
+                          — {report.title}, yeni sekmede açılır
+                        </span>
+                      </a>
+                    )}
                   </div>
                 </div>
               </li>
