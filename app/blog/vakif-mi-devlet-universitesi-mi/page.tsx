@@ -3,6 +3,7 @@ import {
   BlogArticleLayout,
   BlogChecklist,
   type BlogFaq,
+  type BlogService,
   type BlogSource,
 } from "@/components/blog/BlogArticleLayout";
 import { getBlogPost } from "@/data/blogPosts";
@@ -11,6 +12,11 @@ import { createBlogMetadata } from "@/lib/blogMetadata";
 const post = getBlogPost("vakif-mi-devlet-universitesi-mi");
 
 export const metadata: Metadata = createBlogMetadata(post);
+
+const relatedServices: readonly BlogService[] = [
+  { href: "/universite-bolum-analizi", label: "Üniversite ve Bölüm Analizi", detail: "Programların kontenjan, kadro ve olanak açısından karşılaştırılması." },
+  { href: "/denizli-tercih-danismanligi", label: "Denizli Tercih Danışmanlığı", detail: "Başarı sıranıza göre kişiye özel tercih listesi ve bire bir görüşme." },
+];
 
 const comparisonCriteria = [
   "Programın ders planı ve seçmeli ders çeşitliliği",
@@ -76,6 +82,7 @@ export default function VakifDevletKarsilastirmaPage() {
       lead="Doğru soru “vakıf mı, devlet mi daha iyi?” değil; “hangi program benim hedeflerime, bütçeme ve öğrenme biçimime daha uygun?” sorusudur. Üniversitenin türü tek başına eğitim deneyiminin kalitesini belirlemez."
       faqs={faqs}
       sources={sources}
+      services={relatedServices}
     >
       <p>
         Devlet ve vakıf üniversiteleri arasında karar verirken genellemeler yerine program

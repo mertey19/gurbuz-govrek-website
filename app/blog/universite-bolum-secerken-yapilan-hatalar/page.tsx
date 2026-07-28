@@ -3,6 +3,7 @@ import {
   BlogArticleLayout,
   BlogChecklist,
   type BlogFaq,
+  type BlogService,
   type BlogSource,
 } from "@/components/blog/BlogArticleLayout";
 import { getBlogPost } from "@/data/blogPosts";
@@ -11,6 +12,11 @@ import { createBlogMetadata } from "@/lib/blogMetadata";
 const post = getBlogPost("universite-bolum-secerken-yapilan-hatalar");
 
 export const metadata: Metadata = createBlogMetadata(post);
+
+const relatedServices: readonly BlogService[] = [
+  { href: "/universite-bolum-analizi", label: "Üniversite ve Bölüm Analizi", detail: "Programların kontenjan, kadro ve olanak açısından karşılaştırılması." },
+  { href: "/denizli-tercih-danismani", label: "Tercih Danışmanı", detail: "Süreci birlikte yürüteceğiniz uzman ve çalışma biçimi." },
+];
 
 const mistakes = [
   "Sadece YKS puanına bakmak",
@@ -80,6 +86,7 @@ export default function BolumSecimiHatalariPage() {
       lead="Tercih dönemindeki en büyük hata yanlış bir sıralama tahmini yapmak değil, öğrencinin kendisine uygun olmayan bir programı yeterince araştırmadan seçmesidir."
       faqs={faqs}
       sources={sources}
+      services={relatedServices}
     >
       <p>
         Üniversite ve bölüm seçimi; puan, şehir veya tek bir meslek unvanına indirgenemeyecek

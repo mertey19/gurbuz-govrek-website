@@ -4,6 +4,7 @@ import {
   BlogArticleLayout,
   BlogChecklist,
   type BlogFaq,
+  type BlogService,
   type BlogSource,
 } from "@/components/blog/BlogArticleLayout";
 import { getBlogPost } from "@/data/blogPosts";
@@ -12,6 +13,11 @@ import { createBlogMetadata } from "@/lib/blogMetadata";
 const post = getBlogPost("denizlide-mi-sehir-disinda-mi-okumali");
 
 export const metadata: Metadata = createBlogMetadata(post);
+
+const relatedServices: readonly BlogService[] = [
+  { href: "/universite-bolum-analizi", label: "Üniversite ve Bölüm Analizi", detail: "Programların kontenjan, kadro ve olanak açısından karşılaştırılması." },
+  { href: "/tercih-robotu", label: "Tercih Robotu", detail: "Sıralamanıza uyan programları şehir ve kurum türüne göre listeleyin." },
+];
 
 const costItems = [
   "Barınma: evde kalmak ile yurt veya kiralık ev arasındaki fark",
@@ -81,6 +87,7 @@ export default function DenizlideMiSehirDisindaMiOkumaliPage() {
       lead="Denizli’de yaşayan bir öğrenci için tercih dönemi çoğu zaman iki soruyla başlar: hangi bölüm ve hangi şehir. İkincisi genellikle sonraya bırakılır, oysa dört yılın nasıl geçeceğini belirleyen asıl karar odur. Bu yazı, aynı bölümü Denizli’de veya başka bir şehirde okumak arasında kalanlar için yedi ölçüt sunuyor."
       faqs={faqs}
       sources={sources}
+      services={relatedServices}
     >
       <p>
         Peşinen bir uyarı: bu sorunun herkes için geçerli tek bir doğru yanıtı yok. Aynı

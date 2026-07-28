@@ -3,6 +3,7 @@ import {
   BlogArticleLayout,
   BlogChecklist,
   type BlogFaq,
+  type BlogService,
   type BlogSource,
 } from "@/components/blog/BlogArticleLayout";
 import { getBlogPost } from "@/data/blogPosts";
@@ -11,6 +12,11 @@ import { createBlogMetadata } from "@/lib/blogMetadata";
 const post = getBlogPost("denizli-matematik-ozel-ders");
 
 export const metadata: Metadata = createBlogMetadata(post);
+
+const relatedServices: readonly BlogService[] = [
+  { href: "/matematik-ozel-ders", label: "Matematik Özel Ders", detail: "Birebir konu anlatımı, eksik tamamlama ve deneme analizi." },
+  { href: "/denizli-ogrenci-koclugu", label: "Denizli Öğrenci Koçluğu", detail: "Haftalık program, hedef takibi ve motivasyon desteği." },
+];
 
 const advantages = [
   "Konu eksikleri sistemli şekilde tamamlanır",
@@ -83,6 +89,7 @@ export default function DenizliMatematikOzelDersPage() {
       lead="Matematik, düzenli çalışmayla gelişen bir derstir. Ancak her öğrencinin öğrenme hızı farklıdır. Bu nedenle birebir matematik özel ders desteği, eksikleri doğru şekilde tamamlamak isteyen öğrenciler için önemli bir avantaj sunar; öğrenci kendi hızında ilerler, hem konu eksikleri kapanır hem de özgüven artar."
       faqs={faqs}
       sources={sources}
+      services={relatedServices}
     >
       <p>
         İlkokul, ortaokul, LGS, TYT ve AYT düzeylerine uygun birebir veya online matematik

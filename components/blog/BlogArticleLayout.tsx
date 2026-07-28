@@ -11,6 +11,12 @@ export type BlogFaq = {
   answer: string;
 };
 
+export type BlogService = {
+  href: string;
+  label: string;
+  detail: string;
+};
+
 export type BlogSource = {
   label: string;
   href: string;
@@ -21,12 +27,15 @@ export function BlogArticleLayout({
   lead,
   faqs,
   sources,
+  services = [],
   children,
 }: {
   post: BlogPost;
   lead: string;
   faqs: readonly BlogFaq[];
   sources: readonly BlogSource[];
+  /** Yazının konusuyla eşleşen hizmet sayfaları; yoksa bölüm hiç basılmaz. */
+  services?: readonly BlogService[];
   children: ReactNode;
 }) {
   const articleUrl = `${CANONICAL_SITE_URL}/blog/${post.slug}`;
@@ -192,6 +201,34 @@ export function BlogArticleLayout({
                     ))}
                   </ul>
                 </section>
+
+                {services.length > 0 ? (
+                  /*
+                    Blogdan hizmet sayfasına bağlantı. Hizmet sayfaları birbirine
+                    zaten bağlıydı ama blog tarafından geri bağlantı yoktu; benzer
+                    konudaki sayfaların hangisinin merkez olduğu bu yüzden belirsiz
+                    kalıyordu.
+                  */
+                  <section aria-labelledby={`${post.slug}-hizmetler`}>
+                    <h2 id={`${post.slug}-hizmetler`}>Bu Konuda Sunulan Hizmetler</h2>
+                    <div className="mt-6 grid gap-3">
+                      {services.map((service) => (
+                        <Link
+                          key={service.href}
+                          href={service.href}
+                          className="group block rounded-sm border border-navy/10 bg-cream/60 px-5 py-4 no-underline transition hover:border-gold"
+                        >
+                          <span className="block text-sm font-bold text-navy group-hover:text-blue-deep">
+                            {service.label}
+                          </span>
+                          <span className="mt-1 block text-xs leading-6 text-muted">
+                            {service.detail}
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
+                  </section>
+                ) : null}
 
                 <section aria-labelledby={`${post.slug}-ilgili-yazilar`}>
                   <h2 id={`${post.slug}-ilgili-yazilar`}>İlgili Yazılar</h2>

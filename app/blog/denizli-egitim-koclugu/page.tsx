@@ -3,6 +3,7 @@ import {
   BlogArticleLayout,
   BlogChecklist,
   type BlogFaq,
+  type BlogService,
   type BlogSource,
 } from "@/components/blog/BlogArticleLayout";
 import { getBlogPost } from "@/data/blogPosts";
@@ -11,6 +12,11 @@ import { createBlogMetadata } from "@/lib/blogMetadata";
 const post = getBlogPost("denizli-egitim-koclugu");
 
 export const metadata: Metadata = createBlogMetadata(post);
+
+const relatedServices: readonly BlogService[] = [
+  { href: "/denizli-ogrenci-koclugu", label: "Denizli Öğrenci Koçluğu", detail: "Haftalık program, hedef takibi ve motivasyon desteği." },
+  { href: "/matematik-ozel-ders", label: "Matematik Özel Ders", detail: "Birebir konu anlatımı, eksik tamamlama ve deneme analizi." },
+];
 
 const audiences = [
   "LGS öğrencileri",
@@ -85,6 +91,7 @@ export default function DenizliEgitimKocluguPage() {
       lead="Öğrencilik süreci her zaman aynı şekilde ilerlemez. Bazen motivasyon düşer, bazen de doğru çalışma yöntemi bulunamaz. İşte tam bu noktada eğitim koçluğu desteği önemli bir fark oluşturur; çünkü doğru planlama, düzenli takip ve kişiye özel rehberlik başarı yolculuğunu daha verimli hâle getirir."
       faqs={faqs}
       sources={sources}
+      services={relatedServices}
     >
       <p>
         Bu yazıda eğitim koçluğunun ne olduğunu, kimler için uygun olduğunu, süreçte hangi

@@ -3,6 +3,7 @@ import {
   BlogArticleLayout,
   BlogChecklist,
   type BlogFaq,
+  type BlogService,
   type BlogSource,
 } from "@/components/blog/BlogArticleLayout";
 import { getBlogPost } from "@/data/blogPosts";
@@ -11,6 +12,12 @@ import { createBlogMetadata } from "@/lib/blogMetadata";
 const post = getBlogPost("denizli-egitim-danismanligi");
 
 export const metadata: Metadata = createBlogMetadata(post);
+
+const relatedServices: readonly BlogService[] = [
+  { href: "/denizli-tercih-danismanligi", label: "Denizli Tercih Danışmanlığı", detail: "Başarı sıranıza göre kişiye özel tercih listesi ve bire bir görüşme." },
+  { href: "/denizli-ogrenci-koclugu", label: "Denizli Öğrenci Koçluğu", detail: "Haftalık program, hedef takibi ve motivasyon desteği." },
+  { href: "/universite-bolum-analizi", label: "Üniversite ve Bölüm Analizi", detail: "Programların kontenjan, kadro ve olanak açısından karşılaştırılması." },
+];
 
 const services = [
   "Akademik başarı analizi",
@@ -76,6 +83,7 @@ export default function DenizliEgitimDanismanligiPage() {
       lead="Doğru eğitim planı, geleceği şekillendiren en önemli adımlardan biridir. Ancak seçenekler her geçen yıl artıyor. Bu nedenle karar vermek zorleşebiliyor. İşte tam bu noktada Denizli Eğitim Danışmanlığı hizmetleri öne çıkıyor. Doğru yönlendirme sayesinde öğrenciler hedeflerine daha emin adımlarla ilerliyor. Aynı zamanda aileler de süreci daha bilinçli yönetebiliyor."
       faqs={faqs}
       sources={sources}
+      services={relatedServices}
     >
       <section aria-labelledby="neden-onemli">
         <h2 id="neden-onemli">Denizli Eğitim Danışmanlığı Neden Önemlidir?</h2>

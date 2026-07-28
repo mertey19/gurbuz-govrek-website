@@ -3,6 +3,7 @@ import {
   BlogArticleLayout,
   BlogChecklist,
   type BlogFaq,
+  type BlogService,
   type BlogSource,
 } from "@/components/blog/BlogArticleLayout";
 import { getBlogPost } from "@/data/blogPosts";
@@ -11,6 +12,11 @@ import { createBlogMetadata } from "@/lib/blogMetadata";
 const post = getBlogPost("denizli-profesyonel-ogrenci-kocu");
 
 export const metadata: Metadata = createBlogMetadata(post);
+
+const relatedServices: readonly BlogService[] = [
+  { href: "/denizli-ogrenci-koclugu", label: "Denizli Öğrenci Koçluğu", detail: "Haftalık program, hedef takibi ve motivasyon desteği." },
+  { href: "/matematik-ozel-ders", label: "Matematik Özel Ders", detail: "Birebir konu anlatımı, eksik tamamlama ve deneme analizi." },
+];
 
 const supportAreas = [
   "Kişiye özel çalışma programı hazırlama",
@@ -86,6 +92,7 @@ export default function DenizliProfesyonelOgrenciKocuPage() {
       lead="Akademik başarı yalnızca ders çalışmakla sınırlı değildir. Doğru planlama, etkili zaman yönetimi ve güçlü motivasyon da sürecin önemli parçalarıdır. Her öğrencinin öğrenme biçimi farklı olduğu için kişiye özel hazırlanan çalışma planları daha verimli sonuç verir."
       faqs={faqs}
       sources={sources}
+      services={relatedServices}
     >
       <p>
         Doğru rehberlik sayesinde öğrenci hem akademik hem de kişisel gelişim alanında daha

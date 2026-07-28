@@ -4,6 +4,7 @@ import {
   BlogChecklist,
   BlogSteps,
   type BlogFaq,
+  type BlogService,
   type BlogSource,
 } from "@/components/blog/BlogArticleLayout";
 import { getBlogPost } from "@/data/blogPosts";
@@ -12,6 +13,11 @@ import { createBlogMetadata } from "@/lib/blogMetadata";
 const post = getBlogPost("denizlide-yks-tercih-danismani-nasil-secilir");
 
 export const metadata: Metadata = createBlogMetadata(post);
+
+const relatedServices: readonly BlogService[] = [
+  { href: "/denizli-tercih-danismani", label: "Tercih Danışmanı", detail: "Süreci birlikte yürüteceğiniz uzman ve çalışma biçimi." },
+  { href: "/denizli-tercih-danismanligi", label: "Denizli Tercih Danışmanlığı", detail: "Başarı sıranıza göre kişiye özel tercih listesi ve bire bir görüşme." },
+];
 
 const selectionCriteria = [
   "Görüşmeye öğrenciyi ve hedeflerini tanımaya yönelik sorularla başlar.",
@@ -85,6 +91,7 @@ export default function TercihDanismaniSecimiPage() {
       lead="İyi bir tercih danışmanı öğrencinin yerine karar vermez; öğrencinin kendisi için doğru kararı verebilmesi amacıyla verileri açıklar, seçenekleri karşılaştırır ve riskleri görünür hâle getirir."
       faqs={faqs}
       sources={sources}
+      services={relatedServices}
     >
       <p>
         YKS tercih dönemi kısa, seçenekler ise çok fazladır. Bu yoğunluk içinde danışman

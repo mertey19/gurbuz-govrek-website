@@ -3,6 +3,7 @@ import {
   BlogArticleLayout,
   BlogChecklist,
   type BlogFaq,
+  type BlogService,
   type BlogSource,
 } from "@/components/blog/BlogArticleLayout";
 import { getBlogPost } from "@/data/blogPosts";
@@ -11,6 +12,11 @@ import { createBlogMetadata } from "@/lib/blogMetadata";
 const post = getBlogPost("denizli-yks-ek-tercih-danismanligi");
 
 export const metadata: Metadata = createBlogMetadata(post);
+
+const relatedServices: readonly BlogService[] = [
+  { href: "/denizli-yks-tercih-danismanligi", label: "Denizli YKS Tercih Danışmanlığı", detail: "YKS sonrası üniversite ve bölüm kararının adım adım kurulması." },
+  { href: "/tercih-robotu", label: "Tercih Robotu", detail: "Sıralamanıza uyan programları şehir ve kurum türüne göre listeleyin." },
+];
 
 const consultingScope = [
   "Başarı sırası analizi",
@@ -75,6 +81,7 @@ export default function DenizliYksEkTercihDanismanligiPage() {
       lead="YKS sonuçları açıklandıktan sonra her aday için yeni bir süreç başlar. İlk tercih döneminde istediği bölüme yerleşemeyen öğrenciler ise ek tercih hakkını değerlendirir. Doğru analiz, doğru sıralama ve doğru tercih listesi bu aşamada belirleyici olur."
       faqs={faqs}
       sources={sources}
+      services={relatedServices}
     >
       <p>
         Ek tercih süreci kısa sürer. Bu yüzden hızlı hareket etmek gerekir. Aynı zamanda

@@ -4,6 +4,7 @@ import {
   BlogChecklist,
   BlogSteps,
   type BlogFaq,
+  type BlogService,
   type BlogSource,
 } from "@/components/blog/BlogArticleLayout";
 import { getBlogPost } from "@/data/blogPosts";
@@ -12,6 +13,11 @@ import { createBlogMetadata } from "@/lib/blogMetadata";
 const post = getBlogPost("basari-sirasina-gore-tercih-listesi-nasil-hazirlanir");
 
 export const metadata: Metadata = createBlogMetadata(post);
+
+const relatedServices: readonly BlogService[] = [
+  { href: "/denizli-tercih-danismanligi", label: "Denizli Tercih Danışmanlığı", detail: "Başarı sıranıza göre kişiye özel tercih listesi ve bire bir görüşme." },
+  { href: "/tercih-robotu", label: "Tercih Robotu", detail: "Sıralamanıza uyan programları şehir ve kurum türüne göre listeleyin." },
+];
 
 const preparationSteps = [
   "Sonuç belgesindeki ilgili puan türü ve başarı sırasını doğru kaydedin.",
@@ -78,6 +84,7 @@ export default function BasariSirasinaGoreListePage() {
       lead="Başarı sırası, tercih listesinin pusulasıdır; fakat tek başına rota değildir. Sağlıklı bir liste için sıralama verisinin kontenjanlar, program koşulları ve öğrencinin gerçek istekleriyle birlikte okunması gerekir."
       faqs={faqs}
       sources={sources}
+      services={relatedServices}
     >
       <p>
         YKS puanları sınavın güçlüğüne ve adayların performansına göre yıldan yıla

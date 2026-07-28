@@ -3,6 +3,7 @@ import {
   BlogArticleLayout,
   BlogChecklist,
   type BlogFaq,
+  type BlogService,
   type BlogSource,
 } from "@/components/blog/BlogArticleLayout";
 import { getBlogPost } from "@/data/blogPosts";
@@ -11,6 +12,12 @@ import { createBlogMetadata } from "@/lib/blogMetadata";
 const post = getBlogPost("yks-tercihleri-nasil-yapilir");
 
 export const metadata: Metadata = createBlogMetadata(post);
+
+const relatedServices: readonly BlogService[] = [
+  { href: "/denizli-yks-tercih-danismanligi", label: "Denizli YKS Tercih Danışmanlığı", detail: "YKS sonrası üniversite ve bölüm kararının adım adım kurulması." },
+  { href: "/tercih-robotu", label: "Tercih Robotu", detail: "Sıralamanıza uyan programları şehir ve kurum türüne göre listeleyin." },
+  { href: "/universite-bolum-analizi", label: "Üniversite ve Bölüm Analizi", detail: "Programların kontenjan, kadro ve olanak açısından karşılaştırılması." },
+];
 
 const balancedList = [
   "Üst sıralarda hedef bölümler yer almalıdır.",
@@ -85,6 +92,7 @@ export default function YksTercihleriNasilYapilirPage() {
       lead="Üniversite hayali kuran her aday için tercih dönemi en az sınav kadar önemlidir. Çünkü doğru yapılan tercihler, yıllar sürecek eğitim hayatını doğrudan etkiler. Bu nedenle YKS tercihleri nasıl yapılır sorusunun cevabını doğru öğrenmek büyük avantaj sağlar. Ayrıca bilinçli hareket etmek, pişmanlık yaşama ihtimalini de azaltır. Bu rehberde tercih sürecini adım adım ele alacak, dikkat edilmesi gereken noktaları sade bir dille paylaşacağız."
       faqs={faqs}
       sources={sources}
+      services={relatedServices}
     >
       <section aria-labelledby="tercih-sureci">
         <h2 id="tercih-sureci">
