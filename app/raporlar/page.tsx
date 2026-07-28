@@ -62,7 +62,12 @@ export default function RaporlarPage() {
 
                     <div className="min-w-0">
                       <h3 className="font-serif text-lg leading-tight font-semibold text-navy sm:text-xl">
-                        {report.title}
+                        <Link
+                          href={`/raporlar/${report.slug}`}
+                          className="transition hover:text-blue-deep focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy"
+                        >
+                          {report.title}
+                        </Link>
                       </h3>
                       <p className="mt-2 max-w-2xl text-sm leading-6 text-muted">
                         {report.description}

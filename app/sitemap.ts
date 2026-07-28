@@ -78,6 +78,36 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${CANONICAL_SITE_URL}/raporlar/yks-tercih-kilavuzu-2026`,
+      lastModified: new Date("2026-07-27"),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: `${CANONICAL_SITE_URL}/raporlar/universite-raporu-2025-2026`,
+      lastModified: new Date("2026-07-27"),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: `${CANONICAL_SITE_URL}/raporlar/tip-fakulteleri`,
+      lastModified: new Date("2026-07-27"),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: `${CANONICAL_SITE_URL}/raporlar/tuma-2025-2026`,
+      lastModified: new Date("2026-07-27"),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: `${CANONICAL_SITE_URL}/raporlar/urap-2025-2026`,
+      lastModified: new Date("2026-07-27"),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
       url: `${CANONICAL_SITE_URL}/pamukkale-universitesi`,
       lastModified: new Date("2026-07-25"),
       changeFrequency: "monthly",
