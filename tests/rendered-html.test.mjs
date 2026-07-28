@@ -80,6 +80,8 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
     "../public/images/sunum-kosesi/eczacilik/10.webp",
     "../public/images/sunum-kosesi/universite-siralamalari/01.webp",
     "../public/images/sunum-kosesi/universite-siralamalari/13.webp",
+    "../public/images/sunum-kosesi/yks-tercih-rehberi-2026/01.webp",
+    "../public/images/sunum-kosesi/yks-tercih-rehberi-2026/10.webp",
   ].map((path) => access(new URL(path, import.meta.url))));
 
   const response = await render();
@@ -116,8 +118,8 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
   assert.match(html, /115 meslek dosyası/i);
   assert.match(html, /5 kategori/i);
   assert.match(html, /Sunum ve Seminer Köşesi/i);
-  assert.match(html, /273(?:<!-- -->)? özgün görsel/i);
-  assert.match(html, /28(?:<!-- -->)? ayrı içerik serisi/i);
+  assert.match(html, /283(?:<!-- -->)? özgün görsel/i);
+  assert.match(html, /29(?:<!-- -->)? ayrı içerik serisi/i);
   assert.match(html, /YKS Kontenjan Değişimi/i);
   assert.match(html, /YKS İstatistikleri/i);
   assert.match(html, /Seminer Slaytları/i);
@@ -139,6 +141,7 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
   assert.match(html, /Hukuk Fakültesi ve Hukukçuluk/i);
   assert.match(html, /Eczacılık Meslek Rehberi/i);
   assert.match(html, /Üniversite Sıralamaları ve Kalite Göstergeleri/i);
+  assert.match(html, /2026 YKS Tercih Rehberi/i);
   assert.match(html, /Tercih Sürecinde Doğru Karar İçin Güncel Rehberler/i);
   // Ana sayfa blog önizlemesi `blogPosts[0]`'ı gösterir; liste tarihe göre sıralı olduğu
   // için en yeni yazı öne çıkar.

@@ -26,7 +26,8 @@ export type PresentationCategory =
   | "gemi-insaati-gemi-makineleri"
   | "hukuk"
   | "eczacilik"
-  | "universite-siralamalari";
+  | "universite-siralamalari"
+  | "yks-tercih-rehberi-2026";
 
 export interface PresentationSlide {
   src: string;
@@ -534,6 +535,29 @@ export const presentationCollections: readonly PresentationCollection[] = [
         "Öğretim Üyelerinden Memnuniyet Yüzdesinde En İyi Üniversitelerimiz",
       ],
       "Üniversite sıralamaları ve kalite göstergeleri tablosu",
+    ),
+  },
+  {
+    id: "yks-tercih-rehberi-2026",
+    label: "2026 YKS Tercih Rehberi",
+    shortLabel: "Tercih Rehberi",
+    description:
+      "Tercih sürecini baştan sona kuran seri: kendini tanımaktan puan barajlarına, devlet-vakıf karşılaştırmasından güvenli aralıklı liste kurmaya ve son kontrol adımlarına kadar.",
+    slides: createNamedSlides(
+      "yks-tercih-rehberi-2026",
+      [
+        "2026 YKS Tercih Rehberi: Geleceğin Mimari Planı",
+        "Geleceğin Kuralları",
+        "Doğru Tercihin Sıfır Noktası: Kendini Tanımak",
+        "Tercih Sürecinde 5 Adımlı Karar Motoru",
+        "Üniversite Değerlendirme Radarı",
+        "Veri Kılavuzu: Güvenilir Bilgi Kaynakları",
+        "Puan Matrisi ve Başarı Barajları",
+        "Kurumsal Matris: Devlet ve Vakıf Üniversiteleri",
+        "Tercih Listesi Stratejisi: Güvenli Aralık Kurmak",
+        "Nihai Tercih Kontrol Paneli",
+      ],
+      "2026 YKS tercih rehberi sunumu",
     ),
   },
 ];
