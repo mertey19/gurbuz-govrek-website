@@ -55,8 +55,23 @@ export async function POST(request: NextRequest) {
   }
 
   if (!process.env.BLOB_READ_WRITE_TOKEN) {
+    /*
+      Hangi Blob değişkenlerinin geldiğini de bildiriyoruz — yalnızca adları,
+      değerleri değil. Depo bağlantısı bazen store id ve webhook anahtarını
+      ekleyip yazma token'ını atlıyor; bunu görmek teşhisi tek adıma indiriyor.
+    */
+    const present = Object.keys(process.env)
+      .filter((name) => name.startsWith("BLOB_"))
+      .sort();
+
     return NextResponse.json(
-      { error: "Depolama yapılandırılmamış. BLOB_READ_WRITE_TOKEN tanımlı değil." },
+      {
+        error:
+          "Depolama yapılandırılmamış. BLOB_READ_WRITE_TOKEN tanımlı değil. " +
+          (present.length
+            ? `Mevcut Blob değişkenleri: ${present.join(", ")}.`
+            : "Hiçbir Blob değişkeni bulunamadı."),
+      },
       { status: 503 },
     );
   }
