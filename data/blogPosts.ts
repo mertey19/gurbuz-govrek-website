@@ -1,5 +1,18 @@
 export const blogPosts = [
   {
+    slug: "tyt-calisma-programi",
+    category: "Çalışma Programı",
+    title: "TYT Çalışma Programı: Düzenli Çalışarak Başarıya Ulaşmanın En Etkili Yolu",
+    description:
+      "Etkili bir TYT çalışma programı nasıl hazırlanır, hangi hatalardan kaçınılmalı, günlük ders dağılımı nasıl olmalı ve son 30 günde plan nasıl değişir?",
+    publishedAt: "2026-07-30",
+    publishedAtLabel: "30 Temmuz 2026",
+    readingTime: "7 dakika",
+    image: "/images/student-success.webp",
+    imageAlt:
+      "Gürbüz Gövrek öğrenciyle haftalık TYT çalışma programını ve deneme analizlerini birlikte gözden geçiriyor",
+  },
+  {
     slug: "denizlide-mi-sehir-disinda-mi-okumali",
     category: "Şehir Seçimi",
     title: "Denizli’de mi Okumalı, Şehir Dışında mı? Karar Verirken 7 Ölçüt",

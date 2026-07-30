@@ -145,7 +145,7 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
   assert.match(html, /Tercih Sürecinde Doğru Karar İçin Güncel Rehberler/i);
   // Ana sayfa blog önizlemesi `blogPosts[0]`'ı gösterir; liste tarihe göre sıralı olduğu
   // için en yeni yazı öne çıkar.
-  assert.match(html, /\/blog\/denizlide-mi-sehir-disinda-mi-okumali/i);
+  assert.match(html, /\/blog\/tyt-calisma-programi/i);
   assert.match(html, /Matematik Özel Ders ve Akademik Takip/i);
   assert.match(html, /href="\/matematik-ozel-ders"/i);
   assert.match(html, /href="\/denizli-tercih-danismanligi"/i);
@@ -317,7 +317,7 @@ test("sitemap blog adreslerini yalnızca kanonik alan adıyla üretir", async ()
   const xml = await response.text();
   const locations = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
 
-  assert.equal(locations.length, 39);
+  assert.equal(locations.length, 40);
   assert.ok(locations.every((location) => location.startsWith("https://www.xn--grbzgvrek-47a5dc.com.tr/")));
   assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/blog"));
     assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/blog/yks-tercihleri-nasil-yapilir"));
