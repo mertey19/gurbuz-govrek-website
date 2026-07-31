@@ -16,7 +16,7 @@ const DOWNLOAD_PATH = "/indir/tercih-robotu";
 /** Sayı bu eşiğin altındayken gösterilmez; tek haneli bir sayı güven vermez. */
 const DISPLAY_THRESHOLD = 25;
 const FILE_LABEL = "2026 Tercih Robotu · Excel";
-const FILE_SIZE = "4,3 MB";
+const FILE_SIZE = "5,6 MB";
 
 export function TercihRobotDownload({
   downloadCount,

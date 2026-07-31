@@ -48,13 +48,18 @@ SHEETS = {
             "accredited": 19, "tus": 20, "dus": 21,
         },
     },
+    # "SON" sürümünde ÖNLİSANS düzeni değişti: SÜRE ve TÜR sütunları kalktı,
+    # yerine yıllara göre sıralama ve kontenjan geldi. Önlisans programlarının
+    # puan türü zaten her zaman TYT olduğu için sütun yerine sabit veriliyor.
     "ÖNLİSANS": {
         "level": "onlisans",
+        "default_score_type": "TYT",
         "cols": {
             "program_code": 0, "kind": 1, "city": 2, "university": 3,
-            "faculty": 4, "department": 5, "duration": 6, "score_type": 7,
-            "rank": 8, "score": 9, "quota": 10, "school_first": 11,
-            "conditions": 14, "accredited": 15,
+            "faculty": 4, "department": 5,
+            "score": 6, "rank": 7, "rank_2024": 8, "rank_2023": 9,
+            "quota": 10, "quota_2025": 11, "school_first": 12,
+            "conditions": 15,
         },
     },
 }
@@ -124,7 +129,10 @@ def main():
                         return None
                     return row[index]
 
-                score_type = clean_text(cell("score_type"))
+                # Sütun yoksa sayfa için tanımlı sabit tür kullanılır.
+                score_type = clean_text(cell("score_type")) or config.get(
+                    "default_score_type", ""
+                )
                 rank = to_int(cell("rank"))
 
                 # Sıralaması veya puan türü olmayan satır robotta kullanılamaz.
