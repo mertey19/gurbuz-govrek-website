@@ -22,16 +22,27 @@ type ManagedPost = {
 const FIELD =
   "mt-2 w-full rounded-sm border border-navy/15 bg-white px-4 py-3 text-sm text-navy placeholder:text-ink/38 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-gold";
 
-const SITE_IMAGES = [
-  "/images/guidance-introduction.webp",
-  "/images/preference-analysis.webp",
-  "/images/one-to-one-consulting.webp",
-  "/images/university-guidance.webp",
-  "/images/mathematics-education.webp",
-  "/images/campus-visits.webp",
-  "/images/student-success.webp",
-  "/images/seminars.webp",
+/*
+  Kapak seçenekleri iki gruptan gelir. İlk grup Gürbüz Gövrek'in kendi
+  fotoğrafları; kişiyi ya da gerçek bir çalışmayı gösteren yazılarda bunlar
+  kullanılır. İkinci grup temsilî görsellerdir ve kimseyi temsil etmez —
+  konusu genel olan yazılarda kapak boşluğunu doldurur.
+*/
+const OWN_PHOTOS = [
+  { value: "/images/guidance-introduction.webp", label: "Rehberlik görüşmesi" },
+  { value: "/images/preference-analysis.webp", label: "Tercih analizi" },
+  { value: "/images/one-to-one-consulting.webp", label: "Bire bir danışmanlık" },
+  { value: "/images/university-guidance.webp", label: "Üniversite yönlendirmesi" },
+  { value: "/images/mathematics-education.webp", label: "Matematik dersi" },
+  { value: "/images/campus-visits.webp", label: "Kampüs ziyareti" },
+  { value: "/images/student-success.webp", label: "Öğrenci başarısı" },
+  { value: "/images/seminars.webp", label: "Seminer" },
 ];
+
+const STOCK_IMAGES = Array.from({ length: 10 }, (_, index) => ({
+  value: `/images/blog-kapak/${String(index + 1).padStart(2, "0")}.webp`,
+  label: `Temsilî görsel ${index + 1}`,
+}));
 
 export function PostAdmin() {
   const [posts, setPosts] = useState<ManagedPost[]>([]);
@@ -46,7 +57,7 @@ export function PostAdmin() {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [body, setBody] = useState("");
-  const [image, setImage] = useState(SITE_IMAGES[0]);
+  const [image, setImage] = useState(OWN_PHOTOS[0].value);
   const [imageAlt, setImageAlt] = useState("");
 
   async function load() {
@@ -249,11 +260,20 @@ export function PostAdmin() {
                   className={FIELD}
                 >
                   {usingUpload ? <option value="">— yüklenen görsel kullanılıyor —</option> : null}
-                  {SITE_IMAGES.map((path) => (
-                    <option key={path} value={path}>
-                      {path.replace("/images/", "")}
-                    </option>
-                  ))}
+                  <optgroup label="Kendi fotoğraflarınız">
+                    {OWN_PHOTOS.map((item) => (
+                      <option key={item.value} value={item.value}>
+                        {item.label}
+                      </option>
+                    ))}
+                  </optgroup>
+                  <optgroup label="Temsilî görseller">
+                    {STOCK_IMAGES.map((item) => (
+                      <option key={item.value} value={item.value}>
+                        {item.label}
+                      </option>
+                    ))}
+                  </optgroup>
                 </select>
               </div>
 
