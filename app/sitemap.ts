@@ -87,6 +87,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.85,
     },
     {
+      url: `${CANONICAL_SITE_URL}/kontenjan-analizleri`,
+      lastModified: new Date("2026-08-02"),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${CANONICAL_SITE_URL}/meslek-gorselleri`,
+      lastModified: new Date("2026-08-02"),
+      changeFrequency: "monthly",
+      priority: 0.75,
+    },
+    {
       url: `${CANONICAL_SITE_URL}/2026-kontenjan-degisimi`,
       lastModified: new Date("2026-07-28"),
       changeFrequency: "weekly",
