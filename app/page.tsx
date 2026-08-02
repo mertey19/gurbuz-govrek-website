@@ -164,7 +164,6 @@ export default async function Home() {
       <main id="main-content">
         <Hero />
         <FlashAnnouncement />
-        <StudyAbroad />
         <Stats />
         <About />
         <PresentationCorner extraCollections={managedCollections} />
@@ -180,6 +179,7 @@ export default async function Home() {
         <Comments />
         <Events />
         <BlogPreview />
+        <StudyAbroad />
         <Media />
         <Gallery />
         <FAQ />
