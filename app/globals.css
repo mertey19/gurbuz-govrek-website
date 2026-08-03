@@ -579,6 +579,42 @@ select {
   }
 }
 
+/*
+  Kart derinliği.
+
+  Ölçü bilinçli olarak küçük: 3px yükselme ve 1,2 derecelik eğim. Amaç kartın
+  tıklanabilir olduğunu sezdirmek, dikkat çekmek değil — site sakin ve güven
+  veren bir ton taşıyor.
+
+  `perspective` üst öğede duruyor; her kartta ayrı ayrı tanımlamak eğimin
+  ızgaranın kenarlarında farklı görünmesine yol açardı.
+
+  İşaretçisi olmayan cihazlarda (dokunmatik) etkisiz kalır: `hover: hover`
+  sorgusu olmadan efekt dokunuşta takılı kalırdı.
+*/
+.depth-grid {
+  perspective: 1200px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .depth-card {
+    transition:
+      transform 200ms ease-out,
+      box-shadow 200ms ease-out;
+    will-change: transform;
+  }
+
+  .depth-card:hover {
+    transform: translateY(-3px) rotateX(1.2deg);
+    box-shadow: 0 14px 32px rgba(11, 31, 58, 0.13);
+  }
+
+  /* Klavyeyle gezinende de aynı geri bildirim verilir. */
+  .depth-card:focus-within {
+    transform: translateY(-3px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *,
@@ -588,6 +624,11 @@ select {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .depth-card:hover,
+  .depth-card:focus-within {
+    transform: none;
   }
 }
 

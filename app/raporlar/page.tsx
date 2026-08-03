@@ -45,11 +45,11 @@ export default function RaporlarPage() {
             Rapor listesi
           </h2>
 
-          <ul className="grid gap-5">
+          <ul className="depth-grid grid gap-5">
             {reports.map((report) => (
               <li
                 key={report.slug}
-                className="rounded-sm border border-navy/10 bg-white p-6 transition hover:border-gold sm:p-7"
+                className="depth-card rounded-sm border border-navy/10 bg-white p-6 hover:border-gold sm:p-7"
               >
                 <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between sm:gap-8">
                   <div className="flex min-w-0 items-start gap-4">

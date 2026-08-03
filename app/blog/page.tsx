@@ -97,11 +97,11 @@ export default async function BlogPage() {
             </h2>
           </div>
 
-          <div className="grid gap-8 lg:grid-cols-2">
+          <div className="depth-grid grid gap-8 lg:grid-cols-2">
             {posts.map((post) => (
               <article
                 key={post.slug}
-                className="overflow-hidden rounded-sm border border-navy/10 bg-white shadow-[0_18px_55px_rgba(7,26,51,.09)]"
+                className="depth-card overflow-hidden rounded-sm border border-navy/10 bg-white shadow-[0_18px_55px_rgba(7,26,51,.09)]"
               >
                 <Link
                   href={`/blog/${post.slug}`}

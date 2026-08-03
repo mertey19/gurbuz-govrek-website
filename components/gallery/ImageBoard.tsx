@@ -53,7 +53,7 @@ export function ImageBoard({
             Görseller
           </h2>
 
-          <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="depth-grid grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {images.map((image, index) => (
               <li key={image.src}>
                 <a
@@ -62,7 +62,7 @@ export function ImageBoard({
                   rel="noopener"
                   className="group block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-navy"
                 >
-                  <div className="overflow-hidden rounded-sm border border-navy/10 transition group-hover:border-gold">
+                  <div className="depth-card overflow-hidden rounded-sm border border-navy/10 group-hover:border-gold">
                     <SiteImage
                       src={image.thumb}
                       alt={image.alt}
