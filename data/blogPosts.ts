@@ -1,5 +1,18 @@
 export const blogPosts = [
   {
+    slug: "en-cok-tercih-edilen-esit-agirlik-bolumleri",
+    category: "Bölüm Seçimi",
+    title: "En Çok Tercih Edilen Eşit Ağırlık Bölümleri ve İş İmkanları",
+    description:
+      "Hukuk, işletme, iktisat, psikoloji, PDR, uluslararası ilişkiler, YBS, iç mimarlık ve grafik tasarım: eşit ağırlık bölümlerinin ders içerikleri ve mezunların çalışma alanları.",
+    publishedAt: "2026-08-04",
+    publishedAtLabel: "4 Ağustos 2026",
+    readingTime: "9 dakika",
+    image: "/images/university-guidance.webp",
+    imageAlt:
+      "Gürbüz Gövrek öğrenciyle eşit ağırlık bölümlerini ve mezuniyet sonrası kariyer seçeneklerini değerlendiriyor",
+  },
+  {
     slug: "tyt-calisma-programi",
     category: "Çalışma Programı",
     title: "TYT Çalışma Programı: Düzenli Çalışarak Başarıya Ulaşmanın En Etkili Yolu",
