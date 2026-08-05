@@ -1,5 +1,31 @@
 export const blogPosts = [
   {
+    slug: "en-cok-tercih-edilen-sayisal-bolumler",
+    category: "Bölüm Seçimi",
+    title: "En Çok Tercih Edilen Sayısal Bölümler ve İş İmkanları",
+    description:
+      "Tıp, diş hekimliği, eczacılık, hemşirelik, bilgisayar, yazılım, endüstri, elektrik-elektronik, makine ve inşaat mühendisliği: sayısal bölümlerin eğitim süreleri ve mezunların çalışma alanları.",
+    publishedAt: "2026-08-05",
+    publishedAtLabel: "5 Ağustos 2026",
+    readingTime: "12 dakika",
+    image: "/images/blog-kapak/04.webp",
+    imageAlt:
+      "Sayısal bölüm mezunlarının çalıştığı sağlık, mühendislik ve tasarım alanlarını gösteren temsilî kapak görseli",
+  },
+  {
+    slug: "tyt-ayt-calisma-programi",
+    category: "Çalışma Programı",
+    title: "TYT AYT Çalışma Programı ile Başarıya Giden Planlı Yol",
+    description:
+      "Haftalık TYT AYT çalışma programı nasıl hazırlanır, hangi gün hangi ders çalışılır, planlama sırasında hangi hatalar yapılır ve motivasyon nasıl korunur?",
+    publishedAt: "2026-08-05",
+    publishedAtLabel: "5 Ağustos 2026",
+    readingTime: "7 dakika",
+    image: "/images/blog-kapak/06.webp",
+    imageAlt:
+      "Haftalık çalışma planını masa üzerinde oluşturan öğrenciyi gösteren temsilî kapak görseli",
+  },
+  {
     slug: "en-cok-tercih-edilen-esit-agirlik-bolumleri",
     category: "Bölüm Seçimi",
     title: "En Çok Tercih Edilen Eşit Ağırlık Bölümleri ve İş İmkanları",
