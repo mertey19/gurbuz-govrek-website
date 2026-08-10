@@ -1,5 +1,18 @@
 export const blogPosts = [
   {
+    slug: "denizli-ozel-ders",
+    category: "Özel Ders",
+    title: "Denizli Özel Ders ile Başarıya Giden Yol",
+    description:
+      "Özel ders kimler için uygundur, öğretmen seçerken nelere dikkat edilmeli, kişisel çalışma planı neden gerekir ve sınav hazırlığında nasıl fark yaratır?",
+    publishedAt: "2026-08-10",
+    publishedAtLabel: "10 Ağustos 2026",
+    readingTime: "6 dakika",
+    image: "/images/blog-kapak/03.webp",
+    imageAlt:
+      "Öğretmenin öğrenciyle tahtada birebir soru çözdüğü özel ders ortamını gösteren temsilî kapak görseli",
+  },
+  {
     slug: "en-cok-tercih-edilen-sayisal-bolumler",
     category: "Bölüm Seçimi",
     title: "En Çok Tercih Edilen Sayısal Bölümler ve İş İmkanları",
