@@ -2,14 +2,17 @@
 
 import { ChevronDown, Menu, MessageCircle } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { siteNavigationGroups, whatsappUrl } from "@/config/site";
+import { siteNavigationGroups } from "@/config/site";
 import { cn } from "@/lib/utils";
+import { whatsappUrlForPath } from "@/lib/whatsapp";
 import { MobileMenu } from "./MobileMenu";
 
 export function Header() {
+  const whatsappHref = whatsappUrlForPath(usePathname());
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const closeMenu = useCallback(() => setMenuOpen(false), []);
@@ -100,7 +103,7 @@ export function Header() {
 
           <div className="flex shrink-0 items-center gap-3">
             <div className="hidden xl:block">
-              <Button href={whatsappUrl} external variant="whatsapp" className="whitespace-nowrap rounded-full px-4 2xl:px-5" showArrow={false}>
+              <Button href={whatsappHref} external variant="whatsapp" className="whitespace-nowrap rounded-full px-4 2xl:px-5" showArrow={false}>
                 <MessageCircle className="size-4" aria-hidden="true" />
                 WhatsApp
               </Button>

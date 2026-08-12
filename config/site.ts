@@ -78,7 +78,7 @@ export const siteNavigationGroups = [
   {
     label: "Blog",
     items: [
-      { label: "YKS Tercih Blogu", href: "/blog", description: "Güncel rehberler ve uzman yazıları" },
+      { label: "Blog", href: "/blog", description: "Güncel rehberler ve uzman yazıları" },
       { label: "Meslek Tanıtım Köşesi", href: "/meslekler", description: "115 meslek tanıtım dosyası" },
       { label: "2026 Kontenjan Değişimi", href: "/2026-kontenjan-degisimi", description: "Puan türü ve alan bazında kontenjan azalması" },
       { label: "Kontenjan Analizleri", href: "/kontenjan-analizleri", description: "Bölüm bazında artan ve azalan kontenjan tabloları" },
@@ -111,8 +111,12 @@ export const whatsappUrl = buildWhatsappUrl(siteConfig.whatsappMessage);
  * gelen mesajdan konu doğrudan anlaşılıyor. Satır sonu `%0A` olarak kodlanır,
  * WhatsApp bunu alt satır olarak basar.
  */
+export function blogWhatsappMessage(title: string) {
+  return `Merhaba\n${title} hakkında bilgi alabilir miyim?`;
+}
+
 export function blogWhatsappUrl(title: string) {
-  return buildWhatsappUrl(`Merhaba\n${title} hakkında bilgi alabilir miyim?`);
+  return buildWhatsappUrl(blogWhatsappMessage(title));
 }
 
 export const stats = [

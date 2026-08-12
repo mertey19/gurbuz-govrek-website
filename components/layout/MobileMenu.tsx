@@ -2,10 +2,12 @@
 
 import { ChevronDown, X } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { siteNavigationGroups, whatsappUrl } from "@/config/site";
+import { siteNavigationGroups } from "@/config/site";
 import { Button } from "@/components/ui/Button";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
+import { whatsappUrlForPath } from "@/lib/whatsapp";
 
 export function MobileMenu({
   open,
@@ -14,6 +16,7 @@ export function MobileMenu({
   open: boolean;
   onClose: () => void;
 }) {
+  const pathname = usePathname();
   const menuRef = useRef<HTMLDivElement>(null);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const closeMenu = useCallback(() => {
@@ -109,7 +112,7 @@ export function MobileMenu({
             );
           })}
         </ul>
-        <Button href={whatsappUrl} external variant="whatsapp" className="mobile-menu-cta mt-8 w-full" onClick={closeMenu}>
+        <Button href={whatsappUrlForPath(pathname)} external variant="whatsapp" className="mobile-menu-cta mt-8 w-full" onClick={closeMenu}>
           WhatsApp&apos;tan Görüş
         </Button>
       </nav>

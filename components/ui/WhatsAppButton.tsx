@@ -1,14 +1,17 @@
+"use client";
+
 import { MessageCircle } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { siteConfig } from "@/config/site";
-import { toWhatsAppUrl } from "@/lib/utils";
+import { whatsappUrlForPath } from "@/lib/whatsapp";
 
 export function WhatsAppButton() {
-  const url = toWhatsAppUrl(
-    siteConfig.whatsappNumber,
-    siteConfig.whatsappMessage,
-  );
+  // Yüzen buton her sayfada duruyor; mesajı açık yazıya göre değişsin diye
+  // adres istemcide okunuyor.
+  const pathname = usePathname();
+  const hasNumber = siteConfig.whatsappNumber.replace(/\D/g, "").length > 0;
 
-  if (!url) {
+  if (!hasNumber) {
     return (
       <span
         className="fixed right-4 bottom-4 z-40 hidden size-12 cursor-not-allowed items-center justify-center rounded-full border border-white/20 bg-navy/75 text-white/55 shadow-xl backdrop-blur sm:flex"
@@ -22,7 +25,7 @@ export function WhatsAppButton() {
 
   return (
     <a
-      href={url}
+      href={whatsappUrlForPath(pathname)}
       target="_blank"
       rel="noreferrer"
       className="fixed right-4 bottom-[calc(5.5rem+env(safe-area-inset-bottom))] z-40 flex size-13 items-center justify-center rounded-full bg-[#25D366] text-white shadow-xl transition hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-navy lg:bottom-4"
