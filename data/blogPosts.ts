@@ -1,7 +1,7 @@
 export const blogPosts = [
   {
     slug: "merkezefendi-matematik-ozel-ders",
-    category: "Matematik Özel Ders",
+    category: "İlçe Rehberleri",
     title: "Merkezefendi Matematik Özel Ders ile Matematikte Daha Güçlü Adımlar",
     description:
       "Merkezefendi’de birebir matematik çalışması nasıl planlanır, konu eksikleri nasıl belirlenir, LGS, TYT ve AYT hazırlığında hangi adımlar izlenir ve doğru öğretmen seçiminde nelere dikkat edilir?",
@@ -14,7 +14,7 @@ export const blogPosts = [
   },
   {
     slug: "pamukkale-matematik-ozel-ders",
-    category: "Matematik Özel Ders",
+    category: "İlçe Rehberleri",
     title: "Pamukkale Matematik Özel Ders ile Başarıya Bir Adım Daha Yaklaşın",
     description:
       "Pamukkale’de matematik özel ders süreci nasıl ilerler, konu eksikleri nasıl kapatılır, sınav hazırlığında birebir çalışma ne sağlar ve öğretmen seçerken nelere dikkat edilmelidir?",
@@ -250,6 +250,18 @@ export const blogPosts = [
 
 export type BlogPost = (typeof blogPosts)[number];
 export type BlogPostSlug = BlogPost["slug"];
+
+/**
+ * İlçe yazıları.
+ *
+ * `/blog/ilceler` sayfası bu kategoriye bakar; yeni bir ilçe yazısı eklerken
+ * kategoriyi bu değere ayarlamak yeterli, ayrıca listeye yazmak gerekmiyor.
+ */
+export const DISTRICT_CATEGORY = "İlçe Rehberleri";
+
+export const districtBlogPosts = blogPosts.filter(
+  (post) => post.category === DISTRICT_CATEGORY,
+);
 
 export function getBlogPost(slug: BlogPostSlug): BlogPost {
   const post = blogPosts.find((item) => item.slug === slug);

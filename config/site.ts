@@ -79,6 +79,7 @@ export const siteNavigationGroups = [
     label: "Blog",
     items: [
       { label: "Blog", href: "/blog", description: "Güncel rehberler ve uzman yazıları" },
+      { label: "İlçe Rehberleri", href: "/blog/ilceler", description: "Merkezefendi ve Pamukkale için ilçe yazıları" },
       { label: "Meslek Tanıtım Köşesi", href: "/meslekler", description: "115 meslek tanıtım dosyası" },
       { label: "2026 Kontenjan Değişimi", href: "/2026-kontenjan-degisimi", description: "Puan türü ve alan bazında kontenjan azalması" },
       { label: "Kontenjan Analizleri", href: "/kontenjan-analizleri", description: "Bölüm bazında artan ve azalan kontenjan tabloları" },

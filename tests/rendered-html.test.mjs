@@ -263,6 +263,18 @@ test("blog liste sayfasını ve Denizli YKS tercih yazısını sunucu tarafında
   assert.match(blogHtml, /Vakıf mı Devlet Üniversitesi mi\? Karar Verirken 8 Ölçüt/i);
   assert.match(blogHtml, /Üniversite ve Bölüm Seçerken Yapılan 10 Hata/i);
   assert.match(blogHtml, /rel="canonical" href="https:\/\/www\.xn--grbzgvrek-47a5dc\.com\.tr\/blog"/i);
+  assert.match(blogHtml, /href="\/blog\/ilceler"/i);
+
+  // İlçe listesi yalnızca ilçe yazılarını basar; açık segment olduğu için
+  // panelden gelen adreslere düşmez.
+  const districtResponse = await render("/blog/ilceler");
+  assert.equal(districtResponse.status, 200);
+  const districtHtml = await districtResponse.text();
+  assert.match(districtHtml, /Denizli İlçelerinde Eğitim Desteği/i);
+  assert.match(districtHtml, /Merkezefendi Matematik Özel Ders ile Matematikte Daha Güçlü Adımlar/i);
+  assert.match(districtHtml, /Pamukkale Matematik Özel Ders ile Başarıya Bir Adım Daha Yaklaşın/i);
+  assert.doesNotMatch(districtHtml, /Vakıf mı Devlet Üniversitesi mi/i);
+  assert.match(districtHtml, /rel="canonical" href="https:\/\/www\.xn--grbzgvrek-47a5dc\.com\.tr\/blog\/ilceler"/i);
 
   const articleResponse = await render("/blog/denizli-yks-tercih-danismanligi");
   assert.equal(articleResponse.status, 200);
@@ -319,9 +331,10 @@ test("sitemap blog adreslerini yalnızca kanonik alan adıyla üretir", async ()
   const xml = await response.text();
   const locations = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
 
-  assert.equal(locations.length, 48);
+  assert.equal(locations.length, 49);
   assert.ok(locations.every((location) => location.startsWith("https://www.xn--grbzgvrek-47a5dc.com.tr/")));
   assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/blog"));
+  assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/blog/ilceler"));
     assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/blog/yks-tercihleri-nasil-yapilir"));
 assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/blog/denizli-egitim-koclugu"));
   assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/blog/denizli-matematik-ozel-ders"));
