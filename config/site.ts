@@ -76,7 +76,7 @@ export const siteNavigationGroups = [
     ],
   },
   {
-    label: "Kaynaklar",
+    label: "Blog",
     items: [
       { label: "YKS Tercih Blogu", href: "/blog", description: "Güncel rehberler ve uzman yazıları" },
       { label: "Meslek Tanıtım Köşesi", href: "/meslekler", description: "115 meslek tanıtım dosyası" },
