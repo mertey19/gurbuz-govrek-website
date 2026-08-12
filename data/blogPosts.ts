@@ -1,5 +1,31 @@
 export const blogPosts = [
   {
+    slug: "merkezefendi-matematik-ozel-ders",
+    category: "Matematik Özel Ders",
+    title: "Merkezefendi Matematik Özel Ders ile Matematikte Daha Güçlü Adımlar",
+    description:
+      "Merkezefendi’de birebir matematik çalışması nasıl planlanır, konu eksikleri nasıl belirlenir, LGS, TYT ve AYT hazırlığında hangi adımlar izlenir ve doğru öğretmen seçiminde nelere dikkat edilir?",
+    publishedAt: "2026-08-12",
+    publishedAtLabel: "12 Ağustos 2026",
+    readingTime: "5 dakika",
+    image: "/images/blog-kapak/03.webp",
+    imageAlt:
+      "Matematik dersinde öğretmenin öğrenciyle tahtada birebir soru çözdüğü temsilî kapak görseli",
+  },
+  {
+    slug: "pamukkale-matematik-ozel-ders",
+    category: "Matematik Özel Ders",
+    title: "Pamukkale Matematik Özel Ders ile Başarıya Bir Adım Daha Yaklaşın",
+    description:
+      "Pamukkale’de matematik özel ders süreci nasıl ilerler, konu eksikleri nasıl kapatılır, sınav hazırlığında birebir çalışma ne sağlar ve öğretmen seçerken nelere dikkat edilmelidir?",
+    publishedAt: "2026-08-12",
+    publishedAtLabel: "12 Ağustos 2026",
+    readingTime: "5 dakika",
+    image: "/images/mathematics-education.webp",
+    imageAlt:
+      "Birebir matematik çalışmasında konu anlatımı ve soru çözümünü gösteren temsilî kapak görseli",
+  },
+  {
     slug: "denizli-ozel-ders",
     category: "Özel Ders",
     title: "Denizli Özel Ders ile Başarıya Giden Yol",
