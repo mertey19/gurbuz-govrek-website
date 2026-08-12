@@ -162,7 +162,9 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
   assert.match(html, /Matematik &amp; Özel Ders/i);
   assert.match(html, /Öğrenci Deneyimleri/i);
   assert.match(html, /Öğrenci ve Veli Yorumları/i);
-  assert.match(html, /YKS Tercih Blogu/i);
+  // Menüdeki blog girdisi artık "Blog" adını taşıyor; bu ad sayfada başka
+  // yerlerde de geçtiği için girdiyi açıklamasından doğruluyoruz.
+  assert.match(html, /Güncel rehberler ve uzman yazıları/i);
   // Sunum ızgarası küçük resim sürümünü yükler; tam boyutlu dosya yalnızca büyütme penceresinde kullanılır.
   assert.match(html, /\/images\/sunum-kosesi\/kontenjan\/01-thumb\.webp/i);
   assert.match(html, /\/resources\/meslek-tanitim\/tyt\/acil-yardim-ve-afet-yoneticisi\.pdf/i);
