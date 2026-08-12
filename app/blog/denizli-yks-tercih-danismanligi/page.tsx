@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SiteImage as Image } from "@/components/ui/SiteImage";
-import { CANONICAL_SITE_URL, siteConfig, whatsappUrl } from "@/config/site";
+import { blogWhatsappUrl, CANONICAL_SITE_URL, siteConfig } from "@/config/site";
 import { blogPosts, getBlogPost } from "@/data/blogPosts";
 
 const post = getBlogPost("denizli-yks-tercih-danismanligi");
@@ -462,7 +462,7 @@ export default function DenizliYksTercihDanismanligiPage() {
                     üzerinden bilgi alabilirsiniz.
                   </p>
                   <a
-                    href={whatsappUrl}
+                    href={blogWhatsappUrl(post.title)}
                     target="_blank"
                     rel="noreferrer"
                     className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-sm bg-[#25D366] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#20bd5a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"

@@ -98,7 +98,22 @@ export const siteNavigationGroups = [
   },
 ] as const;
 
-export const whatsappUrl = `https://wa.me/${siteConfig.whatsappNumber.replace(/\D/g, "")}?text=${encodeURIComponent(siteConfig.whatsappMessage)}`;
+export function buildWhatsappUrl(message: string) {
+  return `https://wa.me/${siteConfig.whatsappNumber.replace(/\D/g, "")}?text=${encodeURIComponent(message)}`;
+}
+
+export const whatsappUrl = buildWhatsappUrl(siteConfig.whatsappMessage);
+
+/**
+ * Blog yazılarındaki WhatsApp butonu.
+ *
+ * Ortak mesaj hangi yazıdan yazıldığını göstermiyordu; başlık metne girince
+ * gelen mesajdan konu doğrudan anlaşılıyor. Satır sonu `%0A` olarak kodlanır,
+ * WhatsApp bunu alt satır olarak basar.
+ */
+export function blogWhatsappUrl(title: string) {
+  return buildWhatsappUrl(`Merhaba\n${title} hakkında bilgi alabilir miyim?`);
+}
 
 export const stats = [
   { value: "Bire Bir", label: "Öğrenci Görüşmesi" },
