@@ -21,6 +21,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     },
     {
+      url: `${CANONICAL_SITE_URL}/blog/ilceler`,
+      lastModified: new Date("2026-08-12"),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: `${CANONICAL_SITE_URL}/matematik-ozel-ders`,
       lastModified: new Date("2026-07-24"),
       changeFrequency: "monthly",

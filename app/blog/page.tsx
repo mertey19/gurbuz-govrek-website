@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, BookOpenText, CalendarDays, Clock3 } from "lucide-react";
+import { ArrowRight, BookOpenText, MapPin } from "lucide-react";
+import { BlogPostCard } from "@/components/blog/BlogPostCard";
 import { Container } from "@/components/ui/Container";
-import { SiteImage as Image } from "@/components/ui/SiteImage";
 import { CANONICAL_SITE_URL } from "@/config/site";
 import { blogPosts } from "@/data/blogPosts";
 import { listManagedPosts } from "@/lib/posts/service";
@@ -85,6 +85,14 @@ export default async function BlogPage() {
             YKS başarı sırasından bölüm analizine kadar tercih döneminde ihtiyaç duyulan
             bilgileri anlaşılır ve uygulanabilir yazılarla ele alıyoruz.
           </p>
+          <Link
+            href="/blog/ilceler"
+            className="mt-8 inline-flex min-h-11 items-center gap-2 rounded-sm border border-white/22 px-5 py-3 text-sm font-bold text-white/82 transition hover:border-gold hover:text-gold-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-gold"
+          >
+            <MapPin className="size-4" aria-hidden="true" />
+            İlçe Rehberleri
+            <ArrowRight className="size-4" aria-hidden="true" />
+          </Link>
         </Container>
       </section>
 
@@ -99,49 +107,7 @@ export default async function BlogPage() {
 
           <div className="depth-grid grid gap-8 lg:grid-cols-2">
             {posts.map((post) => (
-              <article
-                key={post.slug}
-                className="depth-card overflow-hidden rounded-sm border border-navy/10 bg-white shadow-[0_18px_55px_rgba(7,26,51,.09)]"
-              >
-                <Link
-                  href={`/blog/${post.slug}`}
-                  className="group block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
-                >
-                  <div className="relative aspect-[16/9] overflow-hidden">
-                    <Image
-                      src={post.image}
-                      alt={post.imageAlt}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 50vw"
-                      className="object-cover transition duration-500 group-hover:scale-[1.03]"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-navy/40 to-transparent" aria-hidden="true" />
-                  </div>
-                  <div className="p-7 sm:p-9">
-                    <p className="text-[10px] font-extrabold tracking-[0.16em] text-blue-deep uppercase">
-                      {post.category}
-                    </p>
-                    <h2 className="mt-4 font-serif text-2xl font-semibold leading-tight text-navy sm:text-3xl">
-                      {post.title}
-                    </h2>
-                    <p className="mt-4 text-sm leading-7 text-ink/60">{post.description}</p>
-                    <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-xs text-ink/48">
-                      <span className="inline-flex items-center gap-1.5">
-                        <CalendarDays className="size-4 text-gold" aria-hidden="true" />
-                        {post.publishedAtLabel}
-                      </span>
-                      <span className="inline-flex items-center gap-1.5">
-                        <Clock3 className="size-4 text-gold" aria-hidden="true" />
-                        {post.readingTime}
-                      </span>
-                    </div>
-                    <span className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-blue-deep">
-                      Yazıyı Oku
-                      <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-                    </span>
-                  </div>
-                </Link>
-              </article>
+              <BlogPostCard key={post.slug} post={post} />
             ))}
           </div>
         </Container>

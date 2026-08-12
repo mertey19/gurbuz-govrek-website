@@ -14,8 +14,15 @@ const MAX_TITLE = 140;
 const MAX_DESCRIPTION = 320;
 const MAX_BODY = 40000;
 
-/** Koddaki yazılarla aynı adresin alınması, o sayfaların gölgelenmesine yol açar. */
-const RESERVED_SLUGS = new Set<string>(blogPosts.map((post) => post.slug));
+/**
+ * Koddaki yazılarla aynı adresin alınması, o sayfaların gölgelenmesine yol açar.
+ * `ilceler` bir yazı değil ama `/blog/ilceler` listesi orada duruyor; panelden
+ * o adres alınırsa yazı hiç açılmaz, çünkü açık segment önce eşleşir.
+ */
+const RESERVED_SLUGS = new Set<string>([
+  ...blogPosts.map((post) => post.slug),
+  "ilceler",
+]);
 
 export async function GET(request: NextRequest) {
   if (!isAdminRequest(request)) {
