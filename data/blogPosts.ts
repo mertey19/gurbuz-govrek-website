@@ -1,5 +1,31 @@
 export const blogPosts = [
   {
+    slug: "acipayam-matematik-ozel-ders",
+    category: "İlçe Rehberleri",
+    title: "Acıpayam Matematik Özel Ders ile Matematikte Güveninizi Artırın",
+    description:
+      "Acıpayam’da birebir matematik dersi kimler için uygundur, konu eksikleri nasıl belirlenir, TYT ve AYT hazırlığında neler çalışılır ve öğretmen seçerken nelere dikkat edilmelidir?",
+    publishedAt: "2026-08-13",
+    publishedAtLabel: "13 Ağustos 2026",
+    readingTime: "4 dakika",
+    image: "/images/blog-kapak/01.webp",
+    imageAlt:
+      "Açık kitabıyla ders çalışan ve önündeki eğitim yolunu değerlendiren öğrenciyi gösteren temsilî kapak görseli",
+  },
+  {
+    slug: "civril-matematik-ozel-ders",
+    category: "İlçe Rehberleri",
+    title: "Çivril Matematik Özel Ders ile Matematiği Daha Kolay Öğrenin",
+    description:
+      "Çivril’de matematik özel ders süreci nasıl planlanır, hangi seviyelere uygundur, yanlış analizi neden önemlidir ve TYT ile AYT hazırlığında nasıl ilerlenir?",
+    publishedAt: "2026-08-13",
+    publishedAtLabel: "13 Ağustos 2026",
+    readingTime: "5 dakika",
+    image: "/images/blog-kapak/02.webp",
+    imageAlt:
+      "Masasında bilgisayar başında ders çalışan öğrenciyi gösteren temsilî kapak görseli",
+  },
+  {
     slug: "merkezefendi-matematik-ozel-ders",
     category: "İlçe Rehberleri",
     title: "Merkezefendi Matematik Özel Ders ile Matematikte Daha Güçlü Adımlar",
