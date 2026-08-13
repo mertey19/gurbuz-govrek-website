@@ -1,5 +1,70 @@
 export const blogPosts = [
   {
+    slug: "buldan-matematik-ozel-ders",
+    category: "İlçe Rehberleri",
+    title: "Buldan Matematik Özel Ders ile Matematikte Daha Sağlam Adımlar",
+    description:
+      "Buldan’da birebir matematik dersi kimler için uygundur, hangi konular çalışılır, ders nasıl daha verimli hâle gelir ve yanlış analizi neden önemlidir?",
+    publishedAt: "2026-08-13",
+    publishedAtLabel: "13 Ağustos 2026",
+    readingTime: "4 dakika",
+    image: "/images/blog-kapak/05.webp",
+    imageAlt:
+      "Okul bahçesinde öğretmeniyle birlikte yürüyen öğrencileri gösteren temsilî kapak görseli",
+  },
+  {
+    slug: "honaz-matematik-ozel-ders",
+    category: "İlçe Rehberleri",
+    title: "Honaz Matematik Özel Ders ile Matematikte Eksikleri Kapatın",
+    description:
+      "Honaz’da matematikte zorlanılan konu nasıl bulunur, okul sınavlarına ve LGS ile YKS’ye nasıl hazırlanılır, ders süresi nasıl planlanır ve öğretmen seçerken nelere bakılır?",
+    publishedAt: "2026-08-13",
+    publishedAtLabel: "13 Ağustos 2026",
+    readingTime: "5 dakika",
+    image: "/images/blog-kapak/10.webp",
+    imageAlt:
+      "Okul yolunda ilerleyen bir öğrenciyi gösteren temsilî kapak görseli",
+  },
+  {
+    slug: "kale-matematik-ozel-ders",
+    category: "İlçe Rehberleri",
+    title: "Kale Matematik Özel Ders ile Matematikte Daha Sağlam Adımlar",
+    description:
+      "Kale’de birebir matematik dersi öğrenciye ne kazandırır, hangi öğrenciler için uygundur ve ders sürecinde nelere dikkat edilir?",
+    publishedAt: "2026-08-13",
+    publishedAtLabel: "13 Ağustos 2026",
+    readingTime: "4 dakika",
+    image: "/images/blog-kapak/09.webp",
+    imageAlt:
+      "Eğitim kaynaklarının tablet ve bilgisayar üzerinden incelendiğini gösteren temsilî kapak görseli",
+  },
+  {
+    slug: "saraykoy-matematik-ozel-ders",
+    category: "İlçe Rehberleri",
+    title: "Sarayköy Matematik Özel Ders ile Matematikte Güven Kazanın",
+    description:
+      "Sarayköy’de matematik özel ders kimler için uygundur, derslerde nelere odaklanılır, birebir çalışma sınav başarısına nasıl katkı sağlar ve program nasıl planlanır?",
+    publishedAt: "2026-08-13",
+    publishedAtLabel: "13 Ağustos 2026",
+    readingTime: "4 dakika",
+    image: "/images/blog-kapak/08.webp",
+    imageAlt:
+      "Kalabalık bir salonda yapılan eğitim sunumunu gösteren temsilî kapak görseli",
+  },
+  {
+    slug: "tavas-matematik-ozel-ders",
+    category: "İlçe Rehberleri",
+    title: "Tavas Matematik Özel Ders",
+    description:
+      "Tavas’ta öğrencinin seviyesine göre ders planı nasıl oluşur, öğretmen seçerken neye bakılmalı, ders sıklığı nasıl belirlenir ve ücret değerlendirilirken hangi sorular sorulmalı?",
+    publishedAt: "2026-08-13",
+    publishedAtLabel: "13 Ağustos 2026",
+    readingTime: "5 dakika",
+    image: "/images/blog-kapak/07.webp",
+    imageAlt:
+      "Öğrenci ve velinin bir eğitim danışmanıyla masada görüşmesini gösteren temsilî kapak görseli",
+  },
+  {
     slug: "acipayam-matematik-ozel-ders",
     category: "İlçe Rehberleri",
     title: "Acıpayam Matematik Özel Ders ile Matematikte Güveninizi Artırın",
