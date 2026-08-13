@@ -143,9 +143,10 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
   assert.match(html, /Üniversite Sıralamaları ve Kalite Göstergeleri/i);
   assert.match(html, /2026 YKS Tercih Rehberi/i);
   assert.match(html, /Tercih Sürecinde Doğru Karar İçin Güncel Rehberler/i);
-  // Ana sayfa blog önizlemesi `blogPosts[0]`'ı gösterir; liste tarihe göre sıralı olduğu
-  // için en yeni yazı öne çıkar.
-  assert.match(html, /\/blog\/acipayam-matematik-ozel-ders/i);
+  // Ana sayfa blog önizlemesi `publicBlogPosts[0]`'ı gösterir; liste tarihe göre sıralı
+  // olduğu için en yeni yazı öne çıkar. İlçe yazıları bu listeye girmiyor.
+  assert.match(html, /\/blog\/denizli-ozel-ders/i);
+  assert.doesNotMatch(html, /acipayam-matematik-ozel-ders|civril-matematik-ozel-ders/i);
   assert.match(html, /Matematik Özel Ders ve Akademik Takip/i);
   assert.match(html, /href="\/matematik-ozel-ders"/i);
   assert.match(html, /href="\/denizli-tercih-danismanligi"/i);
@@ -263,7 +264,11 @@ test("blog liste sayfasını ve Denizli YKS tercih yazısını sunucu tarafında
   assert.match(blogHtml, /Vakıf mı Devlet Üniversitesi mi\? Karar Verirken 8 Ölçüt/i);
   assert.match(blogHtml, /Üniversite ve Bölüm Seçerken Yapılan 10 Hata/i);
   assert.match(blogHtml, /rel="canonical" href="https:\/\/www\.xn--grbzgvrek-47a5dc\.com\.tr\/blog"/i);
-  assert.match(blogHtml, /href="\/blog\/ilceler"/i);
+
+  // İlçe yazıları siteden gezerek bulunmuyor: ne listede ne de ilçe sayfasına
+  // giden bir bağlantı var. Adresleri ve site haritası kayıtları duruyor.
+  assert.doesNotMatch(blogHtml, /href="\/blog\/ilceler"/i);
+  assert.doesNotMatch(blogHtml, /Acıpayam Matematik Özel Ders|Merkezefendi Matematik Özel Ders/i);
 
   // İlçe listesi yalnızca ilçe yazılarını basar; açık segment olduğu için
   // panelden gelen adreslere düşmez.
