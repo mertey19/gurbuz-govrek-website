@@ -2,10 +2,10 @@ import Link from "next/link";
 import { ArrowRight, BookOpenText, CalendarDays, Clock3 } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SiteImage as Image } from "@/components/ui/SiteImage";
-import { publicBlogPosts } from "@/data/blogPosts";
+import { blogPosts } from "@/data/blogPosts";
 
 export function BlogPreview() {
-  const post = publicBlogPosts[0];
+  const post = blogPosts[0];
 
   return (
     <section id="blog" className="section-space bg-white">
