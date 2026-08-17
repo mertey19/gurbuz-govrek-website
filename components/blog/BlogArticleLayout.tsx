@@ -4,12 +4,7 @@ import { ArrowLeft, CalendarDays, Clock3, MessageCircle } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SiteImage as Image } from "@/components/ui/SiteImage";
 import { blogWhatsappUrl, CANONICAL_SITE_URL, siteConfig } from "@/config/site";
-import {
-  DISTRICT_CATEGORY,
-  blogPosts,
-  publicBlogPosts,
-  type BlogPost,
-} from "@/data/blogPosts";
+import { blogPosts, type BlogPost } from "@/data/blogPosts";
 
 export type BlogFaq = {
   question: string;
@@ -44,14 +39,7 @@ export function BlogArticleLayout({
   children: ReactNode;
 }) {
   const articleUrl = `${CANONICAL_SITE_URL}/blog/${post.slug}`;
-  /*
-    İlçe yazıları site içinde listelenmiyor; genel yazıların altında da
-    çıkmamaları gerekiyor. Yalnızca bir ilçe yazısındayken diğer ilçe yazıları
-    öneriliyor, böylece bu sayfalar birbirine bağlı kalıyor.
-  */
-  const relatedPool =
-    post.category === DISTRICT_CATEGORY ? blogPosts : publicBlogPosts;
-  const relatedPosts = relatedPool.filter((item) => item.slug !== post.slug).slice(0, 3);
+  const relatedPosts = blogPosts.filter((item) => item.slug !== post.slug).slice(0, 3);
   const schemas = [
     {
       "@context": "https://schema.org",
