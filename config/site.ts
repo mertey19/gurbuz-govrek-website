@@ -78,17 +78,15 @@ export const siteNavigationGroups = [
   {
     label: "Blog",
     items: [
+      { label: "Sunum ve Seminer Köşesi", href: "/#sunum-kosesi", description: "405 özgün eğitim görseli" },
       { label: "Blog", href: "/blog", description: "Güncel rehberler ve uzman yazıları" },
       { label: "İlçe Rehberleri", href: "/blog/ilceler", description: "Merkezefendi ve Pamukkale için ilçe yazıları" },
       { label: "Meslek Tanıtım Köşesi", href: "/meslekler", description: "115 meslek tanıtım dosyası" },
       { label: "2026 Kontenjan Değişimi", href: "/2026-kontenjan-degisimi", description: "Puan türü ve alan bazında kontenjan azalması" },
       { label: "Kontenjan Analizleri", href: "/kontenjan-analizleri", description: "Bölüm bazında artan ve azalan kontenjan tabloları" },
-      { label: "Meslek Slaytları", href: "/meslek-gorselleri", description: "Karşılaştırmalı meslek tanıtım serileri" },
-      { label: "2026 YKS İstatistikleri", href: "/2026-yks-istatistikleri", description: "Test ortalamaları ve sıralamalara etkisi" },
       { label: "Tıp Fakültesi Tercihi", href: "/tip-fakultesi-tercihi", description: "Kontenjan, sıralama ve karar ölçütleri" },
       { label: "Raporlar ve Kılavuzlar", href: "/raporlar", description: "Tercih kılavuzu, üniversite ve tıp raporları" },
       { label: "Tercih Videoları", href: "/tercih-videolari", description: "Tercih, meslek ve üniversite video anlatımları" },
-      { label: "Sunum ve Seminer Köşesi", href: "/#sunum-kosesi", description: "405 özgün eğitim görseli" },
       { label: "Etkinlikler", href: "/#etkinlikler", description: "Seminer ve öğrenci buluşmaları" },
       { label: "Sık Sorulan Sorular", href: "/#sss", description: "Merak edilen konuların yanıtları" },
     ],
