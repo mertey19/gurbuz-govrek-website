@@ -146,6 +146,11 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
   // Ana sayfa blog önizlemesi `blogPosts[0]`'ı gösterir; liste tarihe göre sıralı olduğu
   // için en yeni yazı öne çıkar.
   assert.match(html, /\/blog\/buldan-matematik-ozel-ders/i);
+  // Hizmet sayfası ilçe yazılarına bağlanır; tek giriş noktası blog listesi kalmasın.
+  assert.match(
+    (await (await render("/matematik-ozel-ders")).text()),
+    /href="\/blog\/ilceler"/i,
+  );
   assert.match(html, /Matematik Özel Ders ve Akademik Takip/i);
   assert.match(html, /href="\/matematik-ozel-ders"/i);
   assert.match(html, /href="\/denizli-tercih-danismanligi"/i);
