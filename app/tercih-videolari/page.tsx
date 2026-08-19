@@ -42,7 +42,7 @@ export default async function TercihVideolariPage() {
           </h1>
           <p className="mt-4 max-w-2xl text-sm leading-7 text-muted">
             Tercih sürecini, meslekleri ve üniversiteleri anlatan video anlatımlar. Videolar
-            YouTube üzerinden oynatılır.
+            YouTube ve Instagram üzerinden oynatılır.
           </p>
         </Container>
       </header>
@@ -76,9 +76,19 @@ export default async function TercihVideolariPage() {
                           16:9 oranı önceden ayrılır; oynatıcı yüklenirken sayfa
                           zıplamasın diye yükseklik baştan bellidir.
                         */}
-                        <div className="aspect-video overflow-hidden rounded-sm border border-navy/10 bg-navy">
+                        <div
+                          className={`overflow-hidden rounded-sm border border-navy/10 bg-navy ${
+                            video.provider === "instagram"
+                              ? "mx-auto aspect-[4/5] w-full max-w-md"
+                              : "aspect-video"
+                          }`}
+                        >
                           <iframe
-                            src={`https://www.youtube-nocookie.com/embed/${video.youtubeId}`}
+                            src={
+                              video.provider === "youtube"
+                                ? `https://www.youtube-nocookie.com/embed/${video.videoId}`
+                                : `https://www.instagram.com/${video.instagramType}/${video.videoId}/embed/captioned/`
+                            }
                             title={video.title}
                             loading="lazy"
                             allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

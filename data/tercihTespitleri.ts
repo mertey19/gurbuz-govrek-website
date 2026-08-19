@@ -47,7 +47,7 @@ export const SCORE_TYPE_FORECASTS: readonly ScoreTypeForecast[] = [
     scoreType: "SÖZ",
     headline: "Kontenjan azalması sıralamaları ileri taşıyacak",
     notes: [
-      "Sözel puanda genel kontenjan 16 bin civarı azaldı; dört puan türü içinde en büyük azalma burada.",
+      "Sözel puanda genel kontenjan 6 bin civarı azaldı.",
       "Eşit ağırlık ve sözel bölümlerde kontenjan nedeniyle genelde ilerleme olacaktır.",
       "Bütün eğitim fakülteleri geçen sene atama sayısı nedeniyle çok düşmüştü; bu sene de düşme devam edebilir.",
     ],
@@ -84,7 +84,7 @@ export type QuotaChange = {
 export const SCORE_TYPE_QUOTA_CHANGES: readonly QuotaChange[] = [
   { label: "Sayısal (SAY)", change: -9000, display: "≈ 9.000 azalma" },
   { label: "Eşit Ağırlık (EA)", change: -12000, display: "≈ 12.000 azalma" },
-  { label: "Sözel (SÖZ)", change: -16000, display: "≈ 16.000 azalma" },
+  { label: "Sözel (SÖZ)", change: -6000, display: "≈ 6.000 azalma" },
   { label: "Dil (DİL)", change: -3000, display: "≈ 3.000 azalma" },
 ];
 

@@ -30,11 +30,11 @@ export type PresentationCategory =
   | "yks-tercih-rehberi-2026";
 
 /**
- * Sunum köşesi iki ayrı bölüm hâlinde gösteriliyor: meslek tanıtım serileri ve
- * veri/istatistik serileri. Panelden eklenen seriler grup taşımadığı için
- * meslek bölümünde listelenir.
+ * Sunum köşesi üç ana bölümde gösterilir: YKS istatistikleri, meslek slaytları
+ * ve genel sunumlar. Panelden eklenen seriler grup taşımadığı için Sunumlar
+ * bölümünde listelenir.
  */
-export type PresentationGroup = "meslek" | "istatistik";
+export type PresentationGroup = "meslek" | "istatistik" | "sunum";
 
 export interface PresentationSlide {
   src: string;
@@ -54,7 +54,7 @@ export interface PresentationCollection {
     sağlarken serbest metne de izin verir.
   */
   id: PresentationCategory | (string & {});
-  /** Boş bırakılırsa meslek bölümünde gösterilir. */
+  /** Boş bırakılırsa Sunumlar bölümünde gösterilir. */
   group?: PresentationGroup;
   label: string;
   shortLabel: string;
@@ -140,7 +140,7 @@ export const presentationCollections: readonly PresentationCollection[] = [
   },
   {
     id: "seminer",
-    group: "istatistik",
+    group: "sunum",
     label: "Seminer Slaytları",
     shortLabel: "Seminer",
     description:
@@ -153,7 +153,7 @@ export const presentationCollections: readonly PresentationCollection[] = [
   },
   {
     id: "tuma",
-    group: "istatistik",
+    group: "sunum",
     label: "TÜMA 2025 Araştırması",
     shortLabel: "TÜMA 2025",
     description:
@@ -581,7 +581,7 @@ export const presentationCollections: readonly PresentationCollection[] = [
   },
   {
     id: "yks-tercih-rehberi-2026",
-    group: "istatistik",
+    group: "sunum",
     label: "2026 YKS Tercih Rehberi",
     shortLabel: "Tercih Rehberi",
     description:

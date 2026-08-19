@@ -8,7 +8,6 @@ import { Reveal } from "@/components/ui/Reveal";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import {
   presentationCollections,
-  presentationSlideCount,
   type PresentationCollection,
 } from "@/data/presentationCollections";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
@@ -20,26 +19,37 @@ import { useFocusTrap } from "@/hooks/useFocusTrap";
  * serileri sunucuda okunup buraya geçirilir; bileşen istemci tarafında olduğu
  * için veritabanına kendisi erişemez.
  *
- * Meslek tanıtımları ve veri serileri ayrı bölümlerde listeleniyor; tek bir
- * sekme şeridinde kırk üzeri seri yan yana duruyordu ve aradığını bulmak
- * zorlaşmıştı.
+ * Seriler YKS istatistikleri, meslek slaytları ve genel sunumlar olarak üç
+ * bölüme ayrılır. Her bölümde tek bir seri seçicisi kullanılır; kırk üzeri
+ * başlığın aynı anda ekrana yığılması önlenir.
  */
 export function PresentationCorner({
   extraCollections = [],
 }: {
   extraCollections?: readonly PresentationCollection[];
 }) {
-  const collections = [...presentationCollections, ...extraCollections];
-  const slideCount =
-    presentationSlideCount +
-    extraCollections.reduce((total, item) => total + item.slides.length, 0);
+  const collections = Array.from(
+    new Map(
+      [...extraCollections, ...presentationCollections].map((collection) => [
+        collection.id,
+        collection,
+      ]),
+    ).values(),
+  );
+  const slideCount = collections.reduce(
+    (total, item) => total + item.slides.length,
+    0,
+  );
 
-  // Panelden eklenen seriler grup taşımıyor; meslek bölümünde listeleniyorlar.
+  // Panelden eklenen seriler grup taşımıyor; genel Sunumlar bölümünde listelenir.
   const meslekSerileri = collections.filter(
-    (collection) => (collection.group ?? "meslek") === "meslek",
+    (collection) => collection.group === "meslek",
   );
   const istatistikSerileri = collections.filter(
     (collection) => collection.group === "istatistik",
+  );
+  const sunumSerileri = collections.filter(
+    (collection) => (collection.group ?? "sunum") === "sunum",
   );
 
   return (
@@ -50,7 +60,7 @@ export function PresentationCorner({
             <SectionTitle
               eyebrow="Sunum ve Seminer Köşesi"
               title="Meslekleri ve Tercih Sürecini Görsellerle Keşfedin"
-              description="Meslek tanıtımları ve tercih verileri ayrı bölümlerde toplandı; ayrıntıları okumak için dilediğiniz görseli büyütün."
+              description="YKS istatistikleri, meslek slaytları ve sunumlar ayrı bölümlerde toplandı; bir seri seçip dilediğiniz görseli büyütün."
               tone="light"
             />
             <div className="rounded-sm border border-white/12 bg-white/[.055] p-5 text-white">
@@ -68,17 +78,24 @@ export function PresentationCorner({
         </Reveal>
 
         <PresentationGroupBlock
+          anchor="sunum-istatistik"
+          eyebrow="YKS ve Tercih Verileri"
+          heading="YKS İstatistikleri"
+          collections={istatistikSerileri}
+        />
+
+        <PresentationGroupBlock
           anchor="sunum-meslek"
           eyebrow="Meslek Tanıtımları"
-          heading="Meslekleri Tanıtan Slayt Serileri"
+          heading="Meslek Slaytları"
           collections={meslekSerileri}
         />
 
         <PresentationGroupBlock
-          anchor="sunum-istatistik"
-          eyebrow="İstatistik ve Veriler"
-          heading="Tercih Verilerini Anlatan Slayt Serileri"
-          collections={istatistikSerileri}
+          anchor="sunumlar"
+          eyebrow="Rehber ve Seminerler"
+          heading="Sunumlar"
+          collections={sunumSerileri}
         />
       </Container>
     </section>
@@ -173,7 +190,7 @@ function PresentationGroupBlock({
       </Reveal>
 
       <Reveal delay={0.05} className="mt-8">
-        <label className="block md:hidden" htmlFor={`${anchor}-secim`}>
+        <label className="block" htmlFor={`${anchor}-secim`}>
           <span className="mb-2 block text-[10px] font-bold tracking-[.18em] text-gold-light uppercase">İçerik serisini seçin</span>
           <select
             id={`${anchor}-secim`}
@@ -188,35 +205,6 @@ function PresentationGroupBlock({
             ))}
           </select>
         </label>
-        <div
-          className="hidden gap-2 rounded-sm border border-white/10 bg-white/[.045] p-2 md:grid md:grid-cols-3 xl:grid-cols-5"
-          role="tablist"
-          aria-label={`${eyebrow} kategorileri`}
-        >
-          {collections.map((collection) => {
-            const active = collection.id === category;
-            return (
-              <button
-                key={collection.id}
-                id={`sunum-tab-${collection.id}`}
-                type="button"
-                role="tab"
-                aria-selected={active}
-                aria-controls={`${anchor}-panel`}
-                onClick={() => selectCategory(collection.id)}
-                className={`min-h-14 rounded-sm px-4 py-3 text-sm font-bold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold ${
-                  active
-                    ? "bg-gold text-navy shadow-lg"
-                    : "text-white/68 hover:bg-white/8 hover:text-white"
-                }`}
-              >
-                <span className="hidden xl:inline">{collection.label}</span>
-                <span className="xl:hidden">{collection.shortLabel}</span>
-                <span className={active ? "text-navy/55" : "text-gold-light/72"}> · {collection.slides.length}</span>
-              </button>
-            );
-          })}
-        </div>
       </Reveal>
 
       <div

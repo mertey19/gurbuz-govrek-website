@@ -4,14 +4,17 @@ import { neon } from "@neondatabase/serverless";
 /**
  * Tercih videoları.
  *
- * Videolar YouTube'da barındırılır; burada yalnızca kimlik ve açıklama tutulur.
+ * Videolar YouTube veya Instagram'da barındırılır; burada yalnızca kaynak
+ * kimliği ve açıklama tutulur.
  * Video dosyasını sitede barındırmak bant genişliği, farklı çözünürlük üretimi
  * ve mobil oynatma sorunlarını beraberinde getirirdi.
  */
 
 export type SiteVideo = {
   id: number;
-  youtubeId: string;
+  provider: "youtube" | "instagram";
+  videoId: string;
+  instagramType: "p" | "reel" | "tv" | null;
   title: string;
   description: string;
   category: string;
@@ -66,6 +69,61 @@ export function extractYoutubeId(input: string): string | null {
   return null;
 }
 
+export type VideoSource =
+  | { provider: "youtube"; videoId: string; storageKey: string; instagramType: null }
+  | {
+      provider: "instagram";
+      videoId: string;
+      storageKey: string;
+      instagramType: "p" | "reel" | "tv";
+    };
+
+/** Instagram gönderi, Reels ve eski IGTV bağlantılarını güvenli kimliğe çevirir. */
+export function extractInstagramSource(input: string): VideoSource | null {
+  const value = input.trim();
+  if (!value) return null;
+
+  let url: URL;
+  try {
+    url = new URL(value.startsWith("http") ? value : `https://${value}`);
+  } catch {
+    return null;
+  }
+
+  const host = url.hostname.toLowerCase().replace(/^www\./, "");
+  if (host !== "instagram.com") return null;
+
+  const match = url.pathname.match(/^\/(p|reel|reels|tv)\/([\w-]+)/i);
+  if (!match) return null;
+
+  const instagramType = match[1].toLowerCase() === "reels" ? "reel" : match[1].toLowerCase();
+  if (instagramType !== "p" && instagramType !== "reel" && instagramType !== "tv") {
+    return null;
+  }
+
+  const videoId = match[2];
+  return {
+    provider: "instagram",
+    videoId,
+    instagramType,
+    storageKey: `instagram:${instagramType}:${videoId}`,
+  };
+}
+
+/** Yönetim paneline yapıştırılan YouTube veya Instagram adresini ayrıştırır. */
+export function extractVideoSource(input: string): VideoSource | null {
+  const youtubeId = extractYoutubeId(input);
+  if (youtubeId) {
+    return {
+      provider: "youtube",
+      videoId: youtubeId,
+      storageKey: youtubeId,
+      instagramType: null,
+    };
+  }
+  return extractInstagramSource(input);
+}
+
 type VideoRow = {
   id: number;
   youtube_id: string;
@@ -77,9 +135,12 @@ type VideoRow = {
 };
 
 function toVideo(row: VideoRow): SiteVideo {
+  const instagram = row.youtube_id.match(/^instagram:(p|reel|tv):([\w-]+)$/);
   return {
     id: Number(row.id),
-    youtubeId: row.youtube_id,
+    provider: instagram ? "instagram" : "youtube",
+    videoId: instagram?.[2] ?? row.youtube_id,
+    instagramType: (instagram?.[1] as "p" | "reel" | "tv" | undefined) ?? null,
     title: row.title,
     description: row.description,
     category: row.category,
@@ -110,7 +171,7 @@ export async function listVideos(category?: string): Promise<SiteVideo[]> {
 }
 
 export async function createVideo(input: {
-  youtubeId: string;
+  sourceKey: string;
   title: string;
   description: string;
   category: string;
@@ -118,7 +179,7 @@ export async function createVideo(input: {
   const sql = getClient();
   const rows = (await sql`
     INSERT INTO videos (youtube_id, title, description, category)
-    VALUES (${input.youtubeId}, ${input.title}, ${input.description}, ${input.category})
+    VALUES (${input.sourceKey}, ${input.title}, ${input.description}, ${input.category})
     ON CONFLICT (youtube_id) DO UPDATE
       SET title = EXCLUDED.title,
           description = EXCLUDED.description,

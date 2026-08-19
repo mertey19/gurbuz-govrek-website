@@ -62,7 +62,7 @@ export function Header() {
                         />
                       </button>
                       <div className="pointer-events-none invisible absolute top-full left-1/2 z-50 w-[21rem] -translate-x-1/2 pt-3 opacity-0 transition duration-200 group-hover:pointer-events-auto group-hover:visible group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:visible group-focus-within:opacity-100">
-                        <div className="overflow-hidden rounded-sm border border-navy/10 bg-white p-2 text-navy shadow-[0_24px_70px_rgba(7,26,51,.24)]">
+                        <div className="max-h-[calc(100dvh-6.5rem)] overflow-y-auto overscroll-contain rounded-sm border border-navy/10 bg-white p-2 text-navy shadow-[0_24px_70px_rgba(7,26,51,.24)]">
                           <div className="border-b border-navy/8 px-4 py-3">
                             <p className="text-[10px] font-extrabold tracking-[0.17em] text-gold uppercase">
                               {group.label}

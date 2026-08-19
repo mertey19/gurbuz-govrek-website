@@ -220,7 +220,7 @@ export default function YksTercihleriNasilYapilirPage() {
         <p>
           Gürbüz Gövrek’in 2026 için tespitlerine göre genel kontenjanda dikkat çekici bir
           daralma var: sayısal puan türünde yaklaşık 9 bin, eşit ağırlıkta 12 bin, sözelde
-          16 bin ve dilde 3 bin civarında kontenjan azalması söz konusu. Bölüm bazında ise
+          6 bin ve dilde 3 bin civarında kontenjan azalması söz konusu. Bölüm bazında ise
           tıp fakültesi kontenjanı 85, diş hekimliği kontenjanı 761 azalmış durumda.
         </p>
         <p>

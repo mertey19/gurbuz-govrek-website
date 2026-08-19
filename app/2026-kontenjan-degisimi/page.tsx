@@ -16,7 +16,7 @@ import {
  */
 const title = "2026 YKS Kontenjan Değişimi: Hangi Alanda Ne Kadar Azaldı?";
 const description =
-  "2026 YKS kontenjanları sayısalda 9 bin, eşit ağırlıkta 12 bin, sözelde 16 bin, dilde 3 bin civarında azaldı. Tıp 85, diş hekimliği 761 kontenjan kaybetti. Bu değişimin sıralamalara etkisi.";
+  "2026 YKS kontenjanları sayısalda 9 bin, eşit ağırlıkta 12 bin, sözelde 6 bin, dilde 3 bin civarında azaldı. Tıp 85, diş hekimliği 761 kontenjan kaybetti. Bu değişimin sıralamalara etkisi.";
 const pageUrl = `${CANONICAL_SITE_URL}/2026-kontenjan-degisimi`;
 
 export const metadata: Metadata = {

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Loader2, Plus, Trash2 } from "lucide-react";
+import { FaInstagram } from "react-icons/fa6";
 
 /**
  * Video yönetim arayüzü.
@@ -11,7 +12,8 @@ import { Loader2, Plus, Trash2 } from "lucide-react";
  */
 type AdminVideo = {
   id: number;
-  youtubeId: string;
+  provider: "youtube" | "instagram";
+  videoId: string;
   title: string;
   description: string;
   category: string;
@@ -139,18 +141,18 @@ export function VideoAdmin() {
         <form onSubmit={handleSubmit} className="mt-6 grid gap-5">
           <div>
             <label htmlFor="video-url" className="block text-sm font-bold text-navy">
-              YouTube adresi
+              YouTube veya Instagram adresi
             </label>
             <input
               id="video-url"
               value={url}
               onChange={(event) => setUrl(event.target.value)}
               required
-              placeholder="https://www.youtube.com/watch?v=..."
+              placeholder="https://www.youtube.com/watch?v=... veya https://www.instagram.com/reel/..."
               className={FIELD}
             />
             <p className="mt-1.5 text-xs text-muted">
-              Adresi olduğu gibi yapıştırın; kısa bağlantı ve Shorts da kabul edilir.
+              Adresi olduğu gibi yapıştırın; YouTube Shorts ile Instagram gönderi ve Reels bağlantıları da kabul edilir.
             </p>
           </div>
 
@@ -250,19 +252,25 @@ export function VideoAdmin() {
                       YouTube küçük resmi harici CDN'den gelir ve yalnızca yönetim
                       panelinde, sabit 96x64 boyutunda kullanılır. next/image için
                       uzak kaynak yapılandırması açmak bu tek kullanım için gereksiz. */}
-                  <img
-                    src={`https://i.ytimg.com/vi/${video.youtubeId}/default.jpg`}
-                    alt=""
-                    width={120}
-                    height={90}
-                    className="h-16 w-24 shrink-0 rounded-sm object-cover"
-                  />
+                  {video.provider === "youtube" ? (
+                    <img
+                      src={`https://i.ytimg.com/vi/${video.videoId}/default.jpg`}
+                      alt=""
+                      width={120}
+                      height={90}
+                      className="h-16 w-24 shrink-0 rounded-sm object-cover"
+                    />
+                  ) : (
+                    <span className="flex h-16 w-24 shrink-0 items-center justify-center rounded-sm bg-gradient-to-br from-fuchsia-600 via-rose-500 to-amber-400 text-white">
+                      <FaInstagram className="size-7" aria-hidden="true" />
+                    </span>
+                  )}
                   <div className="min-w-0">
                     <p className="truncate text-sm font-bold text-navy">{video.title}</p>
                     <p className="mt-1 text-xs text-muted">
                       {CATEGORIES.find((item) => item.value === video.category)?.label ??
                         video.category}{" "}
-                      · {video.youtubeId}
+                      · {video.provider === "youtube" ? "YouTube" : "Instagram"} · {video.videoId}
                     </p>
                   </div>
                 </div>

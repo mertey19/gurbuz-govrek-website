@@ -3,7 +3,7 @@ import { isAdminRequest } from "@/lib/comment-auth";
 import {
   VIDEO_CATEGORIES,
   createVideo,
-  extractYoutubeId,
+  extractVideoSource,
   listVideos,
 } from "@/lib/videos/service";
 
@@ -40,11 +40,11 @@ export async function POST(request: NextRequest) {
   }
 
   const rawUrl = typeof payload.url === "string" ? payload.url : "";
-  const youtubeId = extractYoutubeId(rawUrl);
+  const source = extractVideoSource(rawUrl);
 
-  if (!youtubeId) {
+  if (!source) {
     return NextResponse.json(
-      { error: "YouTube adresi tanınmadı. Videonun bağlantısını yapıştırın." },
+      { error: "YouTube veya Instagram adresi tanınmadı. Paylaşım bağlantısını yapıştırın." },
       { status: 400 },
     );
   }
@@ -76,7 +76,12 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const video = await createVideo({ youtubeId, title, description, category });
+    const video = await createVideo({
+      sourceKey: source.storageKey,
+      title,
+      description,
+      category,
+    });
     return NextResponse.json({ video }, { status: 201 });
   } catch (error) {
     console.error("Video eklenemedi:", error);
