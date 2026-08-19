@@ -118,8 +118,13 @@ test("Gürbüz Gövrek ana sayfasını sunucu tarafında oluşturur", async () =
   assert.match(html, /115 meslek dosyası/i);
   assert.match(html, /5 kategori/i);
   assert.match(html, /Sunum ve Seminer Köşesi/i);
-  assert.match(html, /283(?:<!-- -->)? özgün görsel/i);
-  assert.match(html, /29(?:<!-- -->)? ayrı içerik serisi/i);
+  assert.match(html, /405(?:<!-- -->)? özgün görsel/i);
+  assert.match(html, /44(?:<!-- -->)? ayrı içerik serisi/i);
+  // Sunum köşesi meslek ve istatistik olmak üzere iki ayrı bölümde listeleniyor.
+  assert.match(html, /Meslekleri Tanıtan Slayt Serileri/i);
+  assert.match(html, /Tercih Verilerini Anlatan Slayt Serileri/i);
+  assert.match(html, /id="sunum-meslek"/i);
+  assert.match(html, /id="sunum-istatistik"/i);
   assert.match(html, /YKS Kontenjan Değişimi/i);
   assert.match(html, /YKS İstatistikleri/i);
   assert.match(html, /Seminer Slaytları/i);

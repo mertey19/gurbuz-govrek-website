@@ -29,6 +29,13 @@ export type PresentationCategory =
   | "universite-siralamalari"
   | "yks-tercih-rehberi-2026";
 
+/**
+ * Sunum köşesi iki ayrı bölüm hâlinde gösteriliyor: meslek tanıtım serileri ve
+ * veri/istatistik serileri. Panelden eklenen seriler grup taşımadığı için
+ * meslek bölümünde listelenir.
+ */
+export type PresentationGroup = "meslek" | "istatistik";
+
 export interface PresentationSlide {
   src: string;
   /**
@@ -47,6 +54,8 @@ export interface PresentationCollection {
     sağlarken serbest metne de izin verir.
   */
   id: PresentationCategory | (string & {});
+  /** Boş bırakılırsa meslek bölümünde gösterilir. */
+  group?: PresentationGroup;
   label: string;
   shortLabel: string;
   description: string;
@@ -91,6 +100,7 @@ function createNamedSlides(
 export const presentationCollections: readonly PresentationCollection[] = [
   {
     id: "kontenjan",
+    group: "istatistik",
     label: "YKS Kontenjan Değişimi",
     shortLabel: "Kontenjan",
     description:
@@ -109,6 +119,7 @@ export const presentationCollections: readonly PresentationCollection[] = [
   },
   {
     id: "yks-istatistikleri",
+    group: "istatistik",
     label: "YKS İstatistikleri",
     shortLabel: "İstatistikler",
     description:
@@ -129,6 +140,7 @@ export const presentationCollections: readonly PresentationCollection[] = [
   },
   {
     id: "seminer",
+    group: "istatistik",
     label: "Seminer Slaytları",
     shortLabel: "Seminer",
     description:
@@ -141,6 +153,7 @@ export const presentationCollections: readonly PresentationCollection[] = [
   },
   {
     id: "tuma",
+    group: "istatistik",
     label: "TÜMA 2025 Araştırması",
     shortLabel: "TÜMA 2025",
     description:
@@ -154,6 +167,7 @@ export const presentationCollections: readonly PresentationCollection[] = [
   },
   {
     id: "ucak-uzay",
+    group: "meslek",
     label: "Uçak ve Uzay Mühendisliği",
     shortLabel: "Uçak & Uzay",
     description:
@@ -166,6 +180,7 @@ export const presentationCollections: readonly PresentationCollection[] = [
   },
   {
     id: "endustri-isletme",
+    group: "meslek",
     label: "Endüstri ve İşletme Mühendisliği",
     shortLabel: "Endüstri & İşletme",
     description:
@@ -178,6 +193,7 @@ export const presentationCollections: readonly PresentationCollection[] = [
   },
   {
     id: "bilgisayar-yazilim",
+    group: "meslek",
     label: "Bilgisayar ve Yazılım Mühendisliği",
     shortLabel: "Bilgisayar & Yazılım",
     description:
@@ -190,6 +206,7 @@ export const presentationCollections: readonly PresentationCollection[] = [
   },
   {
     id: "bilgisayar-matematik",
+    group: "meslek",
     label: "Bilgisayar ve Matematik Mühendisliği",
     shortLabel: "Bilgisayar & Matematik",
     description:
@@ -202,6 +219,7 @@ export const presentationCollections: readonly PresentationCollection[] = [
   },
   {
     id: "makine-mekatronik",
+    group: "meslek",
     label: "Makine ve Mekatronik Mühendisliği",
     shortLabel: "Makine & Mekatronik",
     description:
@@ -214,6 +232,7 @@ export const presentationCollections: readonly PresentationCollection[] = [
   },
   {
     id: "mimarlik-insaat",
+    group: "meslek",
     label: "Mimarlık ve İnşaat Mühendisliği",
     shortLabel: "Mimarlık & İnşaat",
     description:
@@ -226,6 +245,7 @@ export const presentationCollections: readonly PresentationCollection[] = [
   },
   {
     id: "tip-dis",
+    group: "meslek",
     label: "Tıp ve Diş Hekimliği",
     shortLabel: "Tıp & Diş",
     description:
@@ -238,6 +258,7 @@ export const presentationCollections: readonly PresentationCollection[] = [
   },
   {
     id: "hukuk-psikoloji",
+    group: "meslek",
     label: "Hukuk ve Psikoloji",
     shortLabel: "Hukuk & Psikoloji",
     description:
@@ -250,6 +271,7 @@ export const presentationCollections: readonly PresentationCollection[] = [
   },
   {
     id: "ekonomi-isletme",
+    group: "meslek",
     label: "Çalışma Ekonomisi ve İşletme",
     shortLabel: "Ekonomi & İşletme",
     description:
@@ -262,6 +284,7 @@ export const presentationCollections: readonly PresentationCollection[] = [
   },
   {
     id: "molekuler-kimya-biyomuhendislik",
+    group: "meslek",
     label: "Moleküler Biyoloji ve Genetik & Kimya-Biyoloji Mühendisliği",
     shortLabel: "Moleküler & Kimya-Biyoloji",
     description:
@@ -274,6 +297,7 @@ export const presentationCollections: readonly PresentationCollection[] = [
   },
   {
     id: "siber-guvenlik-bilgi-guvenligi",
+    group: "meslek",
     label: "Siber Güvenlik ve Bilgi Güvenliği",
     shortLabel: "Siber & Bilgi Güvenliği",
     description:
@@ -286,6 +310,7 @@ export const presentationCollections: readonly PresentationCollection[] = [
   },
   {
     id: "bilisim-sistemleri-ybs",
+    group: "meslek",
     label: "Bilişim Sistemleri Mühendisliği ve Yönetim Bilişim Sistemleri",
     shortLabel: "Bilişim Sistemleri & YBS",
     description:
@@ -298,6 +323,7 @@ export const presentationCollections: readonly PresentationCollection[] = [
   },
   {
     id: "bitki-koruma-tarla-bitkileri",
+    group: "meslek",
     label: "Bitki Koruma ve Tarla Bitkileri",
     shortLabel: "Bitki Koruma & Tarla",
     description:
@@ -310,6 +336,7 @@ export const presentationCollections: readonly PresentationCollection[] = [
   },
   {
     id: "biyolog-kimyager",
+    group: "meslek",
     label: "Biyolog ve Kimyager",
     shortLabel: "Biyolog & Kimyager",
     description:
@@ -322,6 +349,7 @@ export const presentationCollections: readonly PresentationCollection[] = [
   },
   {
     id: "diyetisyen-eczaci",
+    group: "meslek",
     label: "Diyetisyenlik ve Eczacılık",
     shortLabel: "Diyetisyen & Eczacı",
     description:
@@ -334,6 +362,7 @@ export const presentationCollections: readonly PresentationCollection[] = [
   },
   {
     id: "pratisyen-hekim",
+    group: "meslek",
     label: "Pratisyen Hekimlik (Tıp Doktorluğu)",
     shortLabel: "Pratisyen Hekim",
     description:
@@ -357,6 +386,7 @@ export const presentationCollections: readonly PresentationCollection[] = [
   },
   {
     id: "bilgisayar-muhendisligi-kariyer",
+    group: "meslek",
     label: "Bilgisayar Mühendisliği Kariyer Haritası",
     shortLabel: "Bilgisayar Müh.",
     description:
@@ -380,6 +410,7 @@ export const presentationCollections: readonly PresentationCollection[] = [
   },
   {
     id: "elektrik-elektronik-muhendisligi",
+    group: "meslek",
     label: "Elektrik-Elektronik Mühendisliği",
     shortLabel: "Elektrik-Elektronik",
     description:
@@ -403,6 +434,7 @@ export const presentationCollections: readonly PresentationCollection[] = [
   },
   {
     id: "endustri-muhendisligi",
+    group: "meslek",
     label: "Endüstri Mühendisliği Kariyer Rehberi",
     shortLabel: "Endüstri Müh.",
     description:
@@ -426,6 +458,7 @@ export const presentationCollections: readonly PresentationCollection[] = [
   },
   {
     id: "kimya-muhendisligi",
+    group: "meslek",
     label: "Kimya Mühendisliği",
     shortLabel: "Kimya Müh.",
     description:
@@ -449,6 +482,7 @@ export const presentationCollections: readonly PresentationCollection[] = [
   },
   {
     id: "gemi-insaati-gemi-makineleri",
+    group: "meslek",
     label: "Gemi İnşaatı ve Gemi Makineleri Mühendisliği",
     shortLabel: "Gemi İnşaatı",
     description:
@@ -472,6 +506,7 @@ export const presentationCollections: readonly PresentationCollection[] = [
   },
   {
     id: "hukuk",
+    group: "meslek",
     label: "Hukuk Fakültesi ve Hukukçuluk",
     shortLabel: "Hukuk",
     description:
@@ -495,6 +530,7 @@ export const presentationCollections: readonly PresentationCollection[] = [
   },
   {
     id: "eczacilik",
+    group: "meslek",
     label: "Eczacılık Meslek Rehberi",
     shortLabel: "Eczacılık",
     description:
@@ -518,6 +554,7 @@ export const presentationCollections: readonly PresentationCollection[] = [
   },
   {
     id: "universite-siralamalari",
+    group: "istatistik",
     label: "Üniversite Sıralamaları ve Kalite Göstergeleri",
     shortLabel: "Üniversite Sıralamaları",
     description:
@@ -544,6 +581,7 @@ export const presentationCollections: readonly PresentationCollection[] = [
   },
   {
     id: "yks-tercih-rehberi-2026",
+    group: "istatistik",
     label: "2026 YKS Tercih Rehberi",
     shortLabel: "Tercih Rehberi",
     description:
@@ -563,6 +601,253 @@ export const presentationCollections: readonly PresentationCollection[] = [
         "Nihai Tercih Kontrol Paneli",
       ],
       "2026 YKS tercih rehberi sunumu",
+    ),
+  },
+  {
+    id: "biyomedikal-biyosistem",
+    group: "meslek",
+    label: "Biyomedikal ve Biyosistem Mühendisliği",
+    shortLabel: "Biyomedikal & Biyosistem",
+    description:
+      "Biyomedikal mühendisliği ile biyosistem mühendisliğinin çalışma alanlarını, ders içeriklerini ve mezuniyet sonrası kariyer seçeneklerini karşılaştıran 10 görsellik seri.",
+    slides: createSlides(
+      "biyomedikal-biyosistem",
+      "Biyomedikal ve Biyosistem Mühendisliği",
+      "Biyomedikal ve biyosistem mühendisliği tanıtım sunumu",
+    ),
+  },
+  {
+    id: "ebe-hemsire-fizyoterapi",
+    group: "meslek",
+    label: "Ebelik, Hemşirelik ve Fizyoterapi",
+    shortLabel: "Ebe & Hemşire",
+    description:
+      "Ebelik, hemşirelik ve fizyoterapi bölümlerinin eğitim süreçlerini, çalışma ortamlarını ve atama koşullarını karşılaştıran 10 görsellik seri.",
+    slides: createSlides(
+      "ebe-hemsire-fizyoterapi",
+      "Ebelik, Hemşirelik ve Fizyoterapi",
+      "Ebelik, hemşirelik ve fizyoterapi tanıtım sunumu",
+    ),
+  },
+  {
+    id: "ekonomi-finans-uzmanligi",
+    group: "meslek",
+    label: "Ekonomi ve Finans Uzmanlığı",
+    shortLabel: "Ekonomi & Finans",
+    description:
+      "Ekonomi ve finans alanındaki bölümleri, uzmanlık dallarını ve mezunların çalıştığı kurumları tanıtan 10 görsellik seri.",
+    slides: createSlides(
+      "ekonomi-finans-uzmanligi",
+      "Ekonomi ve Finans Uzmanlığı",
+      "Ekonomi ve finans uzmanlığı tanıtım sunumu",
+    ),
+  },
+  {
+    id: "fizyoterapi-ergoterapi",
+    group: "meslek",
+    label: "Fizyoterapi ve Ergoterapi",
+    shortLabel: "Fizyoterapi & Ergoterapi",
+    description:
+      "Fizyoterapi ve ergoterapi bölümlerinin farklarını, uygulama alanlarını ve mezuniyet sonrası çalışma seçeneklerini ele alan 10 görsellik seri.",
+    slides: createSlides(
+      "fizyoterapi-ergoterapi",
+      "Fizyoterapi ve Ergoterapi",
+      "Fizyoterapi ve ergoterapi tanıtım sunumu",
+    ),
+  },
+  {
+    id: "maden-malzeme-nano-teknoloji",
+    group: "meslek",
+    label: "Maden, Malzeme ve Nano Teknoloji Mühendisliği",
+    shortLabel: "Maden & Malzeme",
+    description:
+      "Maden mühendisliği ile malzeme ve nano teknoloji mühendisliğinin çalışma alanlarını, sektör beklentilerini ve kariyer yollarını tanıtan 10 görsellik seri.",
+    slides: createSlides(
+      "maden-malzeme-nano-teknoloji",
+      "Maden, Malzeme ve Nano Teknoloji Mühendisliği",
+      "Maden, malzeme ve nano teknoloji mühendisliği tanıtım sunumu",
+    ),
+  },
+  {
+    id: "mimarlik-peyzaj-mimarligi",
+    group: "meslek",
+    label: "Mimarlık ve Peyzaj Mimarlığı",
+    shortLabel: "Mimarlık & Peyzaj",
+    description:
+      "Mimarlık ve peyzaj mimarlığı bölümlerinin ders içeriklerini, tasarım süreçlerini ve mezunların çalışma alanlarını karşılaştıran 10 görsellik seri.",
+    slides: createSlides(
+      "mimarlik-peyzaj-mimarligi",
+      "Mimarlık ve Peyzaj Mimarlığı",
+      "Mimarlık ve peyzaj mimarlığı tanıtım sunumu",
+    ),
+  },
+  {
+    id: "optisyenlik-odyometri",
+    group: "meslek",
+    label: "Optisyenlik ve Odyometri",
+    shortLabel: "Optisyen & Odyometri",
+    description:
+      "Optisyenlik ve odyometri ön lisans programlarının eğitim içeriğini, çalışma alanlarını ve istihdam olanaklarını tanıtan 10 görsellik seri.",
+    slides: createSlides(
+      "optisyenlik-odyometri",
+      "Optisyenlik ve Odyometri",
+      "Optisyenlik ve odyometri tanıtım sunumu",
+    ),
+  },
+  {
+    id: "ucak-elektronik-govde-motor",
+    group: "meslek",
+    label: "Uçak Elektroniği, Gövde ve Motor",
+    shortLabel: "Uçak Elektronik & Gövde",
+    description:
+      "Uçak elektrik-elektroniği ile uçak gövde ve motor programlarının eğitim süreçlerini, sertifikasyon koşullarını ve havacılık sektöründeki kariyer yollarını tanıtan 10 görsellik seri.",
+    slides: createSlides(
+      "ucak-elektronik-govde-motor",
+      "Uçak Elektroniği, Gövde ve Motor",
+      "Uçak elektroniği, gövde ve motor tanıtım sunumu",
+    ),
+  },
+  {
+    id: "kontenjan-kiyas-sayisal",
+    group: "istatistik",
+    label: "Sayısal Kontenjan Kıyaslaması",
+    shortLabel: "Sayısal Kontenjan",
+    description:
+      "Sayısal puan türünde kontenjanı artan ve azalan bölümleri; mühendislik, sağlık ile yapay zekâ ve bilişim alanları üzerinden karşılaştıran 6 görsellik veri serisi.",
+    thumbnailFit: "contain",
+    slides: createNamedSlides(
+      "kontenjan-kiyas-sayisal",
+      [
+        "Sayısal Kontenjanı Artan Bölümler",
+        "Sayısal Kontenjanı Azalan Bölümler",
+        "Mühendislikte Kontenjanı Artan Bölümler",
+        "Mühendislikte Kontenjanı Azalan Bölümler",
+        "Sağlık Bölümlerinde Kontenjan Değişimi",
+        "Yapay Zekâ ve Bilişim Bölümlerinde Kontenjan",
+      ],
+      "Sayısal kontenjan kıyaslaması",
+    ),
+  },
+  {
+    id: "kontenjan-kiyas-esit-agirlik",
+    group: "istatistik",
+    label: "Eşit Ağırlık Kontenjan Kıyaslaması",
+    shortLabel: "EA Kontenjan",
+    description:
+      "Eşit ağırlık puan türünde kontenjanı artan ve azalan bölümleri; İİBF, eğitim ve turizm alanları üzerinden karşılaştıran 5 görsellik veri serisi.",
+    thumbnailFit: "contain",
+    slides: createNamedSlides(
+      "kontenjan-kiyas-esit-agirlik",
+      [
+        "Eşit Ağırlıkta Kontenjanı Artan Bölümler",
+        "Eşit Ağırlıkta Kontenjanı Azalan Bölümler",
+        "İİBF Bölümlerinde Kontenjan Değişimi",
+        "Eğitim Fakültelerinde Kontenjan Değişimi",
+        "Turizm Bölümlerinde Kontenjan Değişimi",
+      ],
+      "Eşit ağırlık kontenjan kıyaslaması",
+    ),
+  },
+  {
+    id: "kontenjan-kiyas-sozel",
+    group: "istatistik",
+    label: "Sözel Kontenjan Kıyaslaması",
+    shortLabel: "Sözel Kontenjan",
+    description:
+      "Sözel puan türünde kontenjanı artan ve azalan bölümleri; eğitim, fen-edebiyat, iletişim ile radyo-televizyon ve sinema alanları üzerinden karşılaştıran 6 görsellik veri serisi.",
+    thumbnailFit: "contain",
+    slides: createNamedSlides(
+      "kontenjan-kiyas-sozel",
+      [
+        "Sözelde Kontenjanı Artan Bölümler",
+        "Sözelde Kontenjanı Azalan Bölümler",
+        "Eğitim Fakültelerinde Kontenjan Değişimi",
+        "Fen-Edebiyat Bölümlerinde Kontenjan Değişimi",
+        "İletişim Bölümlerinde Kontenjan Değişimi",
+        "Radyo, Televizyon ve Sinemada Kontenjan",
+      ],
+      "Sözel kontenjan kıyaslaması",
+    ),
+  },
+  {
+    id: "sayisal-veriler-2026",
+    group: "istatistik",
+    label: "2026 Sayısal Veriler",
+    shortLabel: "2026 Veriler",
+    description:
+      "2026 YKS tahminleri, test ortalamaları, kontenjan yorumu, devlet üniversitelerinin son puanları, yeni açılan lisans ve ön lisans bölümleri ile YÖK bursunu bir araya getiren 13 görsellik veri serisi.",
+    thumbnailFit: "contain",
+    slides: createNamedSlides(
+      "sayisal-veriler-2026",
+      [
+        "2026 YKS Tahminleri",
+        "2026 YKS Test Ortalamaları",
+        "2026 YKS Kontenjan Yorumu",
+        "Devlet Üniversiteleri Son Puanlar: Sayısal I",
+        "Devlet Üniversiteleri Son Puanlar: Sayısal II",
+        "Devlet Üniversiteleri Son Puanlar: EA, Sözel ve Dil",
+        "2026 Yeni Açılan Lisans Bölümleri",
+        "2026 Yeni Açılan Ön Lisans Bölümleri",
+        "2025 Yeni Açılan Ön Lisans Bölümleri",
+        "Önü Açık Ön Lisans Programları",
+        "Sağlık Ön Lisans Atama Puanları",
+        "YÖK Bursu",
+        "Meslek Seçiminde 10 Kriter",
+      ],
+      "2026 YKS sayısal veriler sunumu",
+    ),
+  },
+  {
+    id: "sira-tahmini",
+    group: "istatistik",
+    label: "Başarı Sırası Tahminleri",
+    shortLabel: "Sıra Tahmini",
+    description:
+      "2025 ve 2026 yılları için sayısal ve eşit ağırlık puan türlerinde başarı sırası tahminlerini karşılaştıran 4 görsellik veri serisi.",
+    thumbnailFit: "contain",
+    slides: createNamedSlides(
+      "sira-tahmini",
+      [
+        "2026 Sayısal Başarı Sırası Tahmini",
+        "2026 Eşit Ağırlık Başarı Sırası Tahmini",
+        "2025 Sayısal Başarı Sırası",
+        "2025 Eşit Ağırlık Başarı Sırası",
+      ],
+      "Başarı sırası tahmini",
+    ),
+  },
+  {
+    id: "tip-kiyaslama",
+    group: "istatistik",
+    label: "Tıp Fakültesi Kıyaslaması",
+    shortLabel: "Tıp Kıyas",
+    description:
+      "Tıp fakültelerini kontenjan, sıralama ve tercih eğilimleri üzerinden karşılaştıran 3 görsellik veri serisi.",
+    thumbnailFit: "contain",
+    slides: createNamedSlides(
+      "tip-kiyaslama",
+      ["Tıp Fakültesi Kıyaslaması I", "Tıp Fakültesi Kıyaslaması II", "Tıp Fakültesi Kıyaslaması III"],
+      "Tıp fakültesi kıyaslaması",
+    ),
+  },
+  {
+    id: "urap-kiyaslama",
+    group: "istatistik",
+    label: "URAP Kıyaslaması",
+    shortLabel: "URAP Kıyas",
+    description:
+      "URAP verileriyle üniversiteleri genel sıralama, genel memnuniyet ve öğrenim deneyimi memnuniyeti üzerinden; tıp fakültesi olan ve olmayan kurumlar ayrımıyla karşılaştıran 5 görsellik veri serisi.",
+    thumbnailFit: "contain",
+    slides: createNamedSlides(
+      "urap-kiyaslama",
+      [
+        "URAP Genel Sıralama",
+        "Genel Memnuniyet",
+        "Öğrenim Deneyimi Memnuniyeti",
+        "Tıp Fakültesi Olan Üniversiteler",
+        "Tıp Fakültesi Olmayan Üniversiteler",
+      ],
+      "URAP kıyaslaması",
     ),
   },
 ];
