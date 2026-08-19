@@ -14,9 +14,15 @@ import {
 import { useFocusTrap } from "@/hooks/useFocusTrap";
 
 /**
+ * Sunum köşesi.
+ *
  * Seriler iki kaynaktan gelir: koddakiler ve panelden yayımlananlar. Panel
  * serileri sunucuda okunup buraya geçirilir; bileşen istemci tarafında olduğu
  * için veritabanına kendisi erişemez.
+ *
+ * Meslek tanıtımları ve veri serileri ayrı bölümlerde listeleniyor; tek bir
+ * sekme şeridinde kırk üzeri seri yan yana duruyordu ve aradığını bulmak
+ * zorlaşmıştı.
  */
 export function PresentationCorner({
   extraCollections = [],
@@ -28,31 +34,96 @@ export function PresentationCorner({
     presentationSlideCount +
     extraCollections.reduce((total, item) => total + item.slides.length, 0);
 
-  // Kimlikler artık sabit birlik değil; panel serileri serbest slug taşıyor.
-  const [category, setCategory] = useState<string>("kontenjan");
+  // Panelden eklenen seriler grup taşımıyor; meslek bölümünde listeleniyorlar.
+  const meslekSerileri = collections.filter(
+    (collection) => (collection.group ?? "meslek") === "meslek",
+  );
+  const istatistikSerileri = collections.filter(
+    (collection) => collection.group === "istatistik",
+  );
+
+  return (
+    <section id="sunum-kosesi" className="section-space overflow-hidden bg-navy">
+      <Container>
+        <Reveal>
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-end">
+            <SectionTitle
+              eyebrow="Sunum ve Seminer Köşesi"
+              title="Meslekleri ve Tercih Sürecini Görsellerle Keşfedin"
+              description="Meslek tanıtımları ve tercih verileri ayrı bölümlerde toplandı; ayrıntıları okumak için dilediğiniz görseli büyütün."
+              tone="light"
+            />
+            <div className="rounded-sm border border-white/12 bg-white/[.055] p-5 text-white">
+              <div className="flex items-center gap-3">
+                <span className="flex size-11 items-center justify-center rounded-full bg-gold text-navy">
+                  <Images className="size-5" aria-hidden="true" />
+                </span>
+                <div>
+                  <p className="font-serif text-2xl font-semibold">{slideCount} özgün görsel</p>
+                  <p className="mt-0.5 text-xs text-white/52">{collections.length} ayrı içerik serisi</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Reveal>
+
+        <PresentationGroupBlock
+          anchor="sunum-meslek"
+          eyebrow="Meslek Tanıtımları"
+          heading="Meslekleri Tanıtan Slayt Serileri"
+          collections={meslekSerileri}
+        />
+
+        <PresentationGroupBlock
+          anchor="sunum-istatistik"
+          eyebrow="İstatistik ve Veriler"
+          heading="Tercih Verilerini Anlatan Slayt Serileri"
+          collections={istatistikSerileri}
+        />
+      </Container>
+    </section>
+  );
+}
+
+/**
+ * Tek bir grubun sekme şeridi, ızgarası ve büyütme penceresi. Gruplar birbirinden
+ * bağımsız: birinde seri değiştirmek diğerini etkilemiyor.
+ */
+function PresentationGroupBlock({
+  anchor,
+  eyebrow,
+  heading,
+  collections,
+}: {
+  anchor: string;
+  eyebrow: string;
+  heading: string;
+  collections: readonly PresentationCollection[];
+}) {
+  const [category, setCategory] = useState<string>(collections[0]?.id ?? "");
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
+
   const activeCollection =
     collections.find((collection) => collection.id === category) ?? collections[0];
+
   const close = useCallback(() => setActiveIndex(null), []);
+  const slideTotal = activeCollection?.slides.length ?? 0;
   const previous = useCallback(
     () =>
       setActiveIndex((current) =>
-        current === null
+        current === null || slideTotal === 0
           ? null
-          : (current - 1 + activeCollection.slides.length) %
-            activeCollection.slides.length,
+          : (current - 1 + slideTotal) % slideTotal,
       ),
-    [activeCollection.slides.length],
+    [slideTotal],
   );
   const next = useCallback(
     () =>
       setActiveIndex((current) =>
-        current === null
-          ? null
-          : (current + 1) % activeCollection.slides.length,
+        current === null || slideTotal === 0 ? null : (current + 1) % slideTotal,
       ),
-    [activeCollection.slides.length],
+    [slideTotal],
   );
 
   useFocusTrap(dialogRef, activeIndex !== null, close);
@@ -74,6 +145,8 @@ export function PresentationCorner({
     };
   }, [activeIndex, next, previous]);
 
+  if (!activeCollection) return null;
+
   const selectCategory = (nextCategory: string) => {
     setCategory(nextCategory);
     setActiveIndex(null);
@@ -83,126 +156,117 @@ export function PresentationCorner({
     activeIndex === null ? null : activeCollection.slides[activeIndex];
 
   return (
-    <section id="sunum-kosesi" className="section-space overflow-hidden bg-navy">
-      <Container>
-        <Reveal>
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-end">
-            <SectionTitle
-              eyebrow="Sunum ve Seminer Köşesi"
-              title="Meslekleri ve Tercih Sürecini Görsellerle Keşfedin"
-              description="Hazırlanan slayt serilerini konu başlığına göre inceleyin; ayrıntıları okumak için dilediğiniz görseli büyütün."
-              tone="light"
-            />
-            <div className="rounded-sm border border-white/12 bg-white/[.055] p-5 text-white">
-              <div className="flex items-center gap-3">
-                <span className="flex size-11 items-center justify-center rounded-full bg-gold text-navy">
-                  <Images className="size-5" aria-hidden="true" />
-                </span>
-                <div>
-                  <p className="font-serif text-2xl font-semibold">{slideCount} özgün görsel</p>
-                  <p className="mt-0.5 text-xs text-white/52">{collections.length} ayrı içerik serisi</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.05} className="mt-10">
-          <label className="block md:hidden" htmlFor="sunum-serisi">
-            <span className="mb-2 block text-[10px] font-bold tracking-[.18em] text-gold-light uppercase">İçerik serisini seçin</span>
-            <select
-              id="sunum-serisi"
-              value={category}
-              onChange={(event) => selectCategory(event.target.value)}
-              className="h-14 w-full rounded-sm border border-white/15 bg-white px-4 text-sm font-bold text-navy outline-none focus:border-gold focus:ring-2 focus:ring-gold/25"
-            >
-              {collections.map((collection) => (
-                <option key={collection.id} value={collection.id}>
-                  {collection.label} · {collection.slides.length} görsel
-                </option>
-              ))}
-            </select>
-          </label>
-          <div
-            className="hidden gap-2 rounded-sm border border-white/10 bg-white/[.045] p-2 md:grid md:grid-cols-3 xl:grid-cols-5"
-            role="tablist"
-            aria-label="Sunum kategorileri"
-          >
-            {collections.map((collection) => {
-              const active = collection.id === category;
-              return (
-                <button
-                  key={collection.id}
-                  id={`sunum-tab-${collection.id}`}
-                  type="button"
-                  role="tab"
-                  aria-selected={active}
-                  aria-controls="sunum-panel"
-                  onClick={() => selectCategory(collection.id)}
-                  className={`min-h-14 rounded-sm px-4 py-3 text-sm font-bold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold ${
-                    active
-                      ? "bg-gold text-navy shadow-lg"
-                      : "text-white/68 hover:bg-white/8 hover:text-white"
-                  }`}
-                >
-                  <span className="hidden xl:inline">{collection.label}</span>
-                  <span className="xl:hidden">{collection.shortLabel}</span>
-                  <span className={active ? "text-navy/55" : "text-gold-light/72"}> · {collection.slides.length}</span>
-                </button>
-              );
-            })}
-          </div>
-        </Reveal>
-
-        <div
-          id="sunum-panel"
-          role="tabpanel"
-          aria-label={activeCollection.label}
-          className="mt-9"
-        >
-          <div className="flex flex-col gap-2 border-b border-white/12 pb-6 sm:flex-row sm:items-end sm:justify-between sm:gap-8">
-            <div>
-              <p className="text-[10px] font-bold tracking-[.18em] text-gold-light uppercase">Seçili seri</p>
-              <h3 className="mt-2 font-serif text-2xl font-semibold text-white sm:text-3xl">
-                {activeCollection.label}
-              </h3>
-            </div>
-            <p className="max-w-xl text-sm leading-6 text-white/55">
-              {activeCollection.description}
-            </p>
-          </div>
-
-          <div className="mt-6 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-            {activeCollection.slides.map((slide, index) => (
-              <button
-                key={slide.src}
-                type="button"
-                onClick={() => setActiveIndex(index)}
-                className="group relative aspect-square overflow-hidden rounded-sm border border-white/10 bg-white text-left shadow-[0_14px_35px_rgba(0,0,0,.16)] transition hover:-translate-y-1 hover:border-gold/70 hover:shadow-[0_20px_45px_rgba(0,0,0,.28)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
-                aria-label={`${slide.title} görselini büyüt`}
-              >
-                <Image
-                  src={slide.thumb}
-                  alt={slide.alt}
-                  fill
-                  sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
-                  className={`transition duration-500 group-hover:scale-[1.025] ${
-                    activeCollection.thumbnailFit === "contain"
-                      ? "object-contain p-1"
-                      : "object-cover"
-                  }`}
-                />
-                <span className="absolute top-3 left-3 rounded-full bg-navy/88 px-2.5 py-1 text-[10px] font-bold tracking-wider text-white backdrop-blur">
-                  {index + 1} / {activeCollection.slides.length}
-                </span>
-                <span className="absolute right-3 bottom-3 flex size-9 items-center justify-center rounded-full bg-navy/85 text-gold-light opacity-0 shadow-lg transition group-hover:opacity-100 group-focus-visible:opacity-100">
-                  <Expand className="size-4" aria-hidden="true" />
-                </span>
-              </button>
-            ))}
-          </div>
+    <div id={anchor} className="scroll-mt-24 pt-14 first-of-type:pt-10">
+      <Reveal>
+        <div className="border-t border-white/12 pt-10">
+          <p className="text-[10px] font-bold tracking-[.18em] text-gold-light uppercase">
+            {eyebrow}
+          </p>
+          <h3 className="mt-3 font-serif text-3xl font-semibold text-white sm:text-4xl">
+            {heading}
+          </h3>
+          <p className="mt-3 text-sm text-white/52">
+            {collections.length} seri ·{" "}
+            {collections.reduce((total, item) => total + item.slides.length, 0)} görsel
+          </p>
         </div>
-      </Container>
+      </Reveal>
+
+      <Reveal delay={0.05} className="mt-8">
+        <label className="block md:hidden" htmlFor={`${anchor}-secim`}>
+          <span className="mb-2 block text-[10px] font-bold tracking-[.18em] text-gold-light uppercase">İçerik serisini seçin</span>
+          <select
+            id={`${anchor}-secim`}
+            value={category}
+            onChange={(event) => selectCategory(event.target.value)}
+            className="h-14 w-full rounded-sm border border-white/15 bg-white px-4 text-sm font-bold text-navy outline-none focus:border-gold focus:ring-2 focus:ring-gold/25"
+          >
+            {collections.map((collection) => (
+              <option key={collection.id} value={collection.id}>
+                {collection.label} · {collection.slides.length} görsel
+              </option>
+            ))}
+          </select>
+        </label>
+        <div
+          className="hidden gap-2 rounded-sm border border-white/10 bg-white/[.045] p-2 md:grid md:grid-cols-3 xl:grid-cols-5"
+          role="tablist"
+          aria-label={`${eyebrow} kategorileri`}
+        >
+          {collections.map((collection) => {
+            const active = collection.id === category;
+            return (
+              <button
+                key={collection.id}
+                id={`sunum-tab-${collection.id}`}
+                type="button"
+                role="tab"
+                aria-selected={active}
+                aria-controls={`${anchor}-panel`}
+                onClick={() => selectCategory(collection.id)}
+                className={`min-h-14 rounded-sm px-4 py-3 text-sm font-bold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold ${
+                  active
+                    ? "bg-gold text-navy shadow-lg"
+                    : "text-white/68 hover:bg-white/8 hover:text-white"
+                }`}
+              >
+                <span className="hidden xl:inline">{collection.label}</span>
+                <span className="xl:hidden">{collection.shortLabel}</span>
+                <span className={active ? "text-navy/55" : "text-gold-light/72"}> · {collection.slides.length}</span>
+              </button>
+            );
+          })}
+        </div>
+      </Reveal>
+
+      <div
+        id={`${anchor}-panel`}
+        role="tabpanel"
+        aria-label={activeCollection.label}
+        className="mt-9"
+      >
+        <div className="flex flex-col gap-2 border-b border-white/12 pb-6 sm:flex-row sm:items-end sm:justify-between sm:gap-8">
+          <div>
+            <p className="text-[10px] font-bold tracking-[.18em] text-gold-light uppercase">Seçili seri</p>
+            <h4 className="mt-2 font-serif text-2xl font-semibold text-white sm:text-3xl">
+              {activeCollection.label}
+            </h4>
+          </div>
+          <p className="max-w-xl text-sm leading-6 text-white/55">
+            {activeCollection.description}
+          </p>
+        </div>
+
+        <div className="mt-6 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          {activeCollection.slides.map((slide, index) => (
+            <button
+              key={slide.src}
+              type="button"
+              onClick={() => setActiveIndex(index)}
+              className="group relative aspect-square overflow-hidden rounded-sm border border-white/10 bg-white text-left shadow-[0_14px_35px_rgba(0,0,0,.16)] transition hover:-translate-y-1 hover:border-gold/70 hover:shadow-[0_20px_45px_rgba(0,0,0,.28)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
+              aria-label={`${slide.title} görselini büyüt`}
+            >
+              <Image
+                src={slide.thumb}
+                alt={slide.alt}
+                fill
+                sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                className={`transition duration-500 group-hover:scale-[1.025] ${
+                  activeCollection.thumbnailFit === "contain"
+                    ? "object-contain p-1"
+                    : "object-cover"
+                }`}
+              />
+              <span className="absolute top-3 left-3 rounded-full bg-navy/88 px-2.5 py-1 text-[10px] font-bold tracking-wider text-white backdrop-blur">
+                {index + 1} / {activeCollection.slides.length}
+              </span>
+              <span className="absolute right-3 bottom-3 flex size-9 items-center justify-center rounded-full bg-navy/85 text-gold-light opacity-0 shadow-lg transition group-hover:opacity-100 group-focus-visible:opacity-100">
+                <Expand className="size-4" aria-hidden="true" />
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
 
       {activeSlide && activeIndex !== null && (
         <div
@@ -214,7 +278,7 @@ export function PresentationCorner({
             ref={dialogRef}
             role="dialog"
             aria-modal="true"
-            aria-labelledby="sunum-dialog-title"
+            aria-labelledby={`${anchor}-dialog-title`}
             className="landscape-dialog relative block max-h-[calc(100dvh-1.5rem)] w-full max-w-6xl overflow-y-auto rounded-sm bg-navy shadow-2xl sm:max-h-[calc(100dvh-3rem)] lg:grid lg:grid-cols-[minmax(0,1fr)_320px] lg:overflow-hidden"
           >
             <div className="landscape-dialog-media relative aspect-square min-h-0 bg-white lg:h-[min(84vh,860px)]">
@@ -252,8 +316,8 @@ export function PresentationCorner({
               >
                 <X aria-hidden="true" />
               </button>
-              <p className="eyebrow">Sunum köşesi</p>
-              <h2 id="sunum-dialog-title" className="mt-3 font-serif text-3xl font-semibold">
+              <p className="eyebrow">{eyebrow}</p>
+              <h2 id={`${anchor}-dialog-title`} className="mt-3 font-serif text-3xl font-semibold">
                 {activeCollection.label}
               </h2>
               <p className="mt-4 text-sm leading-7 text-white/58">
@@ -266,6 +330,6 @@ export function PresentationCorner({
           </div>
         </div>
       )}
-    </section>
+    </div>
   );
 }
