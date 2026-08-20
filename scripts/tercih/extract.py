@@ -20,49 +20,53 @@ OUTPUT = os.path.join("tmp", "tercih-programs.jsonl")
 
 # (sayfa adı, seviye, sütun indeksleri) — iki sayfanın sütun düzeni farklı.
 SHEETS = {
-    # Güncel LİSANS düzeni (çok yıllı sıralama ve kontenjan sütunları).
-    # Sıralama olarak 2025 yerleşme sırası, kontenjan olarak 2026 kontenjanı alınır;
-    # tercih bu ikisiyle yapılır. PUAN sütunu bu sürümde bulunmuyor.
+    # 2026 "YENİ SON" düzeni. İki sayfa da aynı 16 sütunu taşır:
+    # KOD, TÜR, İL, ÜNİVERSİTE, BÖLÜM, TÜR(puan), 2026 PUAN, SIRA DEĞİŞİMİ,
+    # 2026/2025/2024/2023 SIRA, 2026/2025/2024/2023 KONT.
+    # Fakülte, süre, koşullar, akademik kadro, akreditasyon ve TUS/DUS
+    # sütunları bu sürümde yok; robot da bu alanları göstermiyor.
     "LİSANS": {
         "level": "lisans",
         "cols": {
             "program_code": 0, "kind": 1, "city": 2, "university": 3,
-            "faculty": 4, "department": 5, "duration": 6, "score_type": 7,
-            "rank": 8, "rank_2024": 9, "rank_2023": 10, "rank_2022": 11,
+            "department": 4, "score_type": 5, "score": 6,
+            "rank": 8, "rank_2025": 9, "rank_2024": 10, "rank_2023": 11,
             "quota": 12, "quota_2025": 13, "quota_2024": 14, "quota_2023": 15,
-            "conditions": 16, "school_first": 17,
-            "prof": 21, "doctor": 22, "lecturers": 23,
-            "accredited": 24, "tus": 25, "dus": 26,
         },
     },
-    # Güncellenmiş dosyada sayfa "TABLO 4" olarak adlandırılmış, başa bir SR
-    # (sıra no) sütunu eklenmiş ve ŞEHİR sütunu kaldırılmıştır. Şehir bilgisi
-    # yükleme sırasında program kodu üzerinden eşleştirilerek korunur.
-    "TABLO 4": {
-        "level": "lisans",
-        "cols": {
-            "program_code": 1, "kind": 2, "university": 3,
-            "faculty": 4, "department": 5, "duration": 6, "score_type": 7,
-            "rank": 8, "score": 9, "quota": 10, "school_first": 11,
-            "conditions": 15, "prof": 16, "doctor": 17, "lecturers": 18,
-            "accredited": 19, "tus": 20, "dus": 21,
-        },
-    },
-    # "SON" sürümünde ÖNLİSANS düzeni değişti: SÜRE ve TÜR sütunları kalktı,
-    # yerine yıllara göre sıralama ve kontenjan geldi. Önlisans programlarının
-    # puan türü zaten her zaman TYT olduğu için sütun yerine sabit veriliyor.
+    # Önlisans programlarının puan türü her zaman TYT olduğu için sayfada
+    # ayrı bir sütun yok; sabit veriliyor.
     "ÖNLİSANS": {
         "level": "onlisans",
         "default_score_type": "TYT",
         "cols": {
             "program_code": 0, "kind": 1, "city": 2, "university": 3,
-            "faculty": 4, "department": 5,
-            "score": 6, "rank": 7, "rank_2024": 8, "rank_2023": 9,
-            "quota": 10, "quota_2025": 11, "school_first": 12,
-            "conditions": 15,
+            "department": 4, "score": 6,
+            "rank": 8, "rank_2025": 9, "rank_2024": 10, "rank_2023": 11,
+            "quota": 12, "quota_2025": 13, "quota_2024": 14, "quota_2023": 15,
         },
     },
 }
+
+# Sütun düzeni yıldan yıla değişiyor. Yanlış sütundan okumak sessizce bozuk veri
+# üretir; bu yüzden başlık satırı beklenenle karşılaştırılır.
+EXPECTED_HEADERS = [
+    "KOD", "TÜR", "İL", "ÜNİVERSİTE", "BÖLÜM", "TÜR", "2026 PUAN",
+    "SIRA DEĞİŞİMİ", "2026 SIRA", "2025 SIRA", "2024 SIRA", "2023 SIRA",
+    "2026 KONT", "2025 KONT", "2024 KONT", "2023 KONT",
+]
+
+
+def check_headers(sheet, sheet_name):
+    header = next(sheet.iter_rows(min_row=1, max_row=1, values_only=True), ())
+    actual = [clean_text(cell) or "" for cell in header][: len(EXPECTED_HEADERS)]
+    if actual != EXPECTED_HEADERS:
+        print(f"HATA: {sheet_name} sayfasının sütun düzeni beklenenden farklı.")
+        for i, (bekl, olan) in enumerate(zip(EXPECTED_HEADERS, actual)):
+            if bekl != olan:
+                print(f"  sütun {i}: beklenen {bekl!r}, gelen {olan!r}")
+        return False
+    return True
 
 
 def clean_text(value):
@@ -117,6 +121,8 @@ def main():
                 continue
 
             sheet = workbook[sheet_name]
+            if not check_headers(sheet, sheet_name):
+                return 1
             cols = config["cols"]
 
             for row in sheet.iter_rows(min_row=2, values_only=True):
@@ -146,28 +152,19 @@ def main():
                     "kind": clean_text(cell("kind")),
                     "city": clean_text(cell("city")),
                     "university": clean_text(cell("university")),
-                    "faculty": clean_text(cell("faculty")),
                     "department": clean_text(cell("department")),
-                    "duration": to_int(cell("duration")),
                     "score_type": score_type.upper(),
+                    # rank ve quota daima 2026 verisidir; tercih bu ikisiyle yapılır.
                     "rank": rank,
                     "score": to_float(cell("score")),
                     "quota": to_int(cell("quota")),
-                    # Geçmiş yıl sütunları yalnızca güncel LİSANS düzeninde var;
-                    # diğer sayfalarda None kalır.
+                    # Geçmiş yıllar trend gösterimi için tutulur; veri yoksa None.
+                    "rank_2025": to_int(cell("rank_2025")),
                     "rank_2024": to_int(cell("rank_2024")),
                     "rank_2023": to_int(cell("rank_2023")),
-                    "rank_2022": to_int(cell("rank_2022")),
                     "quota_2025": to_int(cell("quota_2025")),
                     "quota_2024": to_int(cell("quota_2024")),
                     "quota_2023": to_int(cell("quota_2023")),
-                    "conditions": clean_text(cell("conditions")),
-                    "prof": to_int(cell("prof")),
-                    "doctor": to_int(cell("doctor")),
-                    "lecturers": to_int(cell("lecturers")),
-                    "accredited": clean_text(cell("accredited")),
-                    "tus": clean_text(cell("tus")),
-                    "dus": clean_text(cell("dus")),
                 }
 
                 out.write(json.dumps(record, ensure_ascii=False) + "\n")

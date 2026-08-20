@@ -56,27 +56,18 @@ function getSql() {
 type ProgramRow = {
   program_code: string | null;
   university: string;
-  faculty: string | null;
   department: string;
   city: string;
   kind: string;
-  duration: number | null;
   rank: number;
+  rank_2025: number | null;
   rank_2024: number | null;
   rank_2023: number | null;
-  rank_2022: number | null;
   score: string | number | null;
   quota: number | null;
   quota_2025: number | null;
   quota_2024: number | null;
   quota_2023: number | null;
-  prof: number | null;
-  doctor: number | null;
-  lecturers: number | null;
-  accredited: string | null;
-  tus: string | null;
-  dus: string | null;
-  conditions: string | null;
 };
 
 /**
@@ -165,10 +156,9 @@ export async function queryRobot(
 
   const programRows = (await sql`
     SELECT
-      program_code, university, faculty, department, city, kind, duration,
-      rank, rank_2024, rank_2023, rank_2022,
-      score, quota, quota_2025, quota_2024, quota_2023,
-      prof, doctor, lecturers, accredited, tus, dus, conditions
+      program_code, university, department, city, kind,
+      rank, rank_2025, rank_2024, rank_2023,
+      score, quota, quota_2025, quota_2024, quota_2023
     FROM tercih_programs
     WHERE level = ${level}
       AND score_type = ${scoreType}
@@ -183,28 +173,19 @@ export async function queryRobot(
   const programs: Program[] = programRows.map((row) => ({
     programCode: row.program_code,
     university: row.university,
-    faculty: row.faculty,
     department: row.department,
     city: row.city,
     kind: row.kind,
-    duration: row.duration,
     rank: row.rank,
+    rank2025: row.rank_2025,
     rank2024: row.rank_2024,
     rank2023: row.rank_2023,
-    rank2022: row.rank_2022,
     // NUMERIC sütunu sürücüden metin olarak gelebilir.
     score: row.score === null ? null : Number(row.score),
     quota: row.quota,
     quota2025: row.quota_2025,
     quota2024: row.quota_2024,
     quota2023: row.quota_2023,
-    prof: row.prof,
-    doctor: row.doctor,
-    lecturers: row.lecturers,
-    accredited: row.accredited,
-    tus: row.tus,
-    dus: row.dus,
-    conditions: row.conditions,
   }));
 
   const summary = summaryRows[0];

@@ -139,7 +139,7 @@ export default function KontenjanDegisimiPage() {
                 Tercih robotunda
               </Link>{" "}
               puan türünüzü ve başarı sıranızı girdiğinizde, size uyan programların 2023–2026
-              kontenjan değişimini ve 2022–2025 sıralama seyrini yan yana görebilirsiniz.
+              kontenjan değişimini ve 2023–2026 sıralama seyrini yan yana görebilirsiniz.
             </p>
 
             <div className="mt-7 rounded-sm border border-navy/12 bg-navy p-7 text-white sm:p-8">

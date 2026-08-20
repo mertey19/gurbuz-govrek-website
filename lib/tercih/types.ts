@@ -22,35 +22,33 @@ export const INSTITUTION_KINDS = [
 ] as const;
 
 /** Tabloda gösterilen geçmiş yıllar. Veri eksikse hücre boş kalır. */
-export const RANK_YEARS = [2025, 2024, 2023, 2022] as const;
+export const RANK_YEARS = [2026, 2025, 2024, 2023] as const;
 export const QUOTA_YEARS = [2026, 2025, 2024, 2023] as const;
 
+/**
+ * Kaynak Excel 2026 sürümünde sadeleşti: fakülte, öğrenim süresi, koşullar,
+ * akademik kadro sayıları, akreditasyon ve TUS/DUS sütunları kaldırıldı.
+ * Bu alanlar arayüzden de çıkarıldı; veri olmadan boş hücre göstermek yerine
+ * sütunun tamamı kaldırıldı.
+ */
 export type Program = {
   programCode: string | null;
   university: string;
-  faculty: string | null;
   department: string;
   city: string;
   kind: string;
-  duration: number | null;
-  /** 2025 yerleşme sırası. */
+  /** 2026 yerleşme sırası. */
   rank: number;
+  rank2025: number | null;
   rank2024: number | null;
   rank2023: number | null;
-  rank2022: number | null;
+  /** 2026 yerleştirme puanı. */
   score: number | null;
   /** 2026 kontenjanı. */
   quota: number | null;
   quota2025: number | null;
   quota2024: number | null;
   quota2023: number | null;
-  prof: number | null;
-  doctor: number | null;
-  lecturers: number | null;
-  accredited: string | null;
-  tus: string | null;
-  dus: string | null;
-  conditions: string | null;
 };
 
 /** Boş dizi "filtre yok" anlamına gelir. */
@@ -85,10 +83,10 @@ export function isRobotScoreType(value: unknown): value is RobotScoreType {
 
 /** Sıralamayı bir programın ilgili yılına göre okur. */
 export function rankForYear(program: Program, year: number): number | null {
-  if (year === 2025) return program.rank;
+  if (year === 2026) return program.rank;
+  if (year === 2025) return program.rank2025;
   if (year === 2024) return program.rank2024;
   if (year === 2023) return program.rank2023;
-  if (year === 2022) return program.rank2022;
   return null;
 }
 

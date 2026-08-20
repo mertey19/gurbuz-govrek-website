@@ -170,7 +170,7 @@ export default function TipFakultesiTercihiPage() {
                 Tercih robotunda
               </Link>{" "}
               puan türünü sayısal seçip başarı sıranızı girin, bölüm alanına “tıp” yazın.
-              Sıralamanıza uyan tıp programlarını, her biri için 2022–2025 sıralama seyri ve
+              Sıralamanıza uyan tıp programlarını, her biri için 2023–2026 sıralama seyri ve
               2023–2026 kontenjan değişimiyle birlikte görürsünüz.
             </p>
 

@@ -448,20 +448,11 @@ export function TercihRobot({
                     </div>
 
                     <p className="mt-2 text-sm leading-6 text-ink/68">{program.university}</p>
-                    {program.faculty ? (
-                      <p className="mt-0.5 text-xs leading-5 text-ink/48">{program.faculty}</p>
-                    ) : null}
 
                     <p className="mt-3 flex flex-wrap gap-x-2 gap-y-1 text-xs text-ink/60">
                       <span>{program.city}</span>
                       <span aria-hidden="true">·</span>
                       <span>{program.kind}</span>
-                      {program.duration ? (
-                        <>
-                          <span aria-hidden="true">·</span>
-                          <span>{program.duration} yıl</span>
-                        </>
-                      ) : null}
                     </p>
 
                     <div className="mt-4 grid gap-3 border-t border-navy/8 pt-3 text-xs">
@@ -495,12 +486,7 @@ export function TercihRobot({
                       {(
                         [
                           ["Puan", program.score === null ? "—" : program.score.toFixed(2)],
-                          ["Prof.", orDash(program.prof)],
-                          ["Dr. Öğr.", orDash(program.doctor)],
-                          ["Öğr. Gör.", orDash(program.lecturers)],
-                          ["Akredite", orDash(program.accredited)],
-                          ["TUS", orDash(program.tus)],
-                          ["DUS", orDash(program.dus)],
+                          ["Program kodu", orDash(program.programCode)],
                         ] as const
                       )
                         .filter(([, value]) => value !== "—")
@@ -539,9 +525,7 @@ export function TercihRobot({
                           {year} kont.
                         </th>
                       ))}
-                      <th scope="col" className="px-3 py-3">Prof.</th>
-                      <th scope="col" className="px-3 py-3">Dr. Öğr.</th>
-                      <th scope="col" className="px-3 py-3">Akredite</th>
+                      <th scope="col" className="px-3 py-3">Puan</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -553,11 +537,6 @@ export function TercihRobot({
                         <td className="px-4 py-3 text-navy">{program.university}</td>
                         <td className="px-4 py-3 font-semibold text-navy">
                           {program.department}
-                          {program.faculty ? (
-                            <span className="mt-0.5 block text-xs font-normal text-ink/50">
-                              {program.faculty}
-                            </span>
-                          ) : null}
                         </td>
                         <td className="px-4 py-3 text-ink/70">{program.city}</td>
                         <td className="px-4 py-3 text-ink/70">{program.kind}</td>
@@ -565,7 +544,7 @@ export function TercihRobot({
                           <td
                             key={`r-${year}`}
                             className={`px-3 py-3 whitespace-nowrap ${
-                              year === 2025 ? "font-bold text-blue-deep" : "text-ink/60"
+                              year === 2026 ? "font-bold text-blue-deep" : "text-ink/60"
                             }`}
                           >
                             {orDash(rankForYear(program, year))}
@@ -581,9 +560,9 @@ export function TercihRobot({
                             {orDash(quotaForYear(program, year))}
                           </td>
                         ))}
-                        <td className="px-3 py-3 text-ink/70">{orDash(program.prof)}</td>
-                        <td className="px-3 py-3 text-ink/70">{orDash(program.doctor)}</td>
-                        <td className="px-3 py-3 text-ink/70">{orDash(program.accredited)}</td>
+                        <td className="px-3 py-3 whitespace-nowrap text-ink/70">
+                          {program.score === null ? "—" : program.score.toFixed(2)}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -604,7 +583,7 @@ export function TercihRobot({
               ) : null}
 
               <p className="mt-5 text-xs leading-6 text-ink/50 print:mt-3 print:text-[8px]">
-                Kalın yazılan sütunlar tercihte esas alınan değerlerdir: 2025 yerleşme
+                Kalın yazılan sütunlar tercihte esas alınan değerlerdir: 2026 yerleşme
                 sırası ve 2026 kontenjanı. Boş hücreler o yıla ait veri bulunmadığı
                 anlamına gelir.
               </p>
