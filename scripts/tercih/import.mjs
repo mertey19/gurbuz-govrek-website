@@ -36,39 +36,46 @@ async function ensureSchema() {
       kind VARCHAR(16),
       city VARCHAR(80),
       university VARCHAR(200),
-      faculty VARCHAR(240),
       department VARCHAR(280),
-      duration SMALLINT,
       score_type VARCHAR(8) NOT NULL,
       rank INTEGER NOT NULL,
       score NUMERIC(10, 5),
       quota INTEGER,
       -- Geçmiş yıl sıralama ve kontenjanları: trend gösterimi için tutulur.
-      -- rank sütunu 2025 sırasını, quota sütunu 2026 kontenjanını taşır.
+      -- rank sütunu 2026 sırasını, quota sütunu 2026 kontenjanını taşır.
+      rank_2025 INTEGER,
       rank_2024 INTEGER,
       rank_2023 INTEGER,
-      rank_2022 INTEGER,
       quota_2025 INTEGER,
       quota_2024 INTEGER,
       quota_2023 INTEGER,
-      conditions TEXT,
-      prof INTEGER,
-      doctor INTEGER,
-      lecturers INTEGER,
-      accredited VARCHAR(80),
-      tus VARCHAR(80),
-      dus VARCHAR(80),
       imported_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     )
   `;
 
   // Tablo daha önce oluşturulmuşsa CREATE TABLE yeni sütunları eklemez.
   for (const column of [
-    "rank_2024", "rank_2023", "rank_2022",
+    "rank_2025", "rank_2024", "rank_2023",
     "quota_2025", "quota_2024", "quota_2023",
   ]) {
     await sql.query(
       `ALTER TABLE tercih_programs ADD COLUMN IF NOT EXISTS ${column} INTEGER`,
+    );
+  }
+
+  /*
+    2026 kaynak dosyası sadeleşti: fakülte, süre, koşullar, akademik kadro,
+    akreditasyon ve TUS/DUS sütunları artık gelmiyor. Eski kurulumlarda bu
+    sütunlar duruyorsa NOT NULL kısıtı olmadan da yer kaplar ve okuyanı
+    yanıltır; bu yüzden düşürülüyor.
+  */
+  for (const column of [
+    "faculty", "duration", "conditions", "school_first",
+    "prof", "doctor", "lecturers", "accredited", "tus", "dus",
+    "rank_2022",
+  ]) {
+    await sql.query(
+      `ALTER TABLE tercih_programs DROP COLUMN IF EXISTS ${column}`,
     );
   }
 
@@ -91,10 +98,9 @@ async function insertBatch(rows) {
 
   await sql`
     INSERT INTO tercih_programs (
-      level, program_code, kind, city, university, faculty, department,
-      duration, score_type, rank, score, quota, conditions,
-      prof, doctor, lecturers, accredited, tus, dus,
-      rank_2024, rank_2023, rank_2022, quota_2025, quota_2024, quota_2023
+      level, program_code, kind, city, university, department,
+      score_type, rank, score, quota,
+      rank_2025, rank_2024, rank_2023, quota_2025, quota_2024, quota_2023
     )
     SELECT * FROM UNNEST(
       ${column("level")}::varchar[],
@@ -102,23 +108,14 @@ async function insertBatch(rows) {
       ${column("kind")}::varchar[],
       ${column("city")}::varchar[],
       ${column("university")}::varchar[],
-      ${column("faculty")}::varchar[],
       ${column("department")}::varchar[],
-      ${column("duration")}::smallint[],
       ${column("score_type")}::varchar[],
       ${column("rank")}::integer[],
       ${column("score")}::numeric[],
       ${column("quota")}::integer[],
-      ${column("conditions")}::text[],
-      ${column("prof")}::integer[],
-      ${column("doctor")}::integer[],
-      ${column("lecturers")}::integer[],
-      ${column("accredited")}::varchar[],
-      ${column("tus")}::varchar[],
-      ${column("dus")}::varchar[],
+      ${column("rank_2025")}::integer[],
       ${column("rank_2024")}::integer[],
       ${column("rank_2023")}::integer[],
-      ${column("rank_2022")}::integer[],
       ${column("quota_2025")}::integer[],
       ${column("quota_2024")}::integer[],
       ${column("quota_2023")}::integer[]
