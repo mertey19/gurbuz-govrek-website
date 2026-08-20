@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowRight, BookOpenText, MapPin } from "lucide-react";
+import { BookOpenText } from "lucide-react";
 import { BlogPostCard } from "@/components/blog/BlogPostCard";
 import { Container } from "@/components/ui/Container";
 import { CANONICAL_SITE_URL } from "@/config/site";
-import { blogPosts } from "@/data/blogPosts";
+import { publicBlogPosts } from "@/data/blogPosts";
 import { listManagedPosts } from "@/lib/posts/service";
 
 const title = "YKS Tercih Rehberi ve Eğitim Blogu | Gürbüz Gövrek";
@@ -59,7 +58,7 @@ export default async function BlogPage() {
   const managed = await listManagedPosts();
 
   const posts: ListedPost[] = [
-    ...blogPosts.map((post) => ({ ...post }) as ListedPost),
+    ...publicBlogPosts.map((post) => ({ ...post }) as ListedPost),
     ...managed.map((post) => ({
       slug: post.slug,
       title: post.title,
@@ -85,14 +84,6 @@ export default async function BlogPage() {
             YKS başarı sırasından bölüm analizine kadar tercih döneminde ihtiyaç duyulan
             bilgileri anlaşılır ve uygulanabilir yazılarla ele alıyoruz.
           </p>
-          <Link
-            href="/blog/ilceler"
-            className="mt-8 inline-flex min-h-11 items-center gap-2 rounded-sm border border-white/22 px-5 py-3 text-sm font-bold text-white/82 transition hover:border-gold hover:text-gold-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-gold"
-          >
-            <MapPin className="size-4" aria-hidden="true" />
-            İlçe Rehberleri
-            <ArrowRight className="size-4" aria-hidden="true" />
-          </Link>
         </Container>
       </section>
 

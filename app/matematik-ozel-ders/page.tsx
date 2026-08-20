@@ -17,7 +17,6 @@ import {
 import { Container } from "@/components/ui/Container";
 import { SiteImage as Image } from "@/components/ui/SiteImage";
 import { CANONICAL_SITE_URL, siteConfig, whatsappUrl } from "@/config/site";
-import { districtBlogPosts } from "@/data/blogPosts";
 
 const pageUrl = `${CANONICAL_SITE_URL}/matematik-ozel-ders`;
 const title = "Denizli Matematik Özel Ders | Gürbüz Gövrek";
@@ -401,56 +400,6 @@ export default function MatematikOzelDersPage() {
             </div>
           </Container>
         </section>
-
-        {/*
-          İlçe yazılarına buradan bağlantı veriliyor. Yazılar yalnızca blog
-          listesinden erişilebiliyordu; bu sayfa konu olarak en yakın ve site
-          haritasındaki en öncelikli sayfalardan biri, dolayısıyla hem okur hem
-          tarayıcı için doğal giriş noktası.
-        */}
-        <section className="bg-cream py-16 sm:py-24" aria-labelledby="ilce-rehberleri">
-          <Container>
-            <div className="max-w-3xl">
-              <p className="eyebrow">Denizli İlçeleri</p>
-              <h2
-                id="ilce-rehberleri"
-                className="mt-5 font-serif text-4xl font-semibold leading-tight text-navy sm:text-5xl"
-              >
-                İlçenize Göre Matematik Özel Ders
-              </h2>
-              <p className="mt-6 text-base leading-8 text-ink/62">
-                Merkezefendi ve Pamukkale başta olmak üzere Denizli ilçeleri için hazırlanan
-                yazılarda birebir çalışmanın nasıl planlandığı, konu eksiklerinin nasıl
-                belirlendiği ve sınav hazırlığında izlenen adımlar anlatılıyor.
-              </p>
-            </div>
-
-            <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {districtBlogPosts.map((post) => (
-                <Link
-                  key={post.slug}
-                  href={`/blog/${post.slug}`}
-                  className="group block rounded-sm border border-navy/10 bg-white px-5 py-4 transition hover:border-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
-                >
-                  <span className="block text-sm font-bold leading-6 text-navy group-hover:text-blue-deep">
-                    {post.title}
-                  </span>
-                  <span className="mt-1 block text-xs leading-6 text-muted">
-                    {post.readingTime} okuma
-                  </span>
-                </Link>
-              ))}
-            </div>
-
-            <Link
-              href="/blog/ilceler"
-              className="mt-8 inline-flex min-h-11 items-center gap-2 text-sm font-bold text-blue-deep underline underline-offset-4 hover:text-navy focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
-            >
-              Tüm ilçe rehberleri
-            </Link>
-          </Container>
-        </section>
-
         <section className="py-16 sm:py-24" aria-labelledby="matematik-sss">
           <Container className="max-w-4xl">
             <div className="text-center">

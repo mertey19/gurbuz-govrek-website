@@ -354,6 +354,17 @@ export const districtBlogPosts = blogPosts.filter(
   (post) => post.category === DISTRICT_CATEGORY,
 );
 
+/**
+ * Sitede gezinerek ulaşılan yazılar.
+ *
+ * İlçe yazıları arama sonucundan gelen okur için duruyor; site içinde
+ * listelenmiyorlar. Adresleri ve site haritası kayıtları yerinde, yalnızca
+ * ana sayfa önizlemesi, blog listesi ve ilgili yazılar bunları atlıyor.
+ */
+export const publicBlogPosts = blogPosts.filter(
+  (post) => post.category !== DISTRICT_CATEGORY,
+);
+
 export function getBlogPost(slug: BlogPostSlug): BlogPost {
   const post = blogPosts.find((item) => item.slug === slug);
 
