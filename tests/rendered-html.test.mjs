@@ -357,6 +357,12 @@ test("site yönetim merkezini ve içerik panellerini anlaşılır adlarla oluşt
   assert.match(hubHtml, /Sunum ve Seminer Serileri/i);
   assert.match(hubHtml, /YKS İstatistikleri/i);
   assert.match(hubHtml, /href="\/yks-istatistikleri-yonetimi"/i);
+  assert.match(hubHtml, /href="\/kontenjan-yonetimi"/i);
+  assert.match(hubHtml, /href="\/meslek-slaytlari-yonetimi"/i);
+  assert.match(hubHtml, /href="\/duyuru-yonetimi"/i);
+  assert.match(hubHtml, /href="\/etkinlik-yonetimi"/i);
+  assert.match(hubHtml, /href="\/sss-yonetimi"/i);
+  assert.match(hubHtml, /href="\/rapor-yonetimi"/i);
   assert.match(hubHtml, /Yeni panel/i);
 
   const panelChecks = [
@@ -364,6 +370,12 @@ test("site yönetim merkezini ve içerik panellerini anlaşılır adlarla oluşt
     ["/meslek-yonetimi", /Meslek Tanıtım Yazıları Yönetimi/i, /Meslek Tanıtım Köşesi/i],
     ["/slayt-yonetimi", /Sunum ve Seminer Serileri Yönetimi/i, /Yeni sunum veya seminer serisi/i],
     ["/yks-istatistikleri-yonetimi", /YKS İstatistikleri Yönetimi/i, /Yeni YKS istatistik serisi/i],
+    ["/kontenjan-yonetimi", /Kontenjan Analizleri Yönetimi/i, /Yeni kontenjan analiz serisi/i],
+    ["/meslek-slaytlari-yonetimi", /Meslek Slaytları Yönetimi/i, /Yeni meslek slayt serisi/i],
+    ["/duyuru-yonetimi", /Flaş Duyuru Yönetimi/i, /Duyuru rozeti/i],
+    ["/etkinlik-yonetimi", /Etkinlik ve Seminer Yönetimi/i, /Başlıkları değiştirir/i],
+    ["/sss-yonetimi", /Sık Sorulan Sorular Yönetimi/i, /Soru ekler/i],
+    ["/rapor-yonetimi", /Rapor ve Kılavuz Yönetimi/i, /Belge bağlantısını/i],
   ];
 
   for (const [path, heading, capability] of panelChecks) {

@@ -3,7 +3,8 @@ import Link from "next/link";
 import { BookOpen, Download, ExternalLink, FileText } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { CANONICAL_SITE_URL } from "@/config/site";
-import { reports } from "@/data/reports";
+import { reports, type SiteReport } from "@/data/reports";
+import { listManagedReports } from "@/lib/reports/service";
 
 const title = "Tercih Raporları ve Kılavuzlar";
 const description =
@@ -17,7 +18,11 @@ export const metadata: Metadata = {
   openGraph: { type: "website", locale: "tr_TR", url: pageUrl, title, description },
 };
 
-export default function RaporlarPage() {
+export const dynamic = "force-dynamic";
+
+export default async function RaporlarPage() {
+  const managedReports = await listManagedReports();
+  const allReports: SiteReport[] = [...managedReports, ...reports];
   return (
     <main id="main-content" className="min-h-screen bg-white pt-20">
       <header className="border-b border-navy/10 bg-cream py-12 sm:py-16">
@@ -46,7 +51,7 @@ export default function RaporlarPage() {
           </h2>
 
           <ul className="depth-grid grid gap-5">
-            {reports.map((report) => (
+            {allReports.map((report) => (
               <li
                 key={report.slug}
                 className="depth-card rounded-sm border border-navy/10 bg-white p-6 hover:border-gold sm:p-7"

@@ -19,7 +19,12 @@ export const dynamic = "force-dynamic";
 const MAX_LABEL = 90;
 const MAX_DESCRIPTION = 400;
 const MAX_SLIDES = 40;
-const GROUPS = new Set<ManagedCollectionGroup>(["sunum", "istatistik", "meslek"]);
+const GROUPS = new Set<ManagedCollectionGroup>([
+  "sunum",
+  "istatistik",
+  "meslek",
+  "kontenjan",
+]);
 
 /** Koddaki serilerle aynı kimliğin alınması, sunum köşesinde çakışma üretir. */
 const RESERVED = new Set<string>(presentationCollections.map((item) => item.id));

@@ -23,8 +23,8 @@ import { Services } from "@/components/sections/Services";
 import { Stats } from "@/components/sections/Stats";
 import { SuccessStories } from "@/components/sections/SuccessStories";
 import { siteConfig } from "@/config/site";
-import { faqItems } from "@/data/faq";
 import { services } from "@/data/services";
+import { getManagedSiteContent } from "@/lib/site-content/service";
 
 // Hizmet bağlantıları hem sayfa yolu (`/matematik-ozel-ders`) hem de ana sayfa
 // bölüm çapası (`#kampus`) olabiliyor; her ikisi de mutlak URL'ye çevrilir.
@@ -42,11 +42,13 @@ function toAbsoluteUrl(href: string): string {
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const managedCollections: PresentationCollection[] = (
-    await listManagedCollections()
-  ).map((collection) => ({
+  const [collectionRows, managedContent] = await Promise.all([
+    listManagedCollections(),
+    getManagedSiteContent(),
+  ]);
+  const managedCollections: PresentationCollection[] = collectionRows.map((collection) => ({
     id: collection.slug,
-    group: collection.group,
+    group: collection.group === "kontenjan" ? "istatistik" : collection.group,
     label: collection.label,
     shortLabel: collection.shortLabel,
     description: collection.description,
@@ -142,7 +144,7 @@ export default async function Home() {
       "@type": "FAQPage",
       "@id": `${siteConfig.url}/#sss`,
       inLanguage: "tr-TR",
-      mainEntity: faqItems.map((item) => ({
+      mainEntity: managedContent.faq.map((item) => ({
         "@type": "Question",
         name: item.question,
         acceptedAnswer: { "@type": "Answer", text: item.answer },
@@ -164,7 +166,7 @@ export default async function Home() {
     <>
       <main id="main-content">
         <Hero />
-        <FlashAnnouncement />
+        <FlashAnnouncement announcement={managedContent.announcement} />
         <Stats />
         <About />
         <PresentationCorner extraCollections={managedCollections} />
@@ -178,12 +180,12 @@ export default async function Home() {
         <CampusVisits />
         <SuccessStories />
         <Comments />
-        <Events />
+        <Events content={managedContent.events} />
         <BlogPreview />
         <StudyAbroad />
         <Media />
         <Gallery />
-        <FAQ />
+        <FAQ items={managedContent.faq} />
         <ContactCTA />
       </main>
       <script

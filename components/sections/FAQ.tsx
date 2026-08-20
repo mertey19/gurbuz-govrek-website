@@ -4,9 +4,9 @@ import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 import { Container } from "@/components/ui/Container";
 import { SectionTitle } from "@/components/ui/SectionTitle";
-import { faqItems } from "@/data/faq";
+import type { ManagedFaqItem } from "@/lib/site-content/types";
 
-export function FAQ() {
+export function FAQ({ items }: { items: ManagedFaqItem[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   return (
     <section id="sss" className="section-space bg-cream">
@@ -14,7 +14,7 @@ export function FAQ() {
         <div className="landscape-split grid gap-10 lg:grid-cols-[.7fr_1.3fr] lg:gap-20">
           <div><SectionTitle eyebrow="Sık Sorulan Sorular" title="Karar Vermeden Önce Merak Ettikleriniz" description="Süreçle ilgili başka bir sorunuz varsa WhatsApp üzerinden doğrudan paylaşabilirsiniz." /></div>
           <div className="divide-y divide-navy/12 border-y border-navy/12">
-            {faqItems.map((item, index) => {
+            {items.map((item, index) => {
               const open = openIndex === index;
               return (
                 <div key={item.question}>

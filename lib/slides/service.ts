@@ -19,7 +19,7 @@ export type ManagedSlide = {
   title: string;
 };
 
-export type ManagedCollectionGroup = "sunum" | "istatistik" | "meslek";
+export type ManagedCollectionGroup = "sunum" | "istatistik" | "meslek" | "kontenjan";
 
 export type ManagedCollection = {
   id: number;
@@ -32,7 +32,7 @@ export type ManagedCollection = {
   createdAt: Date;
 };
 
-const GROUP_PREFIX = /^(sunum|istatistik|meslek)--(.+)$/;
+const GROUP_PREFIX = /^(sunum|istatistik|meslek|kontenjan)--(.+)$/;
 
 function parseStoredSlug(storedSlug: string): {
   slug: string;

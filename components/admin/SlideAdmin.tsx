@@ -23,7 +23,7 @@ type DraftSlide = { url: string; title: string; alt: string };
 const FIELD =
   "mt-2 w-full rounded-sm border border-navy/15 bg-white px-4 py-3 text-sm text-navy placeholder:text-ink/38 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-gold";
 
-type SlideGroup = "sunum" | "istatistik" | "meslek";
+type SlideGroup = "sunum" | "istatistik" | "meslek" | "kontenjan";
 
 const PANEL_COPY = {
   sunum: {
@@ -61,6 +61,18 @@ const PANEL_COPY = {
     listDescription:
       "Yalnızca bu panelden eklenen Meslek Slaytları içerikleri burada görünür.",
     empty: "Henüz panelden meslek slayt serisi yayımlanmadı.",
+  },
+  kontenjan: {
+    panelName: "Kontenjan analizleri yönetimi",
+    formTitle: "Yeni kontenjan analiz serisi",
+    labelPlaceholder: "Örnek: 2026 Sayısal Kontenjan Karşılaştırması",
+    shortPlaceholder: "Sayısal Kontenjan",
+    notice: "Kontenjan analiz serisi yayımlandı.",
+    submit: "Kontenjan Analizini Yayımla",
+    listTitle: "Panelden yayımlanan kontenjan analizleri",
+    listDescription:
+      "Yalnızca bu panelden eklenen kontenjan karşılaştırmaları burada görünür.",
+    empty: "Henüz panelden kontenjan analiz serisi yayımlanmadı.",
   },
 } as const;
 

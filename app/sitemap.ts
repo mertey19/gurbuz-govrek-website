@@ -3,9 +3,13 @@ import { CANONICAL_SITE_URL } from "@/config/site";
 import { blogPosts } from "@/data/blogPosts";
 import { listManagedPosts } from "@/lib/posts/service";
 import { careerCategories } from "@/data/careerCategories";
+import { listManagedReports } from "@/lib/reports/service";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const managedPosts = await listManagedPosts();
+  const [managedPosts, managedReports] = await Promise.all([
+    listManagedPosts(),
+    listManagedReports(),
+  ]);
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {
@@ -180,6 +184,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: post.publishedAt,
       changeFrequency: "monthly" as const,
       priority: 0.9,
+    })),
+    ...managedReports.map((report) => ({
+      url: `${CANONICAL_SITE_URL}/raporlar/${report.slug}`,
+      lastModified: report.createdAt,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
     })),
   ];
 }
