@@ -23,7 +23,49 @@ type DraftSlide = { url: string; title: string; alt: string };
 const FIELD =
   "mt-2 w-full rounded-sm border border-navy/15 bg-white px-4 py-3 text-sm text-navy placeholder:text-ink/38 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-gold";
 
-export function SlideAdmin() {
+type SlideGroup = "sunum" | "istatistik" | "meslek";
+
+const PANEL_COPY = {
+  sunum: {
+    panelName: "Sunum ve seminer yönetimi",
+    formTitle: "Yeni sunum veya seminer serisi",
+    labelPlaceholder: "Örnek: Tercih Sürecinde Doğru Karar",
+    shortPlaceholder: "Doğru Tercih",
+    notice: "Sunum serisi yayımlandı.",
+    submit: "Sunum Serisini Yayımla",
+    listTitle: "Panelden yayımlanan sunum serileri",
+    listDescription:
+      "Yalnızca bu panelden eklenen Sunumlar içerikleri burada görünür.",
+    empty: "Henüz panelden sunum serisi yayımlanmadı.",
+  },
+  istatistik: {
+    panelName: "YKS istatistikleri yönetimi",
+    formTitle: "Yeni YKS istatistik serisi",
+    labelPlaceholder: "Örnek: 2026 YKS Test Ortalamaları",
+    shortPlaceholder: "Test Ortalamaları",
+    notice: "YKS istatistik serisi yayımlandı.",
+    submit: "YKS İstatistiğini Yayımla",
+    listTitle: "Panelden yayımlanan YKS istatistikleri",
+    listDescription:
+      "Yalnızca bu panelden eklenen YKS İstatistikleri içerikleri burada görünür.",
+    empty: "Henüz panelden YKS istatistik serisi yayımlanmadı.",
+  },
+  meslek: {
+    panelName: "Meslek slaytları yönetimi",
+    formTitle: "Yeni meslek slayt serisi",
+    labelPlaceholder: "Örnek: Psikoloji Kariyer Rehberi",
+    shortPlaceholder: "Psikoloji",
+    notice: "Meslek slayt serisi yayımlandı.",
+    submit: "Meslek Slaytlarını Yayımla",
+    listTitle: "Panelden yayımlanan meslek slaytları",
+    listDescription:
+      "Yalnızca bu panelden eklenen Meslek Slaytları içerikleri burada görünür.",
+    empty: "Henüz panelden meslek slayt serisi yayımlanmadı.",
+  },
+} as const;
+
+export function SlideAdmin({ group = "sunum" }: { group?: SlideGroup }) {
+  const copy = PANEL_COPY[group];
   const [collections, setCollections] = useState<AdminCollection[]>([]);
   const [loading, setLoading] = useState(true);
   const [unauthorized, setUnauthorized] = useState(false);
@@ -39,7 +81,7 @@ export function SlideAdmin() {
 
   async function load() {
     try {
-      const response = await fetch("/api/admin/slides");
+      const response = await fetch(`/api/admin/slides?group=${encodeURIComponent(group)}`);
       if (response.status === 401) {
         setUnauthorized(true);
         return;
@@ -111,7 +153,7 @@ export function SlideAdmin() {
       const response = await fetch("/api/admin/slides", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ label, shortLabel, description, slides }),
+        body: JSON.stringify({ group, label, shortLabel, description, slides }),
       });
 
       const payload = (await response.json()) as { error?: string };
@@ -124,7 +166,7 @@ export function SlideAdmin() {
       setShortLabel("");
       setDescription("");
       setSlides([]);
-      setNotice("Seri yayımlandı.");
+      setNotice(copy.notice);
       await load();
     } catch {
       setError("Seri kaydedilemedi.");
@@ -149,7 +191,7 @@ export function SlideAdmin() {
       <div className="rounded-sm border border-navy/10 bg-white p-7">
         <h2 className="font-serif text-xl font-semibold text-navy">Oturum gerekli</h2>
         <p className="mt-3 text-sm leading-7 text-muted">
-          Slayt yönetimi, yorum paneliyle aynı oturumu kullanır.{" "}
+          {copy.panelName}, yorum paneliyle aynı oturumu kullanır.{" "}
           <a
             href="/yorum-yonetimi"
             className="font-bold text-blue-deep underline underline-offset-4"
@@ -169,7 +211,7 @@ export function SlideAdmin() {
         className="rounded-sm border border-navy/10 bg-white p-6 sm:p-8"
       >
         <h2 id="seri-ekle" className="font-serif text-xl font-semibold text-navy">
-          Yeni sunum serisi
+          {copy.formTitle}
         </h2>
 
         <form onSubmit={handleSubmit} className="mt-6 grid gap-5">
@@ -184,7 +226,7 @@ export function SlideAdmin() {
                 onChange={(event) => setLabel(event.target.value)}
                 required
                 maxLength={90}
-                placeholder="Örnek: Psikoloji Kariyer Rehberi"
+                placeholder={copy.labelPlaceholder}
                 className={FIELD}
               />
             </div>
@@ -197,7 +239,7 @@ export function SlideAdmin() {
                 id="seri-kisa"
                 value={shortLabel}
                 onChange={(event) => setShortLabel(event.target.value)}
-                placeholder="Psikoloji"
+                placeholder={copy.shortPlaceholder}
                 className={FIELD}
               />
               <p className="mt-1.5 text-xs text-muted">Sekmede görünür. Boşsa başlık kullanılır.</p>
@@ -335,7 +377,7 @@ export function SlideAdmin() {
             ) : (
               <>
                 <Plus className="size-4" aria-hidden="true" />
-                Seriyi Yayımla
+                {copy.submit}
               </>
             )}
           </button>
@@ -344,17 +386,17 @@ export function SlideAdmin() {
 
       <section aria-labelledby="seri-listesi">
         <h2 id="seri-listesi" className="font-serif text-xl font-semibold text-navy">
-          Panelden yayımlanan seriler{" "}
+          {copy.listTitle}{" "}
           <span className="text-sm font-medium text-muted">({collections.length})</span>
         </h2>
         <p className="mt-2 text-xs leading-6 text-muted">
-          Koddaki 29 seri burada görünmez; onlar geliştirme tarafından yönetilir.
+          {copy.listDescription}
         </p>
 
         {loading ? (
           <p className="mt-4 text-sm text-muted">Yükleniyor…</p>
         ) : collections.length === 0 ? (
-          <p className="mt-4 text-sm text-muted">Henüz panelden seri yayımlanmadı.</p>
+          <p className="mt-4 text-sm text-muted">{copy.empty}</p>
         ) : (
           <ul className="mt-5 grid gap-3">
             {collections.map((collection) => (

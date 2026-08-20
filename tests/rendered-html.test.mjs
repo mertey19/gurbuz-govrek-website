@@ -347,6 +347,35 @@ test("blog liste sayfasını ve Denizli YKS tercih yazısını sunucu tarafında
   }
 });
 
+test("site yönetim merkezini ve içerik panellerini anlaşılır adlarla oluşturur", async () => {
+  const hubResponse = await render("/site-yonetimi");
+  assert.equal(hubResponse.status, 200);
+  const hubHtml = await hubResponse.text();
+  assert.match(hubHtml, /Site Yönetim Merkezi/i);
+  assert.match(hubHtml, /Tercih Videoları/i);
+  assert.match(hubHtml, /Meslek Tanıtım Yazıları/i);
+  assert.match(hubHtml, /Sunum ve Seminer Serileri/i);
+  assert.match(hubHtml, /YKS İstatistikleri/i);
+  assert.match(hubHtml, /href="\/yks-istatistikleri-yonetimi"/i);
+  assert.match(hubHtml, /Yeni panel/i);
+
+  const panelChecks = [
+    ["/video-yonetimi", /Tercih Videoları Yönetimi/i, /YouTube ve Instagram/i],
+    ["/meslek-yonetimi", /Meslek Tanıtım Yazıları Yönetimi/i, /Meslek Tanıtım Köşesi/i],
+    ["/slayt-yonetimi", /Sunum ve Seminer Serileri Yönetimi/i, /Yeni sunum veya seminer serisi/i],
+    ["/yks-istatistikleri-yonetimi", /YKS İstatistikleri Yönetimi/i, /Yeni YKS istatistik serisi/i],
+  ];
+
+  for (const [path, heading, capability] of panelChecks) {
+    const response = await render(path);
+    assert.equal(response.status, 200);
+    const html = await response.text();
+    assert.match(html, heading);
+    assert.match(html, capability);
+    assert.match(html, /Site Yönetim Merkezine dön/i);
+  }
+});
+
 test("sitemap blog adreslerini yalnızca kanonik alan adıyla üretir", async () => {
   const response = await render("/sitemap.xml");
   assert.equal(response.status, 200);

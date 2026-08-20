@@ -4,9 +4,9 @@ import { neon } from "@neondatabase/serverless";
 /**
  * Panelden eklenen sunum serileri.
  *
- * Koddaki 29 seri `data/presentationCollections.ts` içinde kalır; görselleri
+ * Koddaki sabit seriler `data/presentationCollections.ts` içinde kalır; görselleri
  * depoda duruyor ve küçük resimleri üretilmiş durumda. Panelden gelenler ayrı
- * bir kaynaktır; sunum köşesi ikisini birleştirerek gösterir.
+ * bir kaynaktır; sunum köşesi ikisini grup bilgisine göre birleştirerek gösterir.
  *
  * Slaytlar ayrı tablo yerine JSONB dizisi olarak tutuluyor. Bir seride en fazla
  * birkaç düzine slayt oluyor; sıralamayı değiştirmek diziyi baştan yazmak
@@ -19,15 +19,32 @@ export type ManagedSlide = {
   title: string;
 };
 
+export type ManagedCollectionGroup = "sunum" | "istatistik" | "meslek";
+
 export type ManagedCollection = {
   id: number;
   slug: string;
+  group: ManagedCollectionGroup;
   label: string;
   shortLabel: string;
   description: string;
   slides: ManagedSlide[];
   createdAt: Date;
 };
+
+const GROUP_PREFIX = /^(sunum|istatistik|meslek)--(.+)$/;
+
+function parseStoredSlug(storedSlug: string): {
+  slug: string;
+  group: ManagedCollectionGroup;
+} {
+  const match = storedSlug.match(GROUP_PREFIX);
+  if (!match) return { slug: storedSlug, group: "sunum" };
+  return {
+    group: match[1] as ManagedCollectionGroup,
+    slug: match[2],
+  };
+}
 
 let client: ReturnType<typeof neon> | undefined;
 
@@ -49,9 +66,11 @@ type CollectionRow = {
 };
 
 function toCollection(row: CollectionRow): ManagedCollection {
+  const identity = parseStoredSlug(row.slug);
   return {
     id: Number(row.id),
-    slug: row.slug,
+    slug: identity.slug,
+    group: identity.group,
     label: row.label,
     shortLabel: row.short_label,
     description: row.description,
@@ -80,15 +99,19 @@ export async function listManagedCollections(): Promise<ManagedCollection[]> {
 
 export async function createManagedCollection(input: {
   slug: string;
+  group: ManagedCollectionGroup;
   label: string;
   shortLabel: string;
   description: string;
   slides: ManagedSlide[];
 }): Promise<ManagedCollection> {
   const sql = getClient();
+  // Grup bilgisi mevcut tabloyu bozmadan kalıcı kimliğin başında saklanır.
+  // Eski, ön eksiz kayıtlar geriye dönük olarak "sunum" kabul edilir.
+  const storedSlug = `${input.group}--${input.slug}`;
   const rows = (await sql`
     INSERT INTO managed_collections (slug, label, short_label, description, slides)
-    VALUES (${input.slug}, ${input.label}, ${input.shortLabel}, ${input.description},
+    VALUES (${storedSlug}, ${input.label}, ${input.shortLabel}, ${input.description},
             ${JSON.stringify(input.slides)}::jsonb)
     ON CONFLICT (slug) DO UPDATE
       SET label = EXCLUDED.label,

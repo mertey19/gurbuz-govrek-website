@@ -5,6 +5,7 @@ import { slugify } from "@/lib/posts/service";
 import {
   createManagedCollection,
   listManagedCollections,
+  type ManagedCollectionGroup,
   type ManagedSlide,
 } from "@/lib/slides/service";
 
@@ -18,6 +19,7 @@ export const dynamic = "force-dynamic";
 const MAX_LABEL = 90;
 const MAX_DESCRIPTION = 400;
 const MAX_SLIDES = 40;
+const GROUPS = new Set<ManagedCollectionGroup>(["sunum", "istatistik", "meslek"]);
 
 /** Koddaki serilerle aynı kimliğin alınması, sunum köşesinde çakışma üretir. */
 const RESERVED = new Set<string>(presentationCollections.map((item) => item.id));
@@ -27,7 +29,13 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Yetkisiz." }, { status: 401 });
   }
 
-  return NextResponse.json({ collections: await listManagedCollections() });
+  const requestedGroup = request.nextUrl.searchParams.get("group");
+  const collections = await listManagedCollections();
+  return NextResponse.json({
+    collections: GROUPS.has(requestedGroup as ManagedCollectionGroup)
+      ? collections.filter((collection) => collection.group === requestedGroup)
+      : collections,
+  });
 }
 
 export async function POST(request: NextRequest) {
@@ -62,6 +70,11 @@ export async function POST(request: NextRequest) {
       { error: `Açıklama en fazla ${MAX_DESCRIPTION} karakter olabilir.` },
       { status: 400 },
     );
+  }
+
+  const group = (text("group") || "sunum") as ManagedCollectionGroup;
+  if (!GROUPS.has(group)) {
+    return NextResponse.json({ error: "Geçersiz içerik bölümü." }, { status: 400 });
   }
 
   const slug = slugify(text("slug") || label);
@@ -113,6 +126,7 @@ export async function POST(request: NextRequest) {
   try {
     const collection = await createManagedCollection({
       slug,
+      group,
       label,
       shortLabel: text("shortLabel") || label,
       description,

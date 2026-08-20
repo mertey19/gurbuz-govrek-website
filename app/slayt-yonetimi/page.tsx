@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
 import { SlideAdmin } from "@/components/admin/SlideAdmin";
 import { Container } from "@/components/ui/Container";
 
 export const metadata: Metadata = {
-  title: "Slayt Yönetimi",
+  title: "Sunum ve Seminer Serileri Yönetimi",
   robots: {
     index: false,
     follow: false,
@@ -15,12 +16,14 @@ export default function SlideManagementPage() {
   return (
     <main id="main-content" className="min-h-screen bg-cream/65 pt-32 pb-20">
       <Container className="max-w-4xl">
-        <h1 className="font-serif text-3xl font-semibold text-navy">Slayt Yönetimi</h1>
-        <p className="mt-3 text-sm leading-7 text-muted">
-          Yayımlanan seri anında sunum köşesinde görünür.
-        </p>
+        <AdminPageHeader
+          title="Sunum ve Seminer Serileri Yönetimi"
+          description="Seminer, tercih rehberi veya genel bilgilendirme görsellerini tek bir başlık altında, doğru sırayla yayımlayın."
+          destination="Ana sayfadaki Sunum ve Seminer Köşesinin “Sunumlar” bölümünde görünür."
+          capability="Çoklu görsel yükler; slayt sırasını, her görselin başlığını ve erişilebilir açıklamasını düzenler; yayımlanan serileri listeler ve siler."
+        />
         <div className="mt-9">
-          <SlideAdmin />
+          <SlideAdmin group="sunum" />
         </div>
       </Container>
     </main>

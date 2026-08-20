@@ -46,6 +46,7 @@ export default async function Home() {
     await listManagedCollections()
   ).map((collection) => ({
     id: collection.slug,
+    group: collection.group,
     label: collection.label,
     shortLabel: collection.shortLabel,
     description: collection.description,
