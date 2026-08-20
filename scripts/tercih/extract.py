@@ -1,9 +1,9 @@
 """
 Tercih robotu veri çıkarımı: xlsx -> JSONL.
 
-Çıktı `tmp/` altına yazılır ve .gitignore kapsamındadır. Program verisi HİÇBİR
-koşulda repoya commit'lenmez; repo herkese açıktır ve veri Gürbüz Gövrek'in
-çalışma varlığıdır. Yükleme adımı `scripts/tercih/import.mjs` ile yapılır.
+Çıktı `tmp/` altına yazılır ve .gitignore kapsamındadır. Veritabanına yükleme
+`scripts/tercih/import.mjs`, veritabanından bağımsız salt okunur site verisi
+üretme adımı ise `scripts/tercih/build-local-data.mjs` ile yapılır.
 
 Kullanım:
     python scripts/tercih/extract.py "C:/yol/2026 TERCIH ROBOTU GURBUZ.xlsx"

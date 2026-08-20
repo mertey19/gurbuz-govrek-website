@@ -2,7 +2,7 @@
 
 import { createHash } from "node:crypto";
 import { headers } from "next/headers";
-import { queryRobot, TercihRobotUnavailableError } from "@/lib/tercih/robot-service";
+import { queryRobot } from "@/lib/tercih/robot-service";
 import {
   INSTITUTION_KINDS,
   isRobotScoreType,
@@ -144,14 +144,6 @@ export async function runTercihRobot(
     const result = await queryRobot(scoreType, rankFrom, rankTo, filters);
     return { status: "success", scoreType, rankFrom, rankTo, filters, result };
   } catch (error) {
-    if (error instanceof TercihRobotUnavailableError) {
-      return {
-        status: "error",
-        message:
-          "Tercih robotu şu anda kullanılamıyor. WhatsApp üzerinden doğrudan bilgi alabilirsiniz.",
-      };
-    }
-
     console.error("Tercih robotu sorgusu başarısız.", {
       message: error instanceof Error ? error.message : "bilinmeyen hata",
     });

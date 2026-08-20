@@ -38,8 +38,8 @@ yarn-error.log*
 # claude code — kişisel izin ayarları paylaşılmaz, launch.json paylaşılır
 .claude/settings.local.json
 
-# Tercih robotu ara çıktıları. Repo herkese açık olduğu için program verisi
-# HİÇBİR koşulda commit'lenmez; yalnızca veritabanında tutulur.
+# Tercih robotunun geçici, satır bazlı çıkarım dosyası repoya alınmaz.
+# Site için üretilen sıkıştırılmış sözlük biçimi `data/` altında izlenir.
 /tmp/
 *.xlsx
 # İndirilebilir sürüm bilinçli olarak yayımlanır (site sahibinin kararı).

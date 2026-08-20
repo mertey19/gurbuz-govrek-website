@@ -11,6 +11,7 @@
     "start": "vinext start",
     "favicon:generate": "node scripts/generate-favicon.mjs",
     "images:optimize": "node scripts/optimize-images.mjs",
+    "tercih:build-data": "python scripts/tercih/extract.py public/2026-tercih-robotu-gurbuz-govrek.xlsx && node scripts/tercih/build-local-data.mjs",
     "tercih:import": "node --env-file-if-exists=.env.local scripts/tercih/import.mjs",
     "typecheck": "tsc --noEmit",
     "test": "npm run typecheck && npm run build && node --test tests/rendered-html.test.mjs",

@@ -1,5 +1,5 @@
 import "server-only";
-import { neon } from "@neondatabase/serverless";
+import dataset from "@/data/tercih-programs-2026.json";
 import {
   EMPTY_FILTERS,
   QUOTA_YEARS,
@@ -10,65 +10,46 @@ import {
   type RobotScoreType,
 } from "@/lib/tercih/types";
 
-/**
- * Tercih robotu sorgu katmanı.
- *
- * Kapsam kararı (site sahibinin talebi): robot eşleşen programların TAMAMINI,
- * akademik kadro / akreditasyon / TUS-DUS sütunları dâhil döndürür. Bunun bilinen
- * bedeli, uç nokta herkese açık olduğu için veri setinin sistematik sorguyla
- * dışarı çıkarılabilmesidir; karar erişilebilirlik lehine bilerek verilmiştir.
- */
-
 /** Kullanıcı üst sınır girmediğinde sıralamanın etrafında taranan pencere. */
 const RANK_WINDOW_BELOW = 0.85;
 const RANK_WINDOW_ABOVE = 1.25;
 
-/**
- * Pencerenin taraması gereken en az sıralama genişliği.
- *
- * Yüzde tabanlı pencere küçük sıralamalarda neredeyse hiç açılmaz: 1. sıra için
- * aralık 1–2 çıkar ve en iyi program 38. sırada olduğu için hiçbir sonuç dönmez.
- */
+/** Küçük sıralamalarda otomatik aralığın boş kalmasını önleyen alt genişlik. */
 const MIN_WINDOW_SPAN = 2500;
 
-/**
- * Tek yanıtta dönebilecek en fazla satır. İş kuralı değil, koruma amaçlıdır:
- * en geniş sorgu bile yanıtı ve tarayıcıyı kilitlemesin.
- */
+/** Tek yanıtta dönebilecek en fazla satır. */
 const MAX_ROWS = 8000;
 
-export class TercihRobotUnavailableError extends Error {
-  constructor() {
-    super("Tercih robotu veritabanı yapılandırılmamış.");
-    this.name = "TercihRobotUnavailableError";
-  }
+/**
+ * Sözlüklerle sıkıştırılmış yerel veri satırı.
+ *
+ * Metin alanları dosyada bir kez tutulur; satır bu sözlüklerin indekslerini
+ * taşır. Bu yapı 18 binden fazla programı yaklaşık 1,5 MB'ta tutar.
+ */
+type LocalRow = [
+  level: number,
+  programCode: string,
+  kind: number,
+  city: number,
+  university: number,
+  department: number,
+  scoreType: number,
+  rank: number,
+  score: number | null,
+  quota: number | null,
+  rank2025: number | null,
+  rank2024: number | null,
+  rank2023: number | null,
+  quota2025: number | null,
+  quota2024: number | null,
+  quota2023: number | null,
+];
+
+const rows = dataset.rows as LocalRow[];
+
+if (dataset.version !== 2026 || rows.length !== 18_251) {
+  throw new Error("Tercih robotunun 2026 veri dosyası eksik veya geçersiz.");
 }
-
-let client: ReturnType<typeof neon> | undefined;
-
-function getSql() {
-  const databaseUrl = process.env.DATABASE_URL;
-  if (!databaseUrl) throw new TercihRobotUnavailableError();
-  client ??= neon(databaseUrl);
-  return client;
-}
-
-type ProgramRow = {
-  program_code: string | null;
-  university: string;
-  department: string;
-  city: string;
-  kind: string;
-  rank: number;
-  rank_2025: number | null;
-  rank_2024: number | null;
-  rank_2023: number | null;
-  score: string | number | null;
-  quota: number | null;
-  quota_2025: number | null;
-  quota_2024: number | null;
-  quota_2023: number | null;
-};
 
 /**
  * Kullanıcının girdiği aralığı çözer.
@@ -87,9 +68,38 @@ export function resolveWindow(rankFrom: number, rankTo: number | null) {
   return { windowFrom, windowTo };
 }
 
+function decodeProgram(row: LocalRow): Program {
+  return {
+    programCode: row[1],
+    kind: dataset.kinds[row[2]],
+    city: dataset.cities[row[3]],
+    university: dataset.universities[row[4]],
+    department: dataset.departments[row[5]],
+    rank: row[7],
+    score: row[8],
+    quota: row[9],
+    rank2025: row[10],
+    rank2024: row[11],
+    rank2023: row[12],
+    quota2025: row[13],
+    quota2024: row[14],
+    quota2023: row[15],
+  };
+}
+
+function quotaAt(row: LocalRow, year: number): number | null {
+  if (year === 2026) return row[9];
+  if (year === 2025) return row[13];
+  if (year === 2024) return row[14];
+  if (year === 2023) return row[15];
+  return null;
+}
+
 /**
  * Verilen sıralama aralığındaki programların tamamını döndürür.
- * TYT önlisans, diğer puan türleri lisans programlarını kapsar.
+ *
+ * Veri dağıtımla birlikte gelen doğrulanmış 2026 dosyasından okunur. Böylece
+ * eksik ortam değişkeni ya da eski Neon şeması robot sorgusunu durduramaz.
  */
 export async function queryRobot(
   scoreType: RobotScoreType,
@@ -97,115 +107,81 @@ export async function queryRobot(
   rankTo: number | null = null,
   filters: RobotFilters = EMPTY_FILTERS,
 ): Promise<RobotResult> {
-  const sql = getSql();
-  const level = scoreType === "TYT" ? "onlisans" : "lisans";
+  const level = scoreType === "TYT" ? 1 : 0;
+  const scoreTypeIndex = dataset.scoreTypes.indexOf(scoreType);
   const { windowFrom, windowTo } = resolveWindow(rankFrom, rankTo);
+  const cityFilter = new Set(filters.cities);
+  const kindFilter = new Set(filters.kinds);
+  const departmentTerms = filters.departments.map((term) =>
+    term.toLocaleLowerCase("tr-TR"),
+  );
 
-  /*
-    Filtreler çoklu seçimdir. Boş dizi "filtre yok" demektir ve koşul tamamen
-    atlanır; dolu dizi `= ANY(...)` ile karşılaştırılır. Sorgu metni sabit kalır,
-    tüm değerler bağlı parametre olarak gider.
+  const matches = rows.filter((row) => {
+    if (
+      row[0] !== level ||
+      row[6] !== scoreTypeIndex ||
+      row[7] < windowFrom ||
+      row[7] > windowTo
+    ) {
+      return false;
+    }
 
-    Bölüm filtresi metin araması olduğu için diziyi `ILIKE ANY` ile kullanır;
-    ifadelerden biri bile eşleşirse program listelenir.
-  */
-  const cities = filters.cities.length > 0 ? filters.cities : null;
-  const kinds = filters.kinds.length > 0 ? filters.kinds : null;
-  const departments =
-    filters.departments.length > 0
-      ? filters.departments.map((term) => `%${term}%`)
-      : null;
+    const city = dataset.cities[row[3]];
+    if (cityFilter.size > 0 && !cityFilter.has(city)) return false;
 
-  const summaryRows = (await sql`
-    SELECT
-      COUNT(*)::int AS total,
-      COUNT(*) FILTER (WHERE kind = 'DEVLET')::int AS state_count,
-      COUNT(*) FILTER (WHERE kind = 'VAKIF')::int AS foundation_count,
-      COUNT(*) FILTER (WHERE kind IS DISTINCT FROM 'DEVLET' AND kind IS DISTINCT FROM 'VAKIF')::int AS other_count,
-      COALESCE(SUM(quota), 0)::int AS quota_2026,
-      COALESCE(SUM(quota_2025), 0)::int AS quota_2025,
-      COALESCE(SUM(quota_2024), 0)::int AS quota_2024,
-      COALESCE(SUM(quota_2023), 0)::int AS quota_2023,
-      COUNT(quota)::int AS has_2026,
-      COUNT(quota_2025)::int AS has_2025,
-      COUNT(quota_2024)::int AS has_2024,
-      COUNT(quota_2023)::int AS has_2023
-    FROM tercih_programs
-    WHERE level = ${level}
-      AND score_type = ${scoreType}
-      AND rank BETWEEN ${windowFrom} AND ${windowTo}
-      AND (${cities}::text[] IS NULL OR city = ANY(${cities}::text[]))
-      AND (${kinds}::text[] IS NULL OR kind = ANY(${kinds}::text[]))
-      AND (${departments}::text[] IS NULL OR department ILIKE ANY(${departments}::text[]))
-  `) as Record<string, number>[];
+    const kind = dataset.kinds[row[2]];
+    if (kindFilter.size > 0 && !kindFilter.has(kind)) return false;
 
-  const cityRows = (await sql`
-    SELECT city, COUNT(*)::int AS count
-    FROM tercih_programs
-    WHERE level = ${level}
-      AND score_type = ${scoreType}
-      AND rank BETWEEN ${windowFrom} AND ${windowTo}
-      AND (${cities}::text[] IS NULL OR city = ANY(${cities}::text[]))
-      AND (${kinds}::text[] IS NULL OR kind = ANY(${kinds}::text[]))
-      AND (${departments}::text[] IS NULL OR department ILIKE ANY(${departments}::text[]))
-      AND city IS NOT NULL
-    GROUP BY city
-    ORDER BY count DESC
-    LIMIT 4
-  `) as { city: string; count: number }[];
+    if (departmentTerms.length > 0) {
+      const department = dataset.departments[row[5]].toLocaleLowerCase("tr-TR");
+      if (!departmentTerms.some((term) => department.includes(term))) return false;
+    }
 
-  const programRows = (await sql`
-    SELECT
-      program_code, university, department, city, kind,
-      rank, rank_2025, rank_2024, rank_2023,
-      score, quota, quota_2025, quota_2024, quota_2023
-    FROM tercih_programs
-    WHERE level = ${level}
-      AND score_type = ${scoreType}
-      AND rank BETWEEN ${windowFrom} AND ${windowTo}
-      AND (${cities}::text[] IS NULL OR city = ANY(${cities}::text[]))
-      AND (${kinds}::text[] IS NULL OR kind = ANY(${kinds}::text[]))
-      AND (${departments}::text[] IS NULL OR department ILIKE ANY(${departments}::text[]))
-    ORDER BY rank ASC
-    LIMIT ${MAX_ROWS}
-  `) as ProgramRow[];
+    return true;
+  });
 
-  const programs: Program[] = programRows.map((row) => ({
-    programCode: row.program_code,
-    university: row.university,
-    department: row.department,
-    city: row.city,
-    kind: row.kind,
-    rank: row.rank,
-    rank2025: row.rank_2025,
-    rank2024: row.rank_2024,
-    rank2023: row.rank_2023,
-    // NUMERIC sütunu sürücüden metin olarak gelebilir.
-    score: row.score === null ? null : Number(row.score),
-    quota: row.quota,
-    quota2025: row.quota_2025,
-    quota2024: row.quota_2024,
-    quota2023: row.quota_2023,
-  }));
+  matches.sort((left, right) => left[7] - right[7]);
 
-  const summary = summaryRows[0];
+  let stateCount = 0;
+  let foundationCount = 0;
+  const cityCounts = new Map<string, number>();
 
-  // Kontenjan trendi: her yıl için toplam ve o yıl verisi bulunan program sayısı.
-  // Program sayısı gösterilir çünkü yıllar arası toplam farkı kısmen "o yıl veri
-  // yok" durumundan kaynaklanır; bunu gizlemek yanıltıcı olur.
-  const quotaTrend: QuotaTrendPoint[] = QUOTA_YEARS.map((year) => ({
-    year,
-    total: summary?.[`quota_${year}`] ?? 0,
-    programCount: summary?.[`has_${year}`] ?? 0,
-  }));
+  for (const row of matches) {
+    const kind = dataset.kinds[row[2]];
+    if (kind === "DEVLET") stateCount += 1;
+    if (kind === "VAKIF") foundationCount += 1;
+
+    const city = dataset.cities[row[3]];
+    cityCounts.set(city, (cityCounts.get(city) ?? 0) + 1);
+  }
+
+  const topCities = [...cityCounts]
+    .sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0], "tr"))
+    .slice(0, 4)
+    .map(([city, count]) => ({ city, count }));
+
+  const quotaTrend: QuotaTrendPoint[] = QUOTA_YEARS.map((year) => {
+    let total = 0;
+    let programCount = 0;
+
+    for (const row of matches) {
+      const quota = quotaAt(row, year);
+      if (quota !== null) {
+        total += quota;
+        programCount += 1;
+      }
+    }
+
+    return { year, total, programCount };
+  });
 
   return {
-    totalMatches: summary?.total ?? 0,
-    stateCount: summary?.state_count ?? 0,
-    foundationCount: summary?.foundation_count ?? 0,
-    otherCount: summary?.other_count ?? 0,
-    topCities: cityRows,
-    programs,
+    totalMatches: matches.length,
+    stateCount,
+    foundationCount,
+    otherCount: matches.length - stateCount - foundationCount,
+    topCities,
+    programs: matches.slice(0, MAX_ROWS).map(decodeProgram),
     quotaTrend,
     windowFrom,
     windowTo,
