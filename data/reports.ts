@@ -84,8 +84,9 @@ export const reports: readonly SiteReport[] = [
     publisher: "Tıpfak — Tıp Doktorları ve Öğrencileri Platformu",
     ownWork: false,
     pages: 220,
-    sizeLabel: "28,6 MB",
-    file: "/resources/raporlar/tip-fakulteleri.pdf",
+    sizeLabel: "8,4 MB",
+    file:
+      "https://raw.githubusercontent.com/mertey19/gurbuz-govrek-website/f4be2af61af515f1d9c951ffe83ca73200e83c0f/public/resources/raporlar/tip-fakulteleri.pdf",
     intro:
       "Bu kılavuzu bir kurum değil, tıp fakültelerinde okuyan öğrenciler hazırladı. Türkiye’nin dört bir yanındaki gönüllü temsilciler kendi fakültelerini 25 sabit soruya verdikleri yanıtlarla anlattı. Sıralama tablolarında görünmeyen şeyleri — şehirde yaşamanın nasıl olduğunu, hastanenin durumunu, sınav sistemini — okuyabileceğiniz tek kaynak türü budur.",
     highlights: [
