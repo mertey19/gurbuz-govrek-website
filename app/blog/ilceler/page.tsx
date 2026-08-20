@@ -22,6 +22,8 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: pageUrl },
+  // Sayfa site içi gezinmede listelenmiyor; taramaya açık olduğu açıkça yazılıyor.
+  robots: { index: true, follow: true },
   openGraph: {
     type: "website",
     locale: "tr_TR",
