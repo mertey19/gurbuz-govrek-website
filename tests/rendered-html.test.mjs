@@ -272,10 +272,13 @@ test("blog liste sayfasını ve Denizli YKS tercih yazısını sunucu tarafında
   assert.match(blogHtml, /Üniversite ve Bölüm Seçerken Yapılan 10 Hata/i);
   assert.match(blogHtml, /rel="canonical" href="https:\/\/www\.xn--grbzgvrek-47a5dc\.com\.tr\/blog"/i);
 
-  // İlçe yazıları siteden gezerek bulunmuyor: ne listede ne de ilçe sayfasına
-  // giden bir bağlantı var. Adresleri ve site haritası kayıtları duruyor.
-  assert.doesNotMatch(blogHtml, /href="\/blog\/ilceler"/i);
-  assert.doesNotMatch(blogHtml, /Acıpayam Matematik Özel Ders|Merkezefendi Matematik Özel Ders/i);
+  // İlçe yazıları listede yer almıyor. Sayfa gövdesinde ilçe sayfasına giden bir
+  // bağlantı da yok; alt bilgideki tek satır tarayıcılar için bilerek bırakıldı,
+  // bu yüzden kontrol `<main>` ile sınırlı.
+  const blogGovde = blogHtml.slice(blogHtml.indexOf("<main"), blogHtml.indexOf("</main>"));
+  assert.doesNotMatch(blogGovde, /href="\/blog\/ilceler"/i);
+  assert.doesNotMatch(blogGovde, /Acıpayam Matematik Özel Ders|Merkezefendi Matematik Özel Ders/i);
+  assert.match(blogHtml, /href="\/blog\/ilceler"/i);
 
   // İlçe listesi yalnızca ilçe yazılarını basar; açık segment olduğu için
   // panelden gelen adreslere düşmez.

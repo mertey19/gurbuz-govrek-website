@@ -33,6 +33,12 @@ export function Footer() {
               <li><Link href="/matematik-ozel-ders" className="hover:text-white">Matematik Özel Ders</Link></li>
               <li><Link href="/universite-bolum-analizi" className="hover:text-white">Bölüm Analizi</Link></li>
               <li><Link href="/denizli-ogrenci-koclugu" className="hover:text-white">Öğrenci Koçluğu</Link></li>
+              {/*
+                İlçe yazıları site içinde listelenmiyor. Hiçbir yerden bağlantı
+                verilmezse tarayıcılar için yalnızca site haritası kalıyor; buradaki
+                tek satır, sayfaları öne çıkarmadan gerçek bir tarama yolu bırakıyor.
+              */}
+              <li><Link href="/blog/ilceler" className="hover:text-white">İlçelere Göre Özel Ders</Link></li>
             </ul>
           </div>
           <div>
