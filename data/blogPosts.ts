@@ -1,5 +1,44 @@
 export const blogPosts = [
   {
+    slug: "serinhisar-matematik-ozel-ders",
+    category: "İlçe Rehberleri",
+    title: "Serinhisar Matematik Özel Ders ile Başarıya Giden Yol",
+    description:
+      "Serinhisar’da birebir matematik dersi neden önemlidir, öğrenciye özel çalışma programı nasıl kurulur, kimler için uygundur ve öğretmen seçerken nelere dikkat edilmelidir?",
+    publishedAt: "2026-08-22",
+    publishedAtLabel: "22 Ağustos 2026",
+    readingTime: "4 dakika",
+    image: "/images/mathematics-education.webp",
+    imageAlt:
+      "Birebir matematik çalışmasında konu anlatımı ve soru çözümünü gösteren temsilî kapak görseli",
+  },
+  {
+    slug: "cal-matematik-ozel-ders",
+    category: "İlçe Rehberleri",
+    title: "Çal Matematik Özel Ders ile Matematiği Daha Kolay Öğrenin",
+    description:
+      "Çal’da matematik özel ders neden tercih edilir, eksik konular nasıl önceliklendirilir, sınav başarısını birebir çalışma nasıl destekler ve öğretmen seçiminde nelere bakılır?",
+    publishedAt: "2026-08-22",
+    publishedAtLabel: "22 Ağustos 2026",
+    readingTime: "4 dakika",
+    image: "/images/blog-kapak/03.webp",
+    imageAlt:
+      "Matematik dersinde öğretmenin öğrenciyle tahtada birebir soru çözdüğü temsilî kapak görseli",
+  },
+  {
+    slug: "cameli-matematik-ozel-ders",
+    category: "İlçe Rehberleri",
+    title: "Çameli Matematik Özel Ders ile Matematik Başarınızı Güçlendirin",
+    description:
+      "Çameli’de birebir matematik eğitimi neden önemlidir, soru çözümü ve hata analizi nasıl yürütülür, LGS ile TYT-AYT hazırlığında program nasıl kurulur?",
+    publishedAt: "2026-08-22",
+    publishedAtLabel: "22 Ağustos 2026",
+    readingTime: "4 dakika",
+    image: "/images/blog-kapak/06.webp",
+    imageAlt:
+      "Haftalık çalışma planını masa üzerinde oluşturan öğrenciyi gösteren temsilî kapak görseli",
+  },
+  {
     slug: "buldan-matematik-ozel-ders",
     category: "İlçe Rehberleri",
     title: "Buldan Matematik Özel Ders ile Matematikte Daha Sağlam Adımlar",
