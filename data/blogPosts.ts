@@ -1,5 +1,44 @@
 export const blogPosts = [
   {
+    slug: "babadag-matematik-ozel-ders",
+    category: "İlçe Rehberleri",
+    title: "Babadağ Matematik Özel Ders ile Başarıya Giden Yol",
+    description:
+      "Babadağ’da birebir matematik dersi neden tercih edilir, matematik başarısı nasıl geliştirilir, LGS ve YKS hazırlığında ne yapılır ve öğretmen seçerken nelere dikkat edilmelidir?",
+    publishedAt: "2026-08-23",
+    publishedAtLabel: "23 Ağustos 2026",
+    readingTime: "4 dakika",
+    image: "/images/one-to-one-consulting.webp",
+    imageAlt:
+      "Gürbüz Gövrek öğrenciyle bire bir çalışma planı ve hedef takibi üzerine görüşüyor",
+  },
+  {
+    slug: "baklan-matematik-ozel-ders",
+    category: "İlçe Rehberleri",
+    title: "Baklan Matematik Özel Ders ile Matematikte Güven Kazanın",
+    description:
+      "Baklan’da matematik özel ders neden önemlidir, hangi öğrenciler için uygundur, ders süreci nasıl ilerler ve öğretmen seçerken hangi ölçütler değerlendirilmelidir?",
+    publishedAt: "2026-08-23",
+    publishedAtLabel: "23 Ağustos 2026",
+    readingTime: "4 dakika",
+    image: "/images/student-success.webp",
+    imageAlt:
+      "Gürbüz Gövrek öğrenciyle haftalık çalışma programını ve deneme analizlerini birlikte gözden geçiriyor",
+  },
+  {
+    slug: "bozkurt-matematik-ozel-ders",
+    category: "İlçe Rehberleri",
+    title: "Bozkurt Matematik Özel Ders ile Matematikte Güven Kazanın",
+    description:
+      "Bozkurt’ta birebir matematik dersi neden önemlidir, doğru çalışma yaklaşımı nasıl kurulur ve LGS ile YKS hazırlığında program nasıl şekillendirilir?",
+    publishedAt: "2026-08-23",
+    publishedAtLabel: "23 Ağustos 2026",
+    readingTime: "4 dakika",
+    image: "/images/blog-kapak/06.webp",
+    imageAlt:
+      "Haftalık çalışma planını masa üzerinde oluşturan öğrenciyi gösteren temsilî kapak görseli",
+  },
+  {
     slug: "serinhisar-matematik-ozel-ders",
     category: "İlçe Rehberleri",
     title: "Serinhisar Matematik Özel Ders ile Başarıya Giden Yol",
