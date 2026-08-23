@@ -298,6 +298,9 @@ test("blog liste sayfasını ve Denizli YKS tercih yazısını sunucu tarafında
   assert.match(districtHtml, /Serinhisar Matematik Özel Ders ile Başarıya Giden Yol/i);
   assert.match(districtHtml, /Çal Matematik Özel Ders ile Matematiği Daha Kolay Öğrenin/i);
   assert.match(districtHtml, /Çameli Matematik Özel Ders ile Matematik Başarınızı Güçlendirin/i);
+  assert.match(districtHtml, /Babadağ Matematik Özel Ders ile Başarıya Giden Yol/i);
+  assert.match(districtHtml, /Baklan Matematik Özel Ders ile Matematikte Güven Kazanın/i);
+  assert.match(districtHtml, /Bozkurt Matematik Özel Ders ile Matematikte Güven Kazanın/i);
   assert.doesNotMatch(districtHtml, /Vakıf mı Devlet Üniversitesi mi/i);
   assert.match(districtHtml, /rel="canonical" href="https:\/\/www\.xn--grbzgvrek-47a5dc\.com\.tr\/blog\/ilceler"/i);
 
@@ -397,7 +400,7 @@ test("sitemap blog adreslerini yalnızca kanonik alan adıyla üretir", async ()
   const xml = await response.text();
   const locations = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
 
-  assert.equal(locations.length, 59);
+  assert.equal(locations.length, 62);
   assert.ok(locations.every((location) => location.startsWith("https://www.xn--grbzgvrek-47a5dc.com.tr/")));
   assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/blog"));
   assert.ok(locations.includes("https://www.xn--grbzgvrek-47a5dc.com.tr/blog/ilceler"));
