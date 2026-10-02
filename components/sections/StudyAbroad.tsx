@@ -99,8 +99,11 @@ export function StudyAbroad() {
               width={1536}
               height={1024}
               sizes="(min-width: 1024px) 45vw, 100vw"
-              /* Bölüm sayfanın üst kısmında; geç yükleme burada boş alan bırakır. */
-              loading="eager"
+              /*
+                Bölüm ana sayfanın sonlarında; dosya da buradaki en ağır görsel.
+                Erken yükleme hero ile bant genişliği için yarışıyordu. Oran
+                `width`/`height` ile ayrıldığı için geç yükleme kayma yaratmaz.
+              */
               className="h-auto w-full"
             />
           </a>

@@ -1,7 +1,21 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-import type { ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+
+/**
+ * Bölüm giriş animasyonu.
+ *
+ * Sunucu çıktısı içeriği görünür bırakır ve animasyonu CSS'e devreder; önceki
+ * sürüm `opacity: 0` basıp animasyonu hydration'a bağladığı için ilk ekran
+ * JavaScript inene kadar boş görünüyordu. Artık ilk ekran boyanır boyanmaz
+ * okunabilir durumda.
+ *
+ * Görüş alanının altındaki bölümler eski davranışını korur: bağlandıktan sonra
+ * gizlenip kaydırmayla açılırlar. Gizleme yalnızca ekran dışındaki öğelere
+ * uygulandığı için kullanıcı hiçbir sıçrama görmez; JavaScript çalışmazsa da
+ * içerik görünür kalır.
+ */
+type RevealState = "enter" | "hidden";
 
 export function Reveal({
   children,
@@ -12,17 +26,42 @@ export function Reveal({
   delay?: number;
   className?: string;
 }) {
-  const reduced = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const [state, setState] = useState<RevealState>("enter");
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    // Ekranda görünen bölüm CSS animasyonunu zaten oynatıyor; ona dokunulmaz.
+    if (element.getBoundingClientRect().top < window.innerHeight) return;
+
+    setState("hidden");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        setState("enter");
+        observer.disconnect();
+      },
+      // Yüksek bölümler de tetiklensin diye oran yerine alt kenar payı kullanılır.
+      { rootMargin: "0px 0px -12% 0px" },
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <motion.div
+    <div
+      ref={ref}
       className={className}
-      initial={reduced ? false : { opacity: 0, y: 22 }}
-      whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.16 }}
-      transition={{ duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] }}
+      data-reveal={state}
+      style={delay ? ({ "--reveal-delay": `${delay}s` } as React.CSSProperties) : undefined}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }

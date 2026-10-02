@@ -615,6 +615,33 @@ select {
   }
 }
 
+/*
+  Bölüm giriş animasyonu (`components/ui/Reveal.tsx`).
+
+  Animasyon CSS'te durduğu için ilk ekran JavaScript beklemeden boyanır; eski
+  sürümde bu iş framer-motion'a bağlıydı ve içerik hydration'a kadar görünmez
+  kalıyordu. `both` dolgusu gecikmeli kartların sırayla açılmasını korur.
+*/
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+[data-reveal="enter"] {
+  animation: reveal-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s) both;
+}
+
+/* Yalnızca ekran dışındaki bölümlere, kaydırmayla açılmak üzere uygulanır. */
+[data-reveal="hidden"] {
+  opacity: 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *,
@@ -629,6 +656,12 @@ select {
   .depth-card:hover,
   .depth-card:focus-within {
     transform: none;
+  }
+
+  /* Hareket azaltıldığında bölümler animasyonsuz ve görünür gelir. */
+  [data-reveal] {
+    animation: none !important;
+    opacity: 1;
   }
 }
 

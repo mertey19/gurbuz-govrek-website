@@ -1,0 +1,232 @@
+{
+  "/images/campus-visits.webp": {
+    "widths": [
+      384,
+      640,
+      828,
+      1080
+    ],
+    "width": 1280,
+    "height": 720
+  },
+  "/images/contact-consulting.webp": {
+    "widths": [
+      384,
+      640,
+      828,
+      1080
+    ],
+    "width": 1280,
+    "height": 720
+  },
+  "/images/expert-opinion.webp": {
+    "widths": [
+      384,
+      640,
+      828,
+      1080
+    ],
+    "width": 1280,
+    "height": 720
+  },
+  "/images/guidance-introduction.webp": {
+    "widths": [
+      384,
+      640,
+      828,
+      1080
+    ],
+    "width": 1280,
+    "height": 720
+  },
+  "/images/hero-gurbuz-govrek.webp": {
+    "widths": [
+      384,
+      640,
+      828,
+      1080
+    ],
+    "width": 1280,
+    "height": 720
+  },
+  "/images/mathematics-education.webp": {
+    "widths": [
+      384,
+      640,
+      828,
+      1080
+    ],
+    "width": 1280,
+    "height": 720
+  },
+  "/images/one-to-one-consulting.webp": {
+    "widths": [
+      384,
+      640,
+      828,
+      1080
+    ],
+    "width": 1280,
+    "height": 720
+  },
+  "/images/preference-analysis.webp": {
+    "widths": [
+      384,
+      640,
+      828,
+      1080
+    ],
+    "width": 1280,
+    "height": 720
+  },
+  "/images/seminars.webp": {
+    "widths": [
+      384,
+      640,
+      828,
+      1080
+    ],
+    "width": 1280,
+    "height": 720
+  },
+  "/images/student-success.webp": {
+    "widths": [
+      384,
+      640,
+      828,
+      1080
+    ],
+    "width": 1280,
+    "height": 720
+  },
+  "/images/success-stories.webp": {
+    "widths": [
+      384,
+      640,
+      828,
+      1080
+    ],
+    "width": 1280,
+    "height": 720
+  },
+  "/images/university-guidance.webp": {
+    "widths": [
+      384,
+      640,
+      828,
+      1080
+    ],
+    "width": 1280,
+    "height": 720
+  },
+  "/images/yurt-disi-egitim-danismanligi.webp": {
+    "widths": [
+      384,
+      640,
+      828,
+      1080
+    ],
+    "width": 1536,
+    "height": 1024
+  },
+  "/images/blog-kapak/01.webp": {
+    "widths": [
+      384,
+      640,
+      828,
+      1080
+    ],
+    "width": 1280,
+    "height": 720
+  },
+  "/images/blog-kapak/02.webp": {
+    "widths": [
+      384,
+      640,
+      828,
+      1080
+    ],
+    "width": 1280,
+    "height": 720
+  },
+  "/images/blog-kapak/03.webp": {
+    "widths": [
+      384,
+      640,
+      828,
+      1080
+    ],
+    "width": 1280,
+    "height": 720
+  },
+  "/images/blog-kapak/04.webp": {
+    "widths": [
+      384,
+      640,
+      828,
+      1080
+    ],
+    "width": 1280,
+    "height": 720
+  },
+  "/images/blog-kapak/05.webp": {
+    "widths": [
+      384,
+      640,
+      828,
+      1080
+    ],
+    "width": 1280,
+    "height": 720
+  },
+  "/images/blog-kapak/06.webp": {
+    "widths": [
+      384,
+      640,
+      828,
+      1080
+    ],
+    "width": 1280,
+    "height": 720
+  },
+  "/images/blog-kapak/07.webp": {
+    "widths": [
+      384,
+      640,
+      828,
+      1080
+    ],
+    "width": 1280,
+    "height": 720
+  },
+  "/images/blog-kapak/08.webp": {
+    "widths": [
+      384,
+      640,
+      828,
+      1080
+    ],
+    "width": 1280,
+    "height": 720
+  },
+  "/images/blog-kapak/09.webp": {
+    "widths": [
+      384,
+      640,
+      828,
+      1080
+    ],
+    "width": 1280,
+    "height": 720
+  },
+  "/images/blog-kapak/10.webp": {
+    "widths": [
+      384,
+      640,
+      828,
+      1080
+    ],
+    "width": 1280,
+    "height": 720
+  }
+}
